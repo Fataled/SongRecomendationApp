@@ -194,3 +194,52 @@ CREATE TABLE Songs (
     Tempo           INTEGER,
     FeaturesJson    TEXT    -- serialized feature vector, e.g. [0.8,0.4,0.7]
 );
+```
+## 5. Work Assignments
+
+Each team member is responsible for a portion of the presentation layer, business layer, and data layer. Responsibilities are divided so that every member implements UI, logic, and data programming for their features, in line with the project requirements.
+
+| Contribution        | Oghenebrume Ako (Brume)      | Obaid Waqas                           | Rithvik Ganesh Konapala (Rithvik) |
+|---------------------|------------------------------|---------------------------------------|-----------------------------------|
+| Presentation Layer  | Search System UI             | Random Song Choice, Add to Playlists | Favorites / Playlists Page        |
+| Business Layer      | Auth, Search Functionality   | Song Recommendation Logic            | Encryption, SQL Queries           |
+| Data Layer          | Genre Management for Songs   | Spotify Playlist Integration         | Database & Query Management       |
+
+### 5.1 Oghenebrume Ako (Brume)
+
+- **Presentation:**  
+  - Implement the Search System UI using MAUI and XAML, including search controls, filters, and result list display.  
+- **Business Logic:**  
+  - Implement authentication logic and the core search functionality to query songs by title, artist, or genre.  
+  - Manage user login and session handling.  
+- **Data:**  
+  - Design and implement genre management, including adding/updating genres to songs and organizing song data by genre.
+
+### 5.2 Obaid Waqas
+
+- **Presentation:**  
+  - Implement the Random Song Choice feature and the ability to add songs to playlists directly from the UI.  
+- **Business Logic:**  
+  - Implement random song selection logic and recommendation algorithms to suggest songs based on user preferences.  
+  - Handle the ability to add selected songs to Spotify playlists.  
+- **Data:**  
+  - Integrate with Spotify's playlist API to save user selections and manage Spotify playlist data.
+
+### 5.3 Rithvik Ganesh Konapala (Rithvik)
+
+- **Presentation:**  
+  - Implement the Favorites / Playlists management page using MAUI and XAML for displaying and managing user collections.  
+- **Business Logic:**  
+  - Implement encryption logic for sensitive user data (e.g., authentication tokens, user preferences).  
+  - Design core encryption/decryption utilities used throughout the app.  
+- **Data:**  
+  - Implement SQL queries for database operations (favorites, playlists, user data).  
+  - Design and maintain the database schema and all data-access code for persistence.
+
+---
+
+## 6. Notes
+
+- This proposal represents the initial planned design for NAMEYETTOBEDECIDED and may be updated as the project evolves.  
+- During development, features, screens, and classes may be refined, added, or removed while still respecting the course requirements for presentation, business logic, and data layers, as well as the use of MAUI, collections, and persistent storage.  
+- The final project report will update this proposal with the completed design, diagrams, screenshots, and a link to the demonstration video.
