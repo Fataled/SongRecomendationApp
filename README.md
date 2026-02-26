@@ -37,7 +37,7 @@ This is the main entry point of the application, where the user can search for s
 
 **Inputs:**  
 - Text search box for song title and/or artist.  
-- Optional filters (e.g., “Use local library”, “Use online catalog”, simple genre filter).  
+- Optional filters (e.g., “Use local library”, “Use online catalog”, simple genre filter).
 - Button to submit the search query.  
 
 **Outputs:**  
@@ -243,3 +243,4 @@ Each team member is responsible for a portion of the presentation layer, busines
 - This proposal represents the initial planned design for NAMEYETTOBEDECIDED and may be updated as the project evolves.  
 - During development, features, screens, and classes may be refined, added, or removed while still respecting the course requirements for presentation, business logic, and data layers, as well as the use of MAUI, collections, and persistent storage.  
 - The final project report will update this proposal with the completed design, diagrams, screenshots, and a link to the demonstration video.
+- This is a pretty complex project though it sounds easy we will be using both C# Maui and python in order to make this work as well as quite a few different apis.
