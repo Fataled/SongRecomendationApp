@@ -1,0 +1,2 @@
+﻿Classes that convert JSON - C# objects from APIs come here NO LOGIC
+Data moving between systems
