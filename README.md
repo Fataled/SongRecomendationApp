@@ -2,7 +2,7 @@
 
 Students use this file to complete the project proposal and then iterate on it to finalize it into a project report. Please consult the project proposal assignment which contains requirements for completing the proposal as well as the requirements for the project and its report.
 
-# NAMEYETTOBEDECIDED – Song Recommender
+# Project Hell's Paradise – Song Recommender
 
 PROG10065 – Interactive Application Development  
 Term Team Project – Project Proposal  
