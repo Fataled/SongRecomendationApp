@@ -1,9 +1,10 @@
 ﻿namespace ProjectHellsParadise.BusinessLogic.APIs;
 
-public class WeezerClient : APIClientBase
+public class FeatureExtractionApi : APIClientBase
 {
-    public WeezerClient() : base("https://api.deezer.com")
+    public FeatureExtractionApi(string baseURL) : base(baseURL)
     {
+        
     }
 
     protected override Task AddAuthHeader(HttpRequestMessage request)
