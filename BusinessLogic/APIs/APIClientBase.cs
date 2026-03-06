@@ -2,20 +2,20 @@
 
 namespace ProjectHellsParadise.BusinessLogic.APIs;
 
-public abstract class APIClientBase
+public abstract class ApiClientBase
 {
-    protected readonly HttpClient _httpClient;
-    protected readonly string _baseUrl;
+    protected readonly HttpClient HttpClient;
+    protected readonly string BaseUrl;
 
-    protected APIClientBase(string baseURL)
+    protected ApiClientBase(string baseUrl)
     {
-        _httpClient = new  HttpClient();
-        _baseUrl = baseURL;
+        HttpClient = new  HttpClient();
+        BaseUrl = baseUrl;
     }
 
     protected async Task<T> GetAsync<T>(string endpoint)
     {
-        var response = await _httpClient.GetAsync($"{_baseUrl}/{endpoint}");
+        var response = await HttpClient.GetAsync($"{BaseUrl}/{endpoint}");
         response.EnsureSuccessStatusCode();
         var json = await response.Content.ReadAsStringAsync();
         return JsonSerializer.Deserialize<T>(json);

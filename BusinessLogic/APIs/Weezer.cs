@@ -1,6 +1,6 @@
 ﻿namespace ProjectHellsParadise.BusinessLogic.APIs;
 
-public class WeezerClient : APIClientBase
+public class WeezerClient : ApiClientBase
 {
     public WeezerClient() : base("https://api.deezer.com")
     {

@@ -1,8 +1,8 @@
 ﻿namespace ProjectHellsParadise.BusinessLogic.APIs;
 
-public class FeatureExtractionApi : APIClientBase
+public class FeatureExtractionApi : ApiClientBase
 {
-    public FeatureExtractionApi(string baseURL) : base(baseURL)
+    public FeatureExtractionApi() : base("")
     {
         
     }

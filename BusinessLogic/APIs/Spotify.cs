@@ -1,8 +1,8 @@
 ﻿namespace ProjectHellsParadise.BusinessLogic.APIs;
 
-public class SpotifyClient : APIClientBase
+public class SpotifyClient : ApiClientBase
 {
-    public SpotifyClient(HttpClient httpClient, string baseURL) : base("https://api.spotify.com/v1")
+    public SpotifyClient() : base("https://api.spotify.com/v1")
     {
         
     }

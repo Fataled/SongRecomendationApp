@@ -1,6 +1,14 @@
-﻿namespace ProjectHellsParadise.BusinessLogic.WebApis;
+﻿namespace ProjectHellsParadise.BusinessLogic.APIs;
 
-public class AppleMusic
+public class AppleMusic : ApiClientBase
 {
-    
+    public AppleMusic() : base("")
+    {
+        
+    }
+
+    protected override Task AddAuthHeader(HttpRequestMessage request)
+    {
+        throw new NotImplementedException();
+    }
 }
