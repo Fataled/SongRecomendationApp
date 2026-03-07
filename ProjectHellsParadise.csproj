@@ -62,7 +62,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="BusinessLogic\Exceptions\" />
       <Folder Include="BusinessLogic\Math\" />
     </ItemGroup>
 

@@ -1,4 +1,6 @@
-﻿namespace ProjectHellsParadise;
+﻿using ProjectHellsParadise.BusinessLogic.APIs;
+
+namespace ProjectHellsParadise;
 
 public partial class MainPage : ContentPage
 {
@@ -7,6 +9,13 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         InitializeComponent();
+    }
+
+    protected async override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        FeatureExtractionApi myApi = await FeatureExtractionApi.CreateAsync();
     }
 
     private void OnCounterClicked(object? sender, EventArgs e)

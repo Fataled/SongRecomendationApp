@@ -11,4 +11,9 @@ public class SpotifyClient : ApiClientBase
     {
         throw new NotImplementedException();
     }
+
+    protected override Task AddRequestHeader(HttpRequestMessage request)
+    {
+        throw new NotImplementedException();
+    }
 }

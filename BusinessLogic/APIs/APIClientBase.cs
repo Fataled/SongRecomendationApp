@@ -9,23 +9,33 @@ public abstract class ApiClientBase
 
     protected ApiClientBase(string baseUrl)
     {
-        HttpClient = new  HttpClient();
+        HttpClient = new HttpClient();
         BaseUrl = baseUrl;
+        HttpClient.BaseAddress = new Uri(baseUrl);
     }
 
-    protected async Task<T> GetAsync<T>(string endpoint)
+    protected async Task<T> GetAsync<T>(string endpoint, string query)
     {
-        var response = await HttpClient.GetAsync($"{BaseUrl}/{endpoint}");
+        HttpRequestMessage request = new(HttpMethod.Get, $"{BaseUrl}/{endpoint}" + Uri.EscapeDataString(query));
+        await AddAuthHeader(request);
+        HttpResponseMessage response = await HttpClient.SendAsync(request);
         response.EnsureSuccessStatusCode();
-        var json = await response.Content.ReadAsStringAsync();
+        string json = await response.Content.ReadAsStringAsync();
         return JsonSerializer.Deserialize<T>(json);
     }
 
-    protected async Task<T> PostAsync<T>(string endpoint, object body)
+    protected virtual async Task<T> PostAsync<T>(string endpoint, object body)
     {
-        return default;
+        HttpRequestMessage request = new(HttpMethod.Post, $"{BaseUrl}/{endpoint}");
+        await AddAuthHeader(request);
+        HttpResponseMessage response = await HttpClient.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+        string json = await response.Content.ReadAsStringAsync();
+        return JsonSerializer.Deserialize<T>(json);
+        
     }
 
     protected abstract Task AddAuthHeader(HttpRequestMessage request);
-
+    
+    protected abstract Task AddRequestHeader(HttpRequestMessage request);
 }
