@@ -2,7 +2,7 @@
 
 public class FeatureExtractionApi : ApiClientBase
 {
-    public FeatureExtractionApi() : base("")
+    public FeatureExtractionApi() : base("http://159.203.18.252:4000")
     {
         
     }
