@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using ProjectHellsParadise.BusinessLogic.Exceptions;
 
 namespace ProjectHellsParadise.BusinessLogic.APIs;
 
@@ -21,17 +22,19 @@ public abstract class ApiClientBase
         HttpResponseMessage response = await HttpClient.SendAsync(request);
         response.EnsureSuccessStatusCode();
         string json = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<T>(json);
+        return JsonSerializer.Deserialize<T>(json)
+               ?? throw new DTOException("Failed to deserialize response to " + typeof(T));
     }
 
-    protected virtual async Task<T> PostAsync<T>(string endpoint, object body)
+    protected virtual async Task<T> RequestAsync<T>(string endpoint, object body)
     {
         HttpRequestMessage request = new(HttpMethod.Post, $"{BaseUrl}/{endpoint}");
         await AddAuthHeader(request);
         HttpResponseMessage response = await HttpClient.SendAsync(request);
         response.EnsureSuccessStatusCode();
         string json = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<T>(json);
+        return JsonSerializer.Deserialize<T>(json)
+            ?? throw new DTOException("Failed to deserialize response to " + typeof(T));
         
     }
 
