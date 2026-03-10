@@ -1,6 +1,4 @@
 ﻿using System.Net.Http.Headers;
-using System.Text.Json;
-using ProjectHellsParadise.BusinessLogic.Exceptions;
 
 namespace ProjectHellsParadise.BusinessLogic.APIs;
 
@@ -45,24 +43,12 @@ public class FeatureExtractionApi : ApiClientBase
             await Task.Delay(delayMs);
         }
     }
-
-    protected override async Task<T> RequestAsync<T>(string endpoint, object body)
-    {
-        ReInitializeConnection();
-        HttpRequestMessage request = new(HttpMethod.Post, $"{BaseUrl}/{endpoint}");
-        request.Content = new ByteArrayContent((byte[]) body);
-        await AddAuthHeader(request);
-        await AddRequestHeader(request);
-        HttpResponseMessage response = await HttpClient.SendAsync(request) ?? throw new HttpRequestException("Error requesting feature extraction.");
-        response.EnsureSuccessStatusCode();
-        string json = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<T>(json)
-               ?? throw new DTOException("Failed to deserialize response to " + typeof(T));
-    }
+    
 
     public async Task<T> PostAsync<T>(string endpoint, object body)
     {
-        return await RequestAsync<T>(endpoint, body);
+        await ReInitializeConnection();
+        return await SendAsync<T>(endpoint, body);
     }
 
     protected override Task AddAuthHeader(HttpRequestMessage request)
@@ -72,7 +58,13 @@ public class FeatureExtractionApi : ApiClientBase
 
     protected override Task AddRequestHeader(HttpRequestMessage request)
     {
-        request.Content.Headers.ContentType = new MediaTypeHeaderValue("audio/wav");
+        request.Content?.Headers.ContentType = new MediaTypeHeaderValue("audio/wav");
+        return Task.CompletedTask;
+    }
+
+    protected override Task AddContent(HttpRequestMessage request, object body)
+    {
+        request.Content = new ByteArrayContent((byte[])body);
         return Task.CompletedTask;
     }
 

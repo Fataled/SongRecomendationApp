@@ -15,10 +15,11 @@ public abstract class ApiClientBase
         HttpClient.BaseAddress = new Uri(baseUrl);
     }
 
-    protected async Task<T> GetAsync<T>(string endpoint, string query)
+    protected async Task<T> RequestAsync<T>(string endpoint, string query)
     {
         HttpRequestMessage request = new(HttpMethod.Get, $"{BaseUrl}/{endpoint}" + Uri.EscapeDataString(query));
         await AddAuthHeader(request);
+        await AddRequestHeader(request);
         HttpResponseMessage response = await HttpClient.SendAsync(request);
         response.EnsureSuccessStatusCode();
         string json = await response.Content.ReadAsStringAsync();
@@ -26,10 +27,12 @@ public abstract class ApiClientBase
                ?? throw new DTOException("Failed to deserialize response to " + typeof(T));
     }
 
-    protected virtual async Task<T> RequestAsync<T>(string endpoint, object body)
+    protected async Task<T> SendAsync<T>(string endpoint, object body)
     {
         HttpRequestMessage request = new(HttpMethod.Post, $"{BaseUrl}/{endpoint}");
+        await AddContent(request, body);
         await AddAuthHeader(request);
+        await AddRequestHeader(request);
         HttpResponseMessage response = await HttpClient.SendAsync(request);
         response.EnsureSuccessStatusCode();
         string json = await response.Content.ReadAsStringAsync();
@@ -41,4 +44,6 @@ public abstract class ApiClientBase
     protected abstract Task AddAuthHeader(HttpRequestMessage request);
     
     protected abstract Task AddRequestHeader(HttpRequestMessage request);
+    
+    protected abstract Task AddContent(HttpRequestMessage requestMessage ,object body);
 }

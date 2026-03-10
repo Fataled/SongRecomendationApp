@@ -16,4 +16,9 @@ public class AppleMusic : ApiClientBase
     {
         throw new NotImplementedException();
     }
+
+    protected override Task AddContent(HttpRequestMessage requestMessage, object body)
+    {
+        throw new NotImplementedException();
+    }
 }

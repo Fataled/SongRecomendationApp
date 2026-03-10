@@ -15,18 +15,15 @@ public partial class MainPage : ContentPage
     protected async override void OnAppearing()
     {
         base.OnAppearing();
-
+        WeezerClient weezerClient = new WeezerClient();
+        DeezerDTO trackData = await weezerClient.GetAsync<DeezerDTO>("/search?q=", "Cozy Forever KembeX");
+        byte[] wavBtyes = await weezerClient.DownloadPreviewBtyes(trackData.Data[0].Preview);
+        
         FeatureExtractionApi myApi = await FeatureExtractionApi.CreateAsync();
-        object data = await File.ReadAllBytesAsync(@"C:\Users\akobr\RiderProjects\ProjectHellsParadise\BusinessLogic\TestFiles\testFile.wav");
-        try
-        {
-            FeatureExtractionDTO dto = await myApi.PostAsync<FeatureExtractionDTO>("/features", data);
-            Console.WriteLine(dto.Embedding[0]);
-        }
-        catch(Exception e)
-        {
-            Console.WriteLine("Error: " + e.Message);
-        }
+        
+        FeatureExtractionDTO dto = await myApi.PostAsync<FeatureExtractionDTO>("/features", wavBtyes);
+        Console.WriteLine(dto.Embedding[0]);
+        
     }
 
     private void OnCounterClicked(object? sender, EventArgs e)
@@ -38,6 +35,6 @@ public partial class MainPage : ContentPage
         else
             CounterBtn.Text = $"Clicked {count} times";
 
-            SemanticScreenReader.Announce(CounterBtn.Text);
+        SemanticScreenReader.Announce(CounterBtn.Text);
         }
 }
