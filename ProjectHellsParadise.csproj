@@ -17,6 +17,8 @@
         <SingleProject>true</SingleProject>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 
         <!-- Display name -->
         <ApplicationTitle>ProjectHellsParadise</ApplicationTitle>

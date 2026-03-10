@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProjectHellsParadise.SongSearchPage">
+    <ContentPage.Content>
+        <Grid RowDefinitions="*, 4*" Margin="10">
+            
+            <SearchBar x:Name="_songSearchBar" 
+                       Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Center"
+                       FontFamily="Inter"
+                       Placeholder="Enter Song Name" SearchButtonPressed="SongSearch" />
+            
+            <CollectionView x:Name="_searchBarResults" Grid.Row="1" ItemsSource="{Binding ObservableCollection}" SelectionMode="Single" SelectionChanged="SearchBarResultsChanged">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Padding="10">
+                            <Label Text="{Binding Title}" FontSize="16" FontAttributes="Bold" FontFamily="Inter" />
+                            <Label Text="{Binding Artist.Name}" FontSize="12" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

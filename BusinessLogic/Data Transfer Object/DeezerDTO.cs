@@ -21,6 +21,11 @@ public class DeezerDTO
 
         [JsonPropertyName("preview")]
         public string Preview { get; set; } = string.Empty;
+
+        public override string ToString()
+        {
+            return $"Title: {Title} Artist Name: {Artist.Name}";
+        }
     }
 
     public class DeezerArtist
@@ -28,8 +33,11 @@ public class DeezerDTO
         [JsonPropertyName("name")]
         public string Name { get; set; } = string.Empty;
     }
-        
-    
-        
-        
+
+    public override string ToString()
+    {
+        return Data.Length == 0
+            ? "No tracks found"
+            : string.Join("\n", Data.Select(t => $"Track: {t.Title}, Artist Name: {t.Artist?.Name ?? "Unknown"}"));
+    }
 }

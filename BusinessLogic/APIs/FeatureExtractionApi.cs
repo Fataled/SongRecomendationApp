@@ -6,18 +6,10 @@ public class FeatureExtractionApi : ApiClientBase
 {
     private bool _connected;
     
-    private FeatureExtractionApi() : base("http://159.203.18.252:4000")
+    public FeatureExtractionApi() : base("http://159.203.18.252:4000")
     {
         _connected = false; //TODO make it so on shutdown this becomes false or on disconnect So far we have smth but not sure if its the best idea
     }
-
-    public static async Task<FeatureExtractionApi> CreateAsync()
-    {
-        FeatureExtractionApi instance = new FeatureExtractionApi();
-        await instance.WaitForServer();
-        return instance;
-    }
-    
 
     private async Task WaitForServer()
     {

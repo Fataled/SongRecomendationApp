@@ -15,13 +15,13 @@ public partial class MainPage : ContentPage
     protected async override void OnAppearing()
     {
         base.OnAppearing();
-        WeezerClient weezerClient = new WeezerClient();
+        DeezerClient weezerClient = new DeezerClient();
         DeezerDTO trackData = await weezerClient.GetAsync<DeezerDTO>("/search?q=", "Cozy Forever KembeX");
         try
         {
             byte[] wavBtyes = await weezerClient.DownloadPreviewBtyes(trackData.Data[0].Preview);
 
-            FeatureExtractionApi myApi = await FeatureExtractionApi.CreateAsync();
+            FeatureExtractionApi myApi = new FeatureExtractionApi();
 
             FeatureExtractionDTO dto = await myApi.PostAsync<FeatureExtractionDTO>("/features", wavBtyes);
             Console.WriteLine(dto.Embedding[0]);

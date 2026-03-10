@@ -3,9 +3,9 @@
 namespace ProjectHellsParadise.BusinessLogic.APIs;
 
 using NAudio.Wave;
-public class WeezerClient : ApiClientBase
+public class DeezerClient : ApiClientBase
 {
-    public WeezerClient() : base("https://api.deezer.com")
+    public DeezerClient() : base("https://api.deezer.com")
     {
     }
 
