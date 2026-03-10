@@ -66,6 +66,7 @@
 
     <ItemGroup>
       <Folder Include="BusinessLogic\Math\" />
+      <Folder Include="Logs\" />
     </ItemGroup>
 
 </Project>
