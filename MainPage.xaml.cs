@@ -17,13 +17,20 @@ public partial class MainPage : ContentPage
         base.OnAppearing();
         WeezerClient weezerClient = new WeezerClient();
         DeezerDTO trackData = await weezerClient.GetAsync<DeezerDTO>("/search?q=", "Cozy Forever KembeX");
-        byte[] wavBtyes = await weezerClient.DownloadPreviewBtyes(trackData.Data[0].Preview);
-        
-        FeatureExtractionApi myApi = await FeatureExtractionApi.CreateAsync();
-        
-        FeatureExtractionDTO dto = await myApi.PostAsync<FeatureExtractionDTO>("/features", wavBtyes);
-        Console.WriteLine(dto.Embedding[0]);
-        
+        try
+        {
+            byte[] wavBtyes = await weezerClient.DownloadPreviewBtyes(trackData.Data[0].Preview);
+
+            FeatureExtractionApi myApi = await FeatureExtractionApi.CreateAsync();
+
+            FeatureExtractionDTO dto = await myApi.PostAsync<FeatureExtractionDTO>("/features", wavBtyes);
+            Console.WriteLine(dto.Embedding[0]);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
     }
 
     private void OnCounterClicked(object? sender, EventArgs e)

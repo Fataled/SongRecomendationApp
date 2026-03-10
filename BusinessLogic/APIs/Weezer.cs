@@ -1,4 +1,6 @@
-﻿namespace ProjectHellsParadise.BusinessLogic.APIs;
+﻿using ProjectHellsParadise.BusinessLogic.Exceptions;
+
+namespace ProjectHellsParadise.BusinessLogic.APIs;
 
 using NAudio.Wave;
 public class WeezerClient : ApiClientBase
@@ -27,27 +29,45 @@ public class WeezerClient : ApiClientBase
         return Task.CompletedTask;
     }
 
-    public async Task<byte[]> DownloadPreviewBtyes(string previewURL)
+    public async Task<byte[]> DownloadPreviewBtyes(string previewUrl)
     {
-        byte[] mp3Bytes = await HttpClient.GetByteArrayAsync(previewURL);
-        byte[] wavBytes = await ConvertMp3BytesToWav(mp3Bytes);
-        return wavBytes;
+        try
+        {
+            byte[] mp3Bytes = await HttpClient.GetByteArrayAsync(previewUrl);
+            byte[] wavBytes = ConvertMp3BytesToWav(mp3Bytes);
+            return wavBytes;
+        }
+        catch (ByteTransformationException ex)
+        {
+          throw new ByteTransformationException(ex.Message, ex);  
+        }
+        catch (Exception ex)
+        {
+            throw new ByteTransformationException("An error occured song previewUrl was: " + previewUrl);
+        }
     }
 
-    private async Task<byte[]> ConvertMp3BytesToWav(byte[] mp3Bytes)
+    private byte[] ConvertMp3BytesToWav(byte[] mp3Bytes) 
     {
-        MemoryStream mp3Stream = new MemoryStream(mp3Bytes);
-        Mp3FileReader mp3FileReader = new Mp3FileReader(mp3Stream);
+        try
+        {
+            MemoryStream mp3Stream = new MemoryStream(mp3Bytes);
+            Mp3FileReader mp3FileReader = new Mp3FileReader(mp3Stream);
 
-        WaveFormat outFormat = new WaveFormat(16000, 1);
-        
-        //THIS IS ON WINDOWS ONLY APPARENTLY
-        MediaFoundationResampler resampler = new MediaFoundationResampler(mp3FileReader, outFormat);
-        resampler.ResamplerQuality = 60;
+            WaveFormat outFormat = new WaveFormat(16000, 1);
 
-        MemoryStream wavStream = new MemoryStream();
-        WaveFileWriter.WriteWavFileToStream(wavStream, resampler);
-        return wavStream.ToArray();
+            //THIS IS ON WINDOWS ONLY APPARENTLY
+            MediaFoundationResampler resampler = new MediaFoundationResampler(mp3FileReader, outFormat);
+            resampler.ResamplerQuality = 60;
+
+            MemoryStream wavStream = new MemoryStream();
+            WaveFileWriter.WriteWavFileToStream(wavStream, resampler);
+            return wavStream.ToArray();
+        }
+        catch
+        {
+            throw new ByteTransformationException("An error occured while converting the MP3 file to wav");
+        }
     }
 
 }
