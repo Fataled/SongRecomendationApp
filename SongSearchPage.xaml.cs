@@ -18,6 +18,7 @@ public partial class SongSearchPage : ContentPage
     
     public SongSearchPage()
     {
+        _analyzedSong = new FeatureData();
         _deezerClient = new DeezerClient();
         _extractionApi = new FeatureExtractionApi();
         _observableCollection = new ObservableCollection<DeezerDTO.DeezerTrack>();
@@ -28,13 +29,13 @@ public partial class SongSearchPage : ContentPage
         
     }
     
-    public ObservableCollection<DeezerDTO.DeezerTrack> ObservableCollection { get => _observableCollection; }
+    public ObservableCollection<DeezerDTO.DeezerTrack> ObservableCollection => _observableCollection;
+
     private async void SongSearch(object? sender, EventArgs e)
     {
-        SearchBar searchBar = (SearchBar)sender;
-        string songName = searchBar.Text;
-        try
-        {
+        try{
+            SearchBar searchBar = (SearchBar)sender!;
+            string songName = searchBar.Text;
             DeezerDTO deezerDto = await _deezerClient.GetAsync<DeezerDTO>("/search?q=", songName);
             _observableCollection.Clear();
             foreach (DeezerDTO.DeezerTrack trackData in deezerDto.Data)
