@@ -53,7 +53,10 @@ public class FeatureExtractionApi : ApiClientBase
 
     protected override Task AddRequestHeader(HttpRequestMessage request)
     {
-        request.Content?.Headers.ContentType = new MediaTypeHeaderValue("audio/wav");
+        if (request.Content is not MultipartFormDataContent)
+        {
+            request.Content?.Headers.ContentType = new MediaTypeHeaderValue("audio/wav");
+        }
         return Task.CompletedTask;
     }
 
@@ -65,7 +68,8 @@ public class FeatureExtractionApi : ApiClientBase
                 MultipartFormDataContent form = new MultipartFormDataContent();
                 foreach (byte[] wavByte in wavFiles)
                 {
-                    form.Add(new ByteArrayContent(wavByte), "files", "audio.wav");
+                    ByteArrayContent fileContent = new ByteArrayContent(wavByte);
+                    form.Add(fileContent, "files", "audio.wav");
                 }
                 request.Content = form;
                 break;

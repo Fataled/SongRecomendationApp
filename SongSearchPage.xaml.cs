@@ -12,7 +12,7 @@ public partial class SongSearchPage : ContentPage
     private DeezerClient _deezerClient;
     private FeatureExtractionApi _extractionApi;
     private ObservableCollection<DeezerDTO.DeezerData> _observableCollection;
-    private byte[] _selectedSong;
+    private ByteRecord _selectedSong;
     private FeatureData _analyzedSong;
     private WaveOutEvent _wavEvent;
     
@@ -23,7 +23,6 @@ public partial class SongSearchPage : ContentPage
         _extractionApi = new FeatureExtractionApi();
         _observableCollection = new ObservableCollection<DeezerDTO.DeezerData>();
         _wavEvent = new WaveOutEvent();
-        _selectedSong = [];
         BindingContext = this;
         InitializeComponent();
         
@@ -56,10 +55,10 @@ public partial class SongSearchPage : ContentPage
         {
             if (e.CurrentSelection.Count == 0) return;
             DeezerDTO.DeezerData dataData = (DeezerDTO.DeezerData)e.CurrentSelection[0];
-            _selectedSong = await _deezerClient.DownloadPreviewBytes(dataData.Preview);
+            _selectedSong = await _deezerClient.DownloadPreviewBytes(dataData.Preview, "");
             FeatureExtractionDTO dto = await _extractionApi.GetFeaturesAsync<FeatureExtractionDTO>("/features", _selectedSong);
             _analyzedSong = new FeatureData(dataData.Title, dataData.Artist.Name, dto.Embedding);
-            PlayAudio(_selectedSong);
+            PlayAudio(_selectedSong.PreviewBytes);
         }
         catch (AudioPlayException ex)
         {

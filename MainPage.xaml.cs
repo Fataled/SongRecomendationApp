@@ -1,5 +1,7 @@
-﻿using ProjectHellsParadise.BusinessLogic.APIs;
+﻿using System.Diagnostics;
+using ProjectHellsParadise.BusinessLogic.APIs;
 using ProjectHellsParadise.BusinessLogic.Data_Transfer_Object;
+using ProjectHellsParadise.BusinessLogic.Models;
 
 namespace ProjectHellsParadise;
 
@@ -19,12 +21,12 @@ public partial class MainPage : ContentPage
         DeezerDTO trackData = await weezerClient.GetGenreSongsAsync("rap");
         try
         {
-            byte[][] wavBytes = (await Task.WhenAll(
+            ByteRecord[] wavBytes = (await Task.WhenAll(
                 trackData.Data.Select(async data =>
                 {
                     try
                     {
-                        return await weezerClient.DownloadPreviewBytes(data.Preview);
+                        return await weezerClient.DownloadPreviewBytes(data.Preview, data.Title);
                     }
                     catch (Exception ex)
                     {
@@ -36,37 +38,40 @@ public partial class MainPage : ContentPage
 
             FeatureExtractionApi myApi = new FeatureExtractionApi();
             
-            List<FeatureExtractionDTO> results = new List<FeatureExtractionDTO>();
-            int batchSize = 20;
-
-            for (int i = 0; i < wavBytes.Length; i += batchSize)
+            
+            
+            try
             {
-                var batch = wavBytes.Skip(i).Take(batchSize).ToArray();
-                var batchIndices = Enumerable.Range(i, batch.Length).ToArray();
-
-                var batchResults = await Task.WhenAll(
-                    batch.Select(async (wavByte, j) =>
-                    {
-                        try
-                        {
-                            return await myApi.GetFeaturesAsync<FeatureExtractionDTO>("/features", wavByte);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Skipping {trackData.Data[batchIndices[j]].Title}: {ex.Message}");
-                            return null;
-                        }
-                    })
-                );
-
-                results.AddRange(batchResults.Where(b => b != null)!);
-                Console.WriteLine($"Processed {Math.Min(i + batchSize, wavBytes.Length)}/{wavBytes.Length}");
+                Stopwatch stopwatch = Stopwatch.StartNew();
+                FeatureExtractionDTO[] dto = await myApi.GetFeaturesAsync<FeatureExtractionDTO[]>("features/batch", wavBytes.Select(data => data.PreviewBytes).ToArray());
+                stopwatch.Stop();
+                Console.WriteLine($"Genre Search Batch Elapsed: {stopwatch.Elapsed.TotalSeconds:F3} seconds");
+                Console.WriteLine(dto.Length);
+                
             }
-
-            FeatureExtractionDTO[] dto = results.ToArray();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             
-            
-            Console.WriteLine(dto.Length);
+            Stopwatch sw = Stopwatch.StartNew();
+            FeatureExtractionDTO?[] dtov2 = (await Task.WhenAll(
+                wavBytes.Select(async (wavByte) =>
+                {
+                    try
+                    {
+                        return await myApi.GetFeaturesAsync<FeatureExtractionDTO>("/features", wavByte.PreviewBytes);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Skipping {wavByte.Title}: {ex.Message}");
+                        return null;
+                    }
+                })
+            )).Where(b => b != null).ToArray()!;
+            sw.Stop();
+            Console.WriteLine($"Genre Search Singles Elapsed: {sw.Elapsed.TotalSeconds:F3} seconds");
+            Console.WriteLine(dtov2.Length);
         }
         catch (Exception ex)
         {
