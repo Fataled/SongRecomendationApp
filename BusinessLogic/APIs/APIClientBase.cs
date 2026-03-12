@@ -15,9 +15,9 @@ public abstract class ApiClientBase
         HttpClient.BaseAddress = new Uri(baseUrl);
     }
 
-    protected async Task<T> RequestAsync<T>(string endpoint, string query)
+    protected async Task<T> RequestAsync<T>(string endpoint, string query, string? ending = null)
     {
-        HttpRequestMessage request = new(HttpMethod.Get, $"{BaseUrl}/{endpoint}" + Uri.EscapeDataString(query));
+        HttpRequestMessage request = GenerateRequest(endpoint, query, ending);
         await AddAuthHeader(request);
         await AddRequestHeader(request);
         HttpResponseMessage response = await HttpClient.SendAsync(request);
@@ -39,6 +39,15 @@ public abstract class ApiClientBase
         return JsonSerializer.Deserialize<T>(json)
             ?? throw new DTOException("Failed to deserialize response to " + typeof(T));
         
+    }
+
+    private HttpRequestMessage GenerateRequest(string endpoint, string query, string? ending = null)
+    {
+        string url = $"{BaseUrl}/{endpoint}/{query}{(ending != null ? $"/{ending}" : "")}";
+        if (endpoint.Equals("search?q=")){
+            url = $"{BaseUrl}/{endpoint}{Uri.EscapeDataString(query)}{(ending != null ? $"/{ending}" : "")}";
+        }
+        return new HttpRequestMessage(HttpMethod.Get, url);
     }
 
     protected abstract Task AddAuthHeader(HttpRequestMessage request);

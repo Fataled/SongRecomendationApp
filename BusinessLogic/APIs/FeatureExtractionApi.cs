@@ -1,4 +1,6 @@
 ﻿using System.Net.Http.Headers;
+using ProjectHellsParadise.BusinessLogic.Data_Transfer_Object;
+using ProjectHellsParadise.BusinessLogic.Models;
 
 namespace ProjectHellsParadise.BusinessLogic.APIs;
 
@@ -9,6 +11,7 @@ public class FeatureExtractionApi : ApiClientBase
     public FeatureExtractionApi() : base("http://159.203.18.252:4000")
     {
         _connected = false; //TODO make it so on shutdown this becomes false or on disconnect So far we have smth but not sure if its the best idea
+        HttpClient.Timeout = TimeSpan.FromSeconds(300);
     }
 
     private async Task WaitForServer()
@@ -37,10 +40,12 @@ public class FeatureExtractionApi : ApiClientBase
     }
     
 
-    public async Task<T> PostAsync<T>(string endpoint, object body)
+    public async Task<FeatureData> GetFeaturesAsync(string endpoint, object body, DeezerDTO.DeezerData deezerDTO)
     {
         await ReInitializeConnection();
-        return await SendAsync<T>(endpoint, body);
+        FeatureExtractionDTO dto = await SendAsync<FeatureExtractionDTO>(endpoint, body);
+        FeatureData data = new FeatureData(deezerDTO.Title, deezerDTO.Artist.Name, dto.Embedding);
+        return data;
     }
 
     protected override Task AddAuthHeader(HttpRequestMessage request)

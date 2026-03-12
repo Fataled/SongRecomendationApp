@@ -1,6 +1,6 @@
 ﻿namespace ProjectHellsParadise.BusinessLogic.Data_Transfer_Object;
 
-public class FeatureExtractionDTO
+public record FeatureExtractionDTO
 {
-    public float[] Embedding { get; init; }
+    public required float[] Embedding { get; set; }
 }

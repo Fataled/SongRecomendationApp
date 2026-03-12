@@ -6,9 +6,9 @@ public class DeezerDTO
 {
 
     [JsonPropertyName("data")] 
-    public DeezerTrack[] Data { get; set; } = Array.Empty<DeezerTrack>();
+    public List<DeezerData> Data { get; set; } = new List<DeezerData>();
 
-    public class DeezerTrack
+    public class DeezerData
     {
         [JsonPropertyName("id")]
         public long Id { get; set; }
@@ -36,7 +36,7 @@ public class DeezerDTO
 
     public override string ToString()
     {
-        return Data.Length == 0
+        return Data.Count == 0
             ? "No tracks found"
             : string.Join("\n", Data.Select(t => $"Track: {t.Title}, Artist Name: {t.Artist?.Name ?? "Unknown"}"));
     }
