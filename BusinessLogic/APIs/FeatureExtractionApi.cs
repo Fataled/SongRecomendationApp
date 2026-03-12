@@ -40,12 +40,10 @@ public class FeatureExtractionApi : ApiClientBase
     }
     
 
-    public async Task<FeatureData> GetFeaturesAsync(string endpoint, object body, DeezerDTO.DeezerData deezerDTO)
+    public async Task<T> GetFeaturesAsync<T>(string endpoint, object body)
     {
         await ReInitializeConnection();
-        FeatureExtractionDTO dto = await SendAsync<FeatureExtractionDTO>(endpoint, body);
-        FeatureData data = new FeatureData(deezerDTO.Title, deezerDTO.Artist.Name, dto.Embedding);
-        return data;
+        return await SendAsync<T>(endpoint, body);
     }
 
     protected override Task AddAuthHeader(HttpRequestMessage request)
@@ -61,7 +59,20 @@ public class FeatureExtractionApi : ApiClientBase
 
     protected override Task AddContent(HttpRequestMessage request, object body)
     {
-        request.Content = new ByteArrayContent((byte[])body);
+        switch (body)
+        {
+            case byte[][] wavFiles:
+                MultipartFormDataContent form = new MultipartFormDataContent();
+                foreach (byte[] wavByte in wavFiles)
+                {
+                    form.Add(new ByteArrayContent(wavByte), "files", "audio.wav");
+                }
+                request.Content = form;
+                break;
+            default:
+                request.Content = new ByteArrayContent((byte[])body);
+                break;
+        }
         return Task.CompletedTask;
     }
 

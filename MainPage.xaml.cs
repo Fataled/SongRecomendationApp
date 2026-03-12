@@ -1,6 +1,5 @@
 ﻿using ProjectHellsParadise.BusinessLogic.APIs;
 using ProjectHellsParadise.BusinessLogic.Data_Transfer_Object;
-using ProjectHellsParadise.BusinessLogic.Models;
 
 namespace ProjectHellsParadise;
 
@@ -36,21 +35,35 @@ public partial class MainPage : ContentPage
             )).Where(b => b != null).ToArray()!;
 
             FeatureExtractionApi myApi = new FeatureExtractionApi();
+            
+            List<FeatureExtractionDTO> results = new List<FeatureExtractionDTO>();
+            int batchSize = 20;
 
-            FeatureData[] dto = (await Task.WhenAll(
-                wavBytes.Select(async (wavByte, i) =>
-                {
-                    try
+            for (int i = 0; i < wavBytes.Length; i += batchSize)
+            {
+                var batch = wavBytes.Skip(i).Take(batchSize).ToArray();
+                var batchIndices = Enumerable.Range(i, batch.Length).ToArray();
+
+                var batchResults = await Task.WhenAll(
+                    batch.Select(async (wavByte, j) =>
                     {
-                        return await myApi.GetFeaturesAsync("/features", wavByte,  trackData.Data[i]);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Skipping a song: {ex.Message}");
-                        return null;
-                    }
-                })
-            )).Where(b => b != null).ToArray()!;;
+                        try
+                        {
+                            return await myApi.GetFeaturesAsync<FeatureExtractionDTO>("/features", wavByte);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Skipping {trackData.Data[batchIndices[j]].Title}: {ex.Message}");
+                            return null;
+                        }
+                    })
+                );
+
+                results.AddRange(batchResults.Where(b => b != null)!);
+                Console.WriteLine($"Processed {Math.Min(i + batchSize, wavBytes.Length)}/{wavBytes.Length}");
+            }
+
+            FeatureExtractionDTO[] dto = results.ToArray();
             
             
             Console.WriteLine(dto.Length);
