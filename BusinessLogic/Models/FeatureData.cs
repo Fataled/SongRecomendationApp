@@ -1,24 +1,50 @@
-﻿namespace ProjectHellsParadise.BusinessLogic.Models;
+﻿using ProjectHellsParadise.BusinessLogic.Data_Transfer_Object;
+
+namespace ProjectHellsParadise.BusinessLogic.Models;
 
 public class FeatureData
 {
-    public FeatureData(string songName, string artist, float[] floats)
+    private string _songName;
+    private string _artist;
+    private FeatureExtractionDTO _features;
+    private GenreExtractionDTO _genre;
+    
+    public FeatureData(string songName, string artist, FeatureExtractionDTO DTO)
     {
-        SongName = songName;
-        Artist = artist;
-        FeatureArray = floats;
+        _songName = songName;
+        _artist = artist;
+        _features = DTO;
+        _genre =  new  GenreExtractionDTO();
     }
 
     public FeatureData()
     {
-        SongName = "";
-        Artist = "";
-        FeatureArray = [];
+        _songName = "";
+        _artist = "";
+        _features = new FeatureExtractionDTO();
+        _genre = new GenreExtractionDTO();
+    }
+    
+    public string SongName => _songName;
+
+    public string Artist => _artist;
+
+    public FeatureExtractionDTO Features => _features;
+    
+    public GenreExtractionDTO Genre => _genre;
+
+
+    public void AddGenreData(GenreExtractionDTO DTO)
+    {
+        _genre = DTO;
     }
 
-    public string SongName { get; }
-
-    public string Artist { get; }
-
-    public float[] FeatureArray { get; }
+    public override string ToString()
+    {
+        return $"{_songName} - {_artist}:  {_features} {_genre.SmallString()}";
+    }
+    
+    
+    
+    
 }

@@ -8,14 +8,16 @@ public class FeatureExtractionApi : ApiClientBase
 {
     private bool _connected;
     
-    public FeatureExtractionApi() : base("http://159.203.18.252:4000")
+    public FeatureExtractionApi() : base("http://159.203.18.252:4000") //   http://159.203.18.252:4000  http://127.0.0.1:4000
     {
         _connected = false; //TODO make it so on shutdown this becomes false or on disconnect So far we have smth but not sure if its the best idea
-        HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        HttpClient.Timeout = TimeSpan.FromSeconds(600);
     }
 
     private async Task WaitForServer()
     {
+        if (_connected) return;
+        
         int maxAttempts = 10;
         int delayMs = 1000;
 
@@ -40,7 +42,15 @@ public class FeatureExtractionApi : ApiClientBase
     }
     
 
-    public async Task<T> GetFeaturesAsync<T>(string endpoint, object body)
+    public async Task<FeatureData> GetFeaturesAsync(string endpoint, object body)
+    {
+        await ReInitializeConnection();
+        ByteRecord byteRecord = (ByteRecord)body;
+        FeatureExtractionDTO dto = await SendAsync<FeatureExtractionDTO>(endpoint, byteRecord.PreviewBytes);
+        return new FeatureData(byteRecord.Title, byteRecord.Title, dto);
+    }
+
+    public async Task<T> PostAsync<T>(string endpoint, object body)
     {
         await ReInitializeConnection();
         return await SendAsync<T>(endpoint, body);

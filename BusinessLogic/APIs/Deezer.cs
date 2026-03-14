@@ -61,7 +61,7 @@ public DeezerClient() : base("https://api.deezer.com")
             DeezerDTO dto = await RequestAsync<DeezerDTO>("chart", GenreIds[query].ToString(), "playlists");
             foreach (DeezerDTO.DeezerData data in dto.Data)
             {
-                DeezerDTO response = await RequestAsync<DeezerDTO>("playlist", data.Id.ToString(), "tracks?limit=50"); //TODO CHANGE TO 50
+                DeezerDTO response = await RequestAsync<DeezerDTO>("playlist", data.Id.ToString(), "tracks?limit=25"); //TODO CHANGE TO 50
                 result.Data.AddRange(response.Data.Where(data => !string.IsNullOrEmpty(data.Preview)));
             }
             return result;
@@ -82,13 +82,13 @@ public DeezerClient() : base("https://api.deezer.com")
         return Task.CompletedTask;
     }
 
-    public async Task<ByteRecord> DownloadPreviewBytes(string previewUrl, string title = "")
+    public async Task<ByteRecord> DownloadPreviewBytes(string previewUrl, string title = "", string artist = "")
     {
         try
         {
             byte[] mp3Bytes = await HttpClient.GetByteArrayAsync(previewUrl);
             byte[] wavBytes = ConvertMp3BytesToWav(mp3Bytes);
-            return new ByteRecord(wavBytes, title);
+            return new ByteRecord(wavBytes, title, artist);
         }
         catch (ByteTransformationException ex)
         {

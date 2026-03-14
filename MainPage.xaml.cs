@@ -26,7 +26,7 @@ public partial class MainPage : ContentPage
                 {
                     try
                     {
-                        return await weezerClient.DownloadPreviewBytes(data.Preview, data.Title);
+                        return await weezerClient.DownloadPreviewBytes(data.Preview, data.Title, data.Artist.Name);
                     }
                     catch (Exception ex)
                     {
@@ -37,9 +37,10 @@ public partial class MainPage : ContentPage
             )).Where(b => b != null).ToArray()!;
 
             FeatureExtractionApi myApi = new FeatureExtractionApi();
+
+            FeatureData warmUp = await myApi.GetFeaturesAsync("features", wavBytes[0]);
             
-            
-            
+            /*
             try
             {
                 Stopwatch stopwatch = Stopwatch.StartNew();
@@ -53,25 +54,35 @@ public partial class MainPage : ContentPage
             {
                 Console.WriteLine(ex.Message);
             }
-            
+            */
+            SemaphoreSlim limiter = new SemaphoreSlim(16);
             Stopwatch sw = Stopwatch.StartNew();
-            FeatureExtractionDTO?[] dtov2 = (await Task.WhenAll(
+            FeatureData?[] dtov2 = (await Task.WhenAll(
                 wavBytes.Select(async (wavByte) =>
                 {
+                    await limiter.WaitAsync();
                     try
                     {
-                        return await myApi.GetFeaturesAsync<FeatureExtractionDTO>("/features", wavByte.PreviewBytes);
+                        return await myApi.GetFeaturesAsync("features", wavByte);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Skipping {wavByte.Title}: {ex.Message}");
                         return null;
                     }
+                    finally
+                    {
+                        limiter.Release();
+                    }
                 })
             )).Where(b => b != null).ToArray()!;
             sw.Stop();
             Console.WriteLine($"Genre Search Singles Elapsed: {sw.Elapsed.TotalSeconds:F3} seconds");
             Console.WriteLine(dtov2.Length);
+            for (var i = 0; i < 10; i++)
+            {
+                Console.WriteLine(dtov2[i]);
+            }
         }
         catch (Exception ex)
         {

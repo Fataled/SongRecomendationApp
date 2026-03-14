@@ -55,14 +55,15 @@ public partial class SongSearchPage : ContentPage
         {
             if (e.CurrentSelection.Count == 0) return;
             DeezerDTO.DeezerData dataData = (DeezerDTO.DeezerData)e.CurrentSelection[0];
-            _selectedSong = await _deezerClient.DownloadPreviewBytes(dataData.Preview, "");
-            FeatureExtractionDTO dto = await _extractionApi.GetFeaturesAsync<FeatureExtractionDTO>("/features", _selectedSong);
-            _analyzedSong = new FeatureData(dataData.Title, dataData.Artist.Name, dto.Embedding);
+            _selectedSong = await _deezerClient.DownloadPreviewBytes(dataData.Preview, dataData.Title, dataData.Artist.Name);
+            _analyzedSong = await _extractionApi.GetFeaturesAsync("features", _selectedSong);
+            GenreExtractionDTO genreDto = await _extractionApi.PostAsync<GenreExtractionDTO>("genres", _selectedSong.PreviewBytes);
+            _analyzedSong.AddGenreData(genreDto);
             PlayAudio(_selectedSong.PreviewBytes);
         }
         catch (AudioPlayException ex)
         {
-            Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
             await DisplayAlertAsync("Player failure", "Failed to play audio", "ok");
         }
         catch (Exception ex)

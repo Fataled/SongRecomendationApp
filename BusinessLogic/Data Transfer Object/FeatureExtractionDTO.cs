@@ -2,5 +2,17 @@
 
 public record FeatureExtractionDTO
 {
-    public required float[] Embedding { get; set; }
+    public float beats_confidence { get; set; }
+    public float bpm { get; set; }
+    public string key { get; set; }
+    public float key_strength { get; set; }
+    public float loudness { get; set; }
+    public float spectral_centroid { get; set; }
+    public string scale { get; set; }
+
+    public override string ToString()
+    {
+        return $"beats confidence: {beats_confidence}, bpm: {bpm}, key: {key}, key strength: {key_strength}, loudness: {loudness}, spectral centroid: {spectral_centroid}, scale: {scale}";
+    }
 }
+
