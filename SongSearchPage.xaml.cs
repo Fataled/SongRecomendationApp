@@ -57,18 +57,19 @@ public partial class SongSearchPage : ContentPage
             DeezerDTO.DeezerData dataData = (DeezerDTO.DeezerData)e.CurrentSelection[0];
             _selectedSong = await _deezerClient.DownloadPreviewBytes(dataData.Preview, dataData.Title, dataData.Artist.Name);
             _analyzedSong = await _extractionApi.GetFeaturesAsync("features", _selectedSong);
-            GenreExtractionDTO genreDto = await _extractionApi.PostAsync<GenreExtractionDTO>("genres", _selectedSong.PreviewBytes);
+            GenrePredictionDTO[] genreDto = await _extractionApi.PostAsync<GenrePredictionDTO[]>("classify", _selectedSong.PreviewBytes);
             _analyzedSong.AddGenreData(genreDto);
+            Console.WriteLine(_analyzedSong);
             PlayAudio(_selectedSong.PreviewBytes);
         }
         catch (AudioPlayException ex)
         {
-                Console.WriteLine(ex.Message);
+            Console.WriteLine(ex.Message);
             await DisplayAlertAsync("Player failure", "Failed to play audio", "ok");
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
+            Console.WriteLine(ex.Message + ex.Source);
             await DisplayAlertAsync("Error Downloading Song", "An error has occured downloading that song", "ok");
         }
     }

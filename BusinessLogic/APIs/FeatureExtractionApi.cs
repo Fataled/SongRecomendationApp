@@ -8,7 +8,7 @@ public class FeatureExtractionApi : ApiClientBase
 {
     private bool _connected;
     
-    public FeatureExtractionApi() : base("http://159.203.18.252:4000") //   http://159.203.18.252:4000  http://127.0.0.1:4000
+    public FeatureExtractionApi() : base("http://127.0.0.1:4000") //  SERVER: http://159.203.18.252:4000  HOME: http://127.0.0.1:4000
     {
         _connected = false; //TODO make it so on shutdown this becomes false or on disconnect So far we have smth but not sure if its the best idea
         HttpClient.Timeout = TimeSpan.FromSeconds(600);
