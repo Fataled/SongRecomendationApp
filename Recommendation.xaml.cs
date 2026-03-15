@@ -60,7 +60,7 @@ public partial class Recommendation : ContentPage
     {
         try
         {
-            DeezerDTO trackData = await _deezerClient.GetGenreSongsAsync(_featureData.Genre[0].label);
+            DeezerDTO trackData = await _deezerClient.GetGenreSongsAsync(_featureData.GetMainGenres());
             List<FeatureData> featureDataList = new List<FeatureData>() { _featureData };
             ByteRecord[] wavBytes = await _deezerClient.DownloadPreviewBytes(trackData);
             SemaphoreSlim limiter = new SemaphoreSlim(16);
