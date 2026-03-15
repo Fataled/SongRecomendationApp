@@ -8,12 +8,15 @@ public class FeatureData
     private string _artist;
     private FeatureExtractionDTO _features;
     private GenrePredictionDTO[] _genre;
+    private byte[] _songBytes;
+    private float[] _vector;
     
-    public FeatureData(string songName, string artist, FeatureExtractionDTO DTO)
+    public FeatureData(string songName, string artist, FeatureExtractionDTO DTO, byte[] songBytes)
     {
         _songName = songName;
         _artist = artist;
         _features = DTO;
+        _songBytes = songBytes;
         _genre = [];
     }
 
@@ -22,6 +25,7 @@ public class FeatureData
         _songName = "";
         _artist = "";
         _features = new FeatureExtractionDTO();
+        _songBytes = [];
         _genre = [];
     }
     
@@ -31,13 +35,11 @@ public class FeatureData
 
     public FeatureExtractionDTO Features => _features;
     
-    public GenrePredictionDTO[] Genre => _genre;
-
-
-    public void AddGenreData(GenrePredictionDTO[] DTO)
-    {
-        _genre = DTO;
-    }
+    public GenrePredictionDTO[] Genre { get => _genre; set => _genre = value; }
+    
+    public byte[] SongBytes => _songBytes;
+    
+    public float[] Vector { get => _vector; set => _vector = value; }
 
     public override string ToString()
     {

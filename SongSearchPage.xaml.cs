@@ -16,11 +16,11 @@ public partial class SongSearchPage : ContentPage
     private FeatureData _analyzedSong;
     private WaveOutEvent _wavEvent;
     
-    public SongSearchPage()
+    public SongSearchPage(DeezerClient deezerClient, FeatureExtractionApi extractionApi)
     {
         _analyzedSong = new FeatureData();
-        _deezerClient = new DeezerClient();
-        _extractionApi = new FeatureExtractionApi();
+        _deezerClient = deezerClient;
+        _extractionApi = extractionApi;
         _observableCollection = new ObservableCollection<DeezerDTO.DeezerData>();
         _wavEvent = new WaveOutEvent();
         BindingContext = this;
@@ -58,9 +58,16 @@ public partial class SongSearchPage : ContentPage
             _selectedSong = await _deezerClient.DownloadPreviewBytes(dataData.Preview, dataData.Title, dataData.Artist.Name);
             _analyzedSong = await _extractionApi.GetFeaturesAsync("features", _selectedSong);
             GenrePredictionDTO[] genreDto = await _extractionApi.PostAsync<GenrePredictionDTO[]>("classify", _selectedSong.PreviewBytes);
-            _analyzedSong.AddGenreData(genreDto);
+            _analyzedSong.Genre = genreDto;
+
+            ShellNavigationQueryParameters navParams = new ShellNavigationQueryParameters
+            {
+                { "_analyzedSong", _analyzedSong }
+            };
             Console.WriteLine(_analyzedSong);
-            PlayAudio(_selectedSong.PreviewBytes);
+            await Shell.Current.GoToAsync(nameof(Recommendation),false, navParams);
+            //PlayAudio(_selectedSong.PreviewBytes);
+            
         }
         catch (AudioPlayException ex)
         {
@@ -92,7 +99,5 @@ public partial class SongSearchPage : ContentPage
         }
         
     }
-    
-    
     
 }

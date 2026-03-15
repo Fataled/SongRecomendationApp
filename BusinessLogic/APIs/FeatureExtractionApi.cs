@@ -47,7 +47,7 @@ public class FeatureExtractionApi : ApiClientBase
         await ReInitializeConnection();
         ByteRecord byteRecord = (ByteRecord)body;
         FeatureExtractionDTO dto = await SendAsync<FeatureExtractionDTO>(endpoint, byteRecord.PreviewBytes);
-        return new FeatureData(byteRecord.Title, byteRecord.Title, dto);
+        return new FeatureData(byteRecord.Title, byteRecord.Artist, dto, byteRecord.PreviewBytes);
     }
 
     public async Task<T> PostAsync<T>(string endpoint, object body)

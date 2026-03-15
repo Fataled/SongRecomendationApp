@@ -8,62 +8,39 @@ namespace ProjectHellsParadise;
 public partial class MainPage : ContentPage
 {
     int count = 0;
-
-    public MainPage()
+    private DeezerClient _deezerClient;
+    private FeatureExtractionApi _myApi;
+    
+    public MainPage(DeezerClient deezerClient, FeatureExtractionApi featureExtractionApi)
     {
         InitializeComponent();
+        _myApi = featureExtractionApi;
+        _deezerClient = deezerClient;
     }
 
     protected async override void OnAppearing()
     {
         base.OnAppearing();
-        DeezerClient weezerClient = new DeezerClient();
-        DeezerDTO trackData = await weezerClient.GetGenreSongsAsync("rap");
+        DeezerDTO trackData = await _deezerClient.GetGenreSongsAsync("rap");
+        
+        Stopwatch sw = Stopwatch.StartNew();
+        
         try
         {
-            ByteRecord[] wavBytes = (await Task.WhenAll(
-                trackData.Data.Select(async data =>
-                {
-                    try
-                    {
-                        return await weezerClient.DownloadPreviewBytes(data.Preview, data.Title, data.Artist.Name);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Skipping {data.Title}: {ex.Message}");
-                        return null;
-                    }
-                })
-            )).Where(b => b != null).ToArray()!;
+            sw = Stopwatch.StartNew();
+            ByteRecord[] wavTry2 = await _deezerClient.DownloadPreviewBytes(trackData);
 
-            FeatureExtractionApi myApi = new FeatureExtractionApi();
-
-            FeatureData warmUp = await myApi.GetFeaturesAsync("features", wavBytes[0]);
+            FeatureData warmUp = await _myApi.GetFeaturesAsync("features", wavTry2[0]);
             
-            /*
-            try
-            {
-                Stopwatch stopwatch = Stopwatch.StartNew();
-                FeatureExtractionDTO[] dto = await myApi.GetFeaturesAsync<FeatureExtractionDTO[]>("features/batch", wavBytes.Select(data => data.PreviewBytes).ToArray());
-                stopwatch.Stop();
-                Console.WriteLine($"Genre Search Batch Elapsed: {stopwatch.Elapsed.TotalSeconds:F3} seconds");
-                Console.WriteLine(dto.Length);
-                
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            */
+            
             SemaphoreSlim limiter = new SemaphoreSlim(16);
-            Stopwatch sw = Stopwatch.StartNew();
             FeatureData?[] dtov2 = (await Task.WhenAll(
-                wavBytes.Select(async (wavByte) =>
+                wavTry2.Select(async (wavByte) =>
                 {
                     await limiter.WaitAsync();
                     try
                     {
-                        return await myApi.GetFeaturesAsync("features", wavByte);
+                        return await _myApi.GetFeaturesAsync("features", wavByte);
                     }
                     catch (Exception ex)
                     {
@@ -83,11 +60,13 @@ public partial class MainPage : ContentPage
             {
                 Console.WriteLine(dtov2[i]);
             }
+            
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
         }
+        
 
     }
 
