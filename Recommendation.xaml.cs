@@ -56,7 +56,7 @@ public partial class Recommendation : ContentPage
         IsLoading = false;
     }
 
-    private async Task StartSearchViaGenre()
+    private async Task StartSearchViaGenre() //TODO ask if they wanna try again if not at least 5 above strong similarity
     {
         try
         {
@@ -91,8 +91,9 @@ public partial class Recommendation : ContentPage
                 featureDataList[i].Vector = vectors[i];
             }
             List<SongSimilarity> newData = Vector.Rank(featureDataList);
+            List<SongSimilarity> similarities = newData.DistinctBy(s => s.Index).ToList();
             Console.WriteLine("Base Song: " + featureDataList[0].SongName);
-            newData.ForEach(Console.WriteLine);
+            similarities.ForEach(Console.WriteLine);
         }
         catch (Exception ex)
         {
@@ -106,10 +107,14 @@ private void PlayAudio(byte[] wavBytes)
         try
         {
             _wavEvent.Stop();
+            _wavEvent.Dispose();
             MemoryStream memoryStream = new MemoryStream(wavBytes);
             memoryStream.Position = 0;
             WaveFileReader waveReader = new WaveFileReader(memoryStream);
-            _wavEvent.Init(waveReader);
+            WaveFormat format = new WaveFormat(44100, 16, 2);
+            MediaFoundationResampler resampler = new MediaFoundationResampler(waveReader, format);
+            resampler.ResamplerQuality = 60;
+            _wavEvent.Init(resampler);
             _wavEvent.Volume = 0.01f;
             _wavEvent.Play();
         }

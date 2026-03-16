@@ -1,4 +1,5 @@
-﻿using ProjectHellsParadise.BusinessLogic.Data_Transfer_Object;
+﻿using System.Security.Cryptography;
+using ProjectHellsParadise.BusinessLogic.Data_Transfer_Object;
 using ProjectHellsParadise.BusinessLogic.Exceptions;
 
 namespace ProjectHellsParadise.BusinessLogic.APIs;
@@ -79,28 +80,57 @@ public DeezerClient() : base("https://api.deezer.com") //TODO MORE GENRES AT A T
     public async Task<DeezerDTO> GetGenreSongsAsync(GenrePredictionDTO[] genrePredictions)
     {
         DeezerDTO result = new DeezerDTO();
-        int limit = Math.Max(1, 20 / genrePredictions.Length);
+        const int playlistsToFetch = 5;                                    // fixed playlists per genre
+        int songsPerPlaylist = Math.Max(1, 20 / genrePredictions.Length); // songs split across genres
+        int remainder = 20 % genrePredictions.Length;
+        Console.WriteLine("Genres: " + string.Join(", ", genrePredictions.Select(g => g.label)) );
+        Random rng = new Random();
+
         try
         {
-            foreach (GenrePredictionDTO prediction in genrePredictions)
+            foreach (var (prediction, index) in genrePredictions.Select((p, i) => (p, i)))
             {
-                if (!GenreIds.ContainsKey((prediction.label)))
-                    continue; // skip unknown genres instead of crashing
+                if (!GenreIds.ContainsKey(prediction.label))
+                    continue;
 
-                DeezerDTO dto = await RequestAsync<DeezerDTO>("chart", GenreIds[(prediction.label)].ToString(), $"playlists?limit={limit}");
+                int songsToTake = songsPerPlaylist + (index < remainder ? 1 : 0); // distribute remainder
 
-                foreach (DeezerDTO.DeezerData data in dto.Data)
+                DeezerDTO dto = await RequestAsync<DeezerDTO>(
+                    "chart", 
+                    GenreIds[prediction.label].ToString(), 
+                    $"playlists?limit=100"
+                );
+                
+                List<DeezerDTO.DeezerData> selectedPlaylists = dto.Data
+                    .OrderBy(_ => rng.Next())
+                    .Take(playlistsToFetch)
+                    .ToList();
+                
+
+                foreach (DeezerDTO.DeezerData data in selectedPlaylists)
                 {
-                    DeezerDTO response = await RequestAsync<DeezerDTO>("playlist", data.Id.ToString(), "tracks?limit=10");
-                    result.Data.AddRange(response.Data.Where(d => !string.IsNullOrEmpty(d.Preview)));
+                    DeezerDTO response = await RequestAsync<DeezerDTO>(
+                        "playlist", 
+                        data.Id.ToString(), 
+                        "tracks?limit=100"
+                    );
+
+                    List<DeezerDTO.DeezerData> randomTracks = response.Data
+                        .Where(t => !string.IsNullOrEmpty(t.Preview))
+                        .OrderBy(_ => rng.Next())
+                        .Take(songsToTake)
+                        .ToList();
+
+                    result.Data.AddRange(randomTracks);
                 }
             }
 
-            return result; // now outside the foreach, returns after ALL genres processed
+            result.Data = result.Data.DistinctBy(t => t.Id).ToList();
+            return result;
         }
         catch (KeyNotFoundException)
         {
-            throw new KeyNotFoundException("No genre found for query: " + string.Join(", ", genrePredictions.Select(g => g.label)));
+            throw new KeyNotFoundException("No genre found: " + string.Join(", ", genrePredictions.Select(g => g.label)));
         }
     }
 

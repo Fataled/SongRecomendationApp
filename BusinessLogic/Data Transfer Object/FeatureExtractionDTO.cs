@@ -9,10 +9,13 @@ public record FeatureExtractionDTO
     public float loudness { get; set; }
     public float spectral_centroid { get; set; }
     public string scale { get; set; }
+    public float danceability { get; set; }
+    public float dynamic_complexity { get; set; }
+    public float[] mfcc { get; set; }
 
     public override string ToString()
     {
-        return $"beats confidence: {beats_confidence}, bpm: {bpm}, key: {key}, key strength: {key_strength}, loudness: {loudness}, spectral centroid: {spectral_centroid}, scale: {scale}";
+        return $"beats confidence: {beats_confidence}, bpm: {bpm}, key: {key}, key strength: {key_strength}, loudness: {loudness}, spectral centroid: {spectral_centroid}, scale: {scale},  danceability: {danceability},  dynamic complexity: {dynamic_complexity}";
     }
 }
 

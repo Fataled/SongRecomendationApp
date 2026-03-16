@@ -452,14 +452,32 @@ public class FeatureData
 
     public GenrePredictionDTO[] GetMainGenres()
     {
-        return _genre
+        GenrePredictionDTO[] filtered = _genre
             .Where(s => s.score > 0.1f)
             .Select(s => new GenrePredictionDTO
             {
                 label = MapGenre(s.label),
                 score = s.score
-            }).DistinctBy(s => s.label)
+            })
+            .DistinctBy(s => s.label)
             .ToArray();
+
+        // If less than 2 genres found, fall back to top 3 regardless of score
+        if (filtered.Length < 2)
+        {
+            return _genre
+                .OrderByDescending(s => s.score)
+                .Select(s => new GenrePredictionDTO
+                {
+                    label = MapGenre(s.label),
+                    score = s.score
+                })
+                .DistinctBy(s => s.label)  // this will keep going until it finds distinct labels
+                .Take(3)
+                .ToArray();
+        }
+
+        return filtered;
     }
     
 }
