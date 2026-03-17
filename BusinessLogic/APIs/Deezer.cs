@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using NAudio.Wave.SampleProviders;
 using ProjectHellsParadise.BusinessLogic.Data_Transfer_Object;
 using ProjectHellsParadise.BusinessLogic.Exceptions;
 
@@ -80,58 +81,40 @@ public DeezerClient() : base("https://api.deezer.com") //TODO MORE GENRES AT A T
     public async Task<DeezerDTO> GetGenreSongsAsync(GenrePredictionDTO[] genrePredictions)
     {
         DeezerDTO result = new DeezerDTO();
-        const int playlistsToFetch = 5;                                    // fixed playlists per genre
-        int songsPerPlaylist = Math.Max(1, 20 / genrePredictions.Length); // songs split across genres
-        int remainder = 20 % genrePredictions.Length;
-        Console.WriteLine("Genres: " + string.Join(", ", genrePredictions.Select(g => g.label)) );
+        const int playlistsToFetch = 6;
+        int songsPerPlaylist = Math.Max(1, 50 / genrePredictions.Length);
+        int remainder = 50 % genrePredictions.Length;
         Random rng = new Random();
 
-        try
+        IEnumerable<Task<List<DeezerDTO.DeezerData>>> genreTasks = genrePredictions.Select(async (prediction, index) =>
         {
-            foreach (var (prediction, index) in genrePredictions.Select((p, i) => (p, i)))
+            if (!GenreIds.ContainsKey(prediction.label)) return new List<DeezerDTO.DeezerData>();
+
+            int songsToTake = songsPerPlaylist + (index < remainder ? 1 : 0);
+
+            DeezerDTO dto = await RequestAsync<DeezerDTO>("chart", GenreIds[prediction.label].ToString(), "playlists?limit=100");
+
+            List<DeezerDTO.DeezerData> selectedPlaylists = dto.Data.OrderBy(_ => rng.Next())
+                .Take(playlistsToFetch)
+                .ToList();
+
+            IEnumerable<Task<List<DeezerDTO.DeezerData>>> playlistTasks = selectedPlaylists.Select(async data =>
             {
-                if (!GenreIds.ContainsKey(prediction.label))
-                    continue;
+                DeezerDTO response = await RequestAsync<DeezerDTO>("playlist", data.Id.ToString(), "tracks?limit=100");
 
-                int songsToTake = songsPerPlaylist + (index < remainder ? 1 : 0); // distribute remainder
-
-                DeezerDTO dto = await RequestAsync<DeezerDTO>(
-                    "chart", 
-                    GenreIds[prediction.label].ToString(), 
-                    $"playlists?limit=100"
-                );
-                
-                List<DeezerDTO.DeezerData> selectedPlaylists = dto.Data
+                return response.Data.Where(t => !string.IsNullOrEmpty(t.Preview))
                     .OrderBy(_ => rng.Next())
-                    .Take(playlistsToFetch)
+                    .Take(songsToTake)
                     .ToList();
-                
+            });
 
-                foreach (DeezerDTO.DeezerData data in selectedPlaylists)
-                {
-                    DeezerDTO response = await RequestAsync<DeezerDTO>(
-                        "playlist", 
-                        data.Id.ToString(), 
-                        "tracks?limit=100"
-                    );
+            List<DeezerDTO.DeezerData>[] playlistResults = await Task.WhenAll(playlistTasks);
+            return playlistResults.SelectMany(x => x).ToList();
+        });
 
-                    List<DeezerDTO.DeezerData> randomTracks = response.Data
-                        .Where(t => !string.IsNullOrEmpty(t.Preview))
-                        .OrderBy(_ => rng.Next())
-                        .Take(songsToTake)
-                        .ToList();
-
-                    result.Data.AddRange(randomTracks);
-                }
-            }
-
-            result.Data = result.Data.DistinctBy(t => t.Id).ToList();
-            return result;
-        }
-        catch (KeyNotFoundException)
-        {
-            throw new KeyNotFoundException("No genre found: " + string.Join(", ", genrePredictions.Select(g => g.label)));
-        }
+        List<DeezerDTO.DeezerData>[] allResults = await Task.WhenAll(genreTasks);
+        result.Data = allResults.SelectMany(x => x).DistinctBy(t => t.Id).ToList();
+        return result;
     }
 
     protected override Task AddRequestHeader(HttpRequestMessage request)
@@ -149,8 +132,7 @@ public DeezerClient() : base("https://api.deezer.com") //TODO MORE GENRES AT A T
         try
         {
             byte[] mp3Bytes = await HttpClient.GetByteArrayAsync(previewUrl);
-            byte[] wavBytes = ConvertMp3BytesToWav(mp3Bytes);
-            return new ByteRecord(wavBytes, title, artist);
+            return new ByteRecord(title, artist, mp3Bytes);
         }
         catch (ByteTransformationException ex)
         {
@@ -166,24 +148,22 @@ public DeezerClient() : base("https://api.deezer.com") //TODO MORE GENRES AT A T
     {
         try
         {
-            SemaphoreSlim semaphoreSlim = new SemaphoreSlim(50);
-            var tasks = dto.Data.Select(async deezerData =>
+            SemaphoreSlim semaphoreSlim = new SemaphoreSlim(20);
+            IEnumerable<Task<ByteRecord>> tasks = dto.Data.Select(async deezerData =>
+            {
+                await semaphoreSlim.WaitAsync();
+                try
                 {
-                    await semaphoreSlim.WaitAsync();
-                    try
-                    {
-                        byte[] data = await HttpClient.GetByteArrayAsync(deezerData.Preview);
-                        byte[] wavBytes = ConvertMp3BytesToWav(data);
-                        return new ByteRecord(wavBytes, deezerData.Title, deezerData.Artist.Name);
-                    }
-                    finally
-                    {
-                        semaphoreSlim.Release();
-                    }
+                    byte[] mp3Bytes = await HttpClient.GetByteArrayAsync(deezerData.Preview);
+                    return new ByteRecord(deezerData.Title, deezerData.Artist.Name, mp3Bytes);
                 }
-            );
+                finally
+                {
+                    semaphoreSlim.Release();
+                }
+            });
 
-            var recordArray = await Task.WhenAll(tasks);
+            ByteRecord[] recordArray = await Task.WhenAll(tasks);
         
             return recordArray;
         }
@@ -197,21 +177,17 @@ public DeezerClient() : base("https://api.deezer.com") //TODO MORE GENRES AT A T
         }
     }
 
-    private byte[] ConvertMp3BytesToWav(byte[] mp3Bytes) 
+    public static byte[] ConvertMp3BytesToWav(byte[] mp3Bytes) 
     {
         try
         {
-            MemoryStream mp3Stream = new MemoryStream(mp3Bytes);
-            Mp3FileReader mp3FileReader = new Mp3FileReader(mp3Stream);
+            using MemoryStream mp3Stream = new MemoryStream(mp3Bytes);
+            using Mp3FileReader mp3FileReader = new Mp3FileReader(mp3Stream);
+            
+            WdlResamplingSampleProvider resampler = new WdlResamplingSampleProvider(mp3FileReader.ToSampleProvider().ToMono(), 16000);
 
-            WaveFormat outFormat = new WaveFormat(16000, 1);
-
-            //THIS IS ON WINDOWS ONLY APPARENTLY
-            MediaFoundationResampler resampler = new MediaFoundationResampler(mp3FileReader, outFormat);
-            resampler.ResamplerQuality = 60;
-
-            MemoryStream wavStream = new MemoryStream();
-            WaveFileWriter.WriteWavFileToStream(wavStream, resampler);
+            using MemoryStream wavStream = new MemoryStream();
+            WaveFileWriter.WriteWavFileToStream(wavStream, resampler.ToWaveProvider16());
             return wavStream.ToArray();
         }
         catch

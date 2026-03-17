@@ -24,78 +24,122 @@ public class Vector
         return map[key] / 11f; // normalize to 0-1
     }
 
-    private float Normalize(float value, float min, float max)
+    private static void Normalize(List<float[]> featureVectors)
     {
-        return (value - min) / (max - min);
+        int featureCount = featureVectors[0].Length;
+
+        float[] mins = new float[featureCount];
+        float[] maxs = new float[featureCount];
+
+        // Initialize
+        for (int i = 0; i < featureCount; i++)
+        {
+            mins[i] = float.MaxValue;
+            maxs[i] = float.MinValue;
+        }
+
+        // Find min/max
+        foreach (var vec in featureVectors)
+        {
+            for (int i = 0; i < featureCount; i++)
+            {
+                if (vec[i] < mins[i]) mins[i] = vec[i];
+                if (vec[i] > maxs[i]) maxs[i] = vec[i];
+            }
+        }
+        
+        foreach (var vec in featureVectors)
+        {
+            for (int i = 0; i < featureCount; i++)
+            {
+                if (maxs[i] - mins[i] == 0)
+                    vec[i] = 0; // avoid divide by zero
+                else
+                    vec[i] = (vec[i] - mins[i]) / (maxs[i] - mins[i]);
+            }
+        }
     }
+
+    private static void L2Normalize(float[] vec)
+    {
+        double sum = 0;
+        for (int i = 0; i < vec.Length; i++)
+            sum += vec[i] * vec[i];
+
+        double mag = Math.Sqrt(sum);
+
+        if (mag == 0) return;
+
+        for (int i = 0; i < vec.Length; i++)
+            vec[i] = (float)(vec[i] / mag);
+    }
+
 
     public float[][] MakeVectors()
-{
-    float beatsConfidenceMin = _featureDataSet.Min(s => s.Features.beats_confidence);
-    float beatsConfidenceMax = _featureDataSet.Max(s => s.Features.beats_confidence);
-    float bpmMin = _featureDataSet.Min(s => s.Features.bpm);
-    float bpmMax = _featureDataSet.Max(s => s.Features.bpm);
-    float keyStrengthMin = _featureDataSet.Min(s => s.Features.key_strength);
-    float keyStrengthMax = _featureDataSet.Max(s => s.Features.key_strength);
-    float loudnessMin = _featureDataSet.Min(s => s.Features.loudness);
-    float loudnessMax = _featureDataSet.Max(s => s.Features.loudness);
-    float spectralCentroidMin = _featureDataSet.Min(s => s.Features.spectral_centroid);
-    float spectralCentroidMax = _featureDataSet.Max(s => s.Features.spectral_centroid);
-    float danceabilityMin = _featureDataSet.Min(s => s.Features.danceability);
-    float danceabilityMax = _featureDataSet.Max(s => s.Features.danceability);
-    float dynamicComplexityMin = _featureDataSet.Min(s => s.Features.dynamic_complexity);
-    float dynamicComplexityMax = _featureDataSet.Max(s => s.Features.dynamic_complexity);
-
-    // Precompute MFCC min/max for each of the 13 coefficients
-    float[] mfccMin = new float[13];
-    float[] mfccMax = new float[13];
-    for (int i = 0; i < 13; i++)
     {
-        mfccMin[i] = _featureDataSet.Min(s => s.Features.mfcc[i]);
-        mfccMax[i] = _featureDataSet.Max(s => s.Features.mfcc[i]);
-    }
-
-    float[][] vectorArray = _featureDataSet.Select(s =>
-    {
-        // Base features
-        float[] baseFeatures =
-        [
-            Normalize(s.Features.beats_confidence,  beatsConfidenceMin,  beatsConfidenceMax),
-            Normalize(s.Features.bpm,               bpmMin,              bpmMax),
-            KeyToFloat(s.Features.key),
-            Normalize(s.Features.key_strength,      keyStrengthMin,      keyStrengthMax),
-            Normalize(s.Features.loudness,          loudnessMin,         loudnessMax),
-            Normalize(s.Features.spectral_centroid, spectralCentroidMin, spectralCentroidMax),
-            ScaleToFloat(s.Features.scale),
-            Normalize(s.Features.danceability,      danceabilityMin,     danceabilityMax),
-            Normalize(s.Features.dynamic_complexity,dynamicComplexityMin,dynamicComplexityMax)
+        float[] weights = [
+            0.5f,  // beats_confidence
+            2.0f,  // bpm - rhythm is important
+            1.0f,  // key
+            1.0f,  // key_strength
+            1.0f,  // loudness
+            1.5f,  // spectral_centroid
+            1.0f,  // scale
+            2.0f,  // danceability - important
+            1.0f,  // dynamic_complexity
+            // mfcc - reduce these
+            0.8f, 0.8f, 0.8f, 0.8f,
+            0.8f, 0.8f, 0.8f, 0.8f,
+            0.8f, 0.8f, 0.8f, 0.8f
         ];
+        
+        float[][] vectorArray = _featureDataSet.Select(s =>
+        {
+            float[] baseFeatures = [
+                s.Features.beats_confidence,
+                s.Features.bpm,
+                KeyToFloat(s.Features.key),
+                s.Features.key_strength,
+                s.Features.loudness,
+                s.Features.spectral_centroid,
+                ScaleToFloat(s.Features.scale),
+                s.Features.danceability,
+                s.Features.dynamic_complexity
+            ];
 
-        // MFCC coefficients 1-12 (skip 0 as it's mostly loudness)
-        float[] mfccFeatures = Enumerable.Range(1, 12)
-            .Select(i => Normalize(s.Features.mfcc[i], mfccMin[i], mfccMax[i]))
-            .ToArray();
+            float[] mfccFeatures = Enumerable.Range(1, 12)
+                .Select(i => s.Features.mfcc[i])
+                .ToArray();
 
-        return baseFeatures.Concat(mfccFeatures).ToArray();
-    }).ToArray();
+            return baseFeatures.Concat(mfccFeatures).ToArray();
+        }).ToArray();
+        
+        Normalize(vectorArray.ToList());
 
-    return vectorArray;
-}
+        try
+        {
+            foreach (float[] vector in vectorArray)
+            {
+                for (int j = 0; j < vector.Length; j++)
+                {
+                    vector[j] *= weights[j];
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message + "AT MAKE VECTORS");
+        }
+        
+        vectorArray.ToList().ForEach(L2Normalize);
+
+        // normalizes everything in one pass
+        return vectorArray;
+    }
 
     private static double CosineSimilarity(float[] a, float[] b)
     {
-        float dot = 0;
-        float magA = 0;
-        float magB = 0;
-
-        for (int i = 0; i < a.Length; i++)
-        {
-            dot += a[i] * b[i];
-            magA += a[i] * a[i];
-            magB += b[i] * b[i];
-        }
-
-        return dot / (Math.Sqrt(magA) * Math.Sqrt(magB));
+        return a.Select((t, i) => t * b[i]).Sum();
     }
     
     public static List<SongSimilarity> Rank(List<FeatureData>  featureDataList)
@@ -109,13 +153,14 @@ public class Vector
                     Index = featureDataList[index + 1].SongName + ", " + featureDataList[index + 1].Artist,
                     Score = score,
                     AngleBetween = Math.Acos(score) * 180 / Math.PI,
-                    Explanation = InterpretSimilarity(score)
+                    Explanation = InterpretSimilarity(score),
+                    Mp3Bytes = featureDataList[index + 1].MP3SongBytes
                 };
             })
             .OrderByDescending(x => x.Score)
             .ToList();
     }
-
+    
     private static string InterpretSimilarity(double score)
     {
         return score switch

@@ -7,6 +7,8 @@ public class SongSimilarity
     public required double AngleBetween { get; init; }
     
     public required string Explanation { get; init; }
+    
+    public required byte[] Mp3Bytes { get; init; }
 
     public override string ToString()
     {

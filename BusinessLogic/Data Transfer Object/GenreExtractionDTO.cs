@@ -3,7 +3,7 @@
 
 public class GenrePredictionDTO
 {
-    public string label { get; set; }
+    public required string label { get; set; }
     public float score { get; set; }
     
     public override string ToString()

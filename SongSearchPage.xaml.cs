@@ -30,6 +30,13 @@ public partial class SongSearchPage : ContentPage
     
     public ObservableCollection<DeezerDTO.DeezerData> ObservableCollection => _observableCollection;
 
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        _wavEvent.Stop();
+        _wavEvent.Dispose();
+    }
+    
     private async void SongSearch(object? sender, EventArgs e)
     {
         try{
@@ -57,16 +64,14 @@ public partial class SongSearchPage : ContentPage
             DeezerDTO.DeezerData dataData = (DeezerDTO.DeezerData)e.CurrentSelection[0];
             _selectedSong = await _deezerClient.DownloadPreviewBytes(dataData.Preview, dataData.Title, dataData.Artist.Name);
             _analyzedSong = await _extractionApi.GetFeaturesAsync("features", _selectedSong);
-            GenrePredictionDTO[] genreDto = await _extractionApi.PostAsync<GenrePredictionDTO[]>("classify", _selectedSong.PreviewBytes);
+            GenrePredictionDTO[] genreDto = await _extractionApi.PostAsync<GenrePredictionDTO[]>("classify", _analyzedSong.WavSongBytes);
             _analyzedSong.Genre = genreDto;
 
             ShellNavigationQueryParameters navParams = new ShellNavigationQueryParameters
             {
                 { "_analyzedSong", _analyzedSong }
             };
-            Console.WriteLine(_analyzedSong);
             await Shell.Current.GoToAsync(nameof(Recommendation),false, navParams);
-            //PlayAudio(_selectedSong.PreviewBytes);
             
         }
         catch (AudioPlayException ex)
@@ -80,24 +85,6 @@ public partial class SongSearchPage : ContentPage
             await DisplayAlertAsync("Error Downloading Song", "An error has occured downloading that song", "ok");
         }
     }
-
-    private void PlayAudio(byte[] wavBytes)
-    {
-        try
-        {
-            _wavEvent.Stop();
-            MemoryStream memoryStream = new MemoryStream(wavBytes);
-            memoryStream.Position = 0;
-            WaveFileReader waveReader = new WaveFileReader(memoryStream);
-            _wavEvent.Init(waveReader);
-            _wavEvent.Volume = 0.01f;
-            _wavEvent.Play();
-        }
-        catch (Exception)
-        {
-            throw new AudioPlayException("Failed to play audio");
-        }
-        
-    }
+    
     
 }

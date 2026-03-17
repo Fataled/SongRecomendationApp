@@ -46,8 +46,9 @@ public class FeatureExtractionApi : ApiClientBase
     {
         await ReInitializeConnection();
         ByteRecord byteRecord = (ByteRecord)body;
-        FeatureExtractionDTO dto = await SendAsync<FeatureExtractionDTO>(endpoint, byteRecord.PreviewBytes);
-        return new FeatureData(byteRecord.Title, byteRecord.Artist, dto, byteRecord.PreviewBytes);
+        byte[] wavBytes = await Task.Run(() => DeezerClient.ConvertMp3BytesToWav(byteRecord.Mp3Bytes));
+        FeatureExtractionDTO dto = await SendAsync<FeatureExtractionDTO>(endpoint, wavBytes);
+        return new FeatureData(byteRecord.Title, byteRecord.Artist, dto, wavBytes, byteRecord.Mp3Bytes);
     }
 
     public async Task<T> PostAsync<T>(string endpoint, object body)

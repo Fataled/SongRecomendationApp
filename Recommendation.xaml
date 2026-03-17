@@ -4,8 +4,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProjectHellsParadise.Recommendation">
     <ContentPage.Content>
-        <Grid>
-            <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" Color="CornflowerBlue"></ActivityIndicator>
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <CollectionView Grid.Row="0"
+                            x:Name="_recomendationsView"
+                            ItemsSource="{Binding Similarities}"
+                            VerticalOptions="Fill"
+                            HorizontalOptions="Fill"
+                            VerticalScrollBarVisibility="Always"
+                            SelectionMode="Single"
+                            SelectionChanged="RecomendationSelected">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Padding="10">
+                            <Label Text="{Binding Index}" FontSize="16" FontAttributes="Bold" />
+                            <Label Text="{Binding Explanation}" FontSize="12" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <ActivityIndicator Grid.Row="1"
+                               IsRunning="{Binding IsLoading}"
+                               IsVisible="{Binding IsLoading}"
+                               Color="CornflowerBlue" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

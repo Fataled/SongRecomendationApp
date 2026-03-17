@@ -18,15 +18,15 @@ public class Microphone
     public async Task<bool> ArePermissionsGranted()
     {
         PermissionStatus microphonePermissionStatus = await Permissions.RequestAsync<Permissions.Microphone>();
-        Boolean isSpeechToTextRequestPermissionsGranted = await _speechToText.RequestPermissions(CancellationToken.None);
+        bool isSpeechToTextRequestPermissionsGranted = await _speechToText.RequestPermissions(CancellationToken.None);
 
         return microphonePermissionStatus is PermissionStatus.Granted
                && isSpeechToTextRequestPermissionsGranted;
     }
     
-    async Task StartListening(CancellationToken cancellationToken)
+    public async Task StartListening(CancellationToken cancellationToken)
     {
-        var isGranted = await _speechToText.RequestPermissions(cancellationToken);
+        bool isGranted = await _speechToText.RequestPermissions(cancellationToken);
         if (!isGranted)
         {
             await Toast.Make("Permission not granted").Show(CancellationToken.None);
@@ -38,7 +38,7 @@ public class Microphone
         await _speechToText.StartListenAsync(new SpeechToTextOptions	{ Culture = CultureInfo.CurrentCulture, ShouldReportPartialResults = true }, CancellationToken.None);
     }
 
-    async Task StopListening(CancellationToken cancellationToken)
+    public async Task StopListening(CancellationToken cancellationToken)
     {
         await _speechToText.StopListenAsync(CancellationToken.None);
         _speechToText.RecognitionResultUpdated -= OnRecognitionTextUpdated;

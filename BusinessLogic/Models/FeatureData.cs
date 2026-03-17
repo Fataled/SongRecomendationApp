@@ -406,15 +406,17 @@ public class FeatureData
     private string _artist;
     private FeatureExtractionDTO _features;
     private GenrePredictionDTO[] _genre;
-    private byte[] _songBytes;
+    private byte[] _wavSongBytes;
+    private byte[] _mp3songBytes;
     private float[] _vector;
     
-    public FeatureData(string songName, string artist, FeatureExtractionDTO DTO, byte[] songBytes)
+    public FeatureData(string songName, string artist, FeatureExtractionDTO DTO, byte[] wavSongBytes, byte[] mp3SongBytes)
     {
         _songName = songName;
         _artist = artist;
         _features = DTO;
-        _songBytes = songBytes;
+        _wavSongBytes = wavSongBytes;
+        _mp3songBytes = mp3SongBytes;
         _genre = [];
     }
 
@@ -423,7 +425,8 @@ public class FeatureData
         _songName = "";
         _artist = "";
         _features = new FeatureExtractionDTO();
-        _songBytes = [];
+        _wavSongBytes = [];
+        _mp3songBytes = [];
         _genre = [];
     }
     
@@ -435,15 +438,15 @@ public class FeatureData
     
     public GenrePredictionDTO[] Genre { get => _genre; set => _genre = value; }
     
-    public byte[] SongBytes => _songBytes;
+    public byte[] WavSongBytes => _wavSongBytes;
     
     public float[] Vector { get => _vector; set => _vector = value; }
     
-    string MapGenre(string essentiaLabel)
+    public byte[] MP3SongBytes => _mp3songBytes;
+
+    private string MapGenre(string essentiaLabel)
     {
-        return EssentiaGenreMap.TryGetValue(essentiaLabel, out var mapped) 
-            ? mapped 
-            : "pop"; // fallback
+        return EssentiaGenreMap.GetValueOrDefault(essentiaLabel, "pop"); // fallback
     }
     public override string ToString()
     {
