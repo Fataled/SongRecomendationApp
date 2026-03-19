@@ -88,9 +88,10 @@ public class Vector
             2.0f,  // danceability - important
             1.0f,  // dynamic_complexity
             // mfcc - reduce these
-            0.8f, 0.8f, 0.8f, 0.8f,
-            0.8f, 0.8f, 0.8f, 0.8f,
-            0.8f, 0.8f, 0.8f, 0.8f
+            1.5f, 1.5f, 1.5f, 1.5f,
+            1.5f, 1.5f, 1.5f, 1.5f,
+            1.5f, 1.5f, 1.5f, 1.5f,
+            1f
         ];
         
         float[][] vectorArray = _featureDataSet.Select(s =>
@@ -104,7 +105,8 @@ public class Vector
                 s.Features.spectral_centroid,
                 ScaleToFloat(s.Features.scale),
                 s.Features.danceability,
-                s.Features.dynamic_complexity
+                s.Features.dynamic_complexity,
+                s.Features.vocal
             ];
 
             float[] mfccFeatures = Enumerable.Range(1, 12)

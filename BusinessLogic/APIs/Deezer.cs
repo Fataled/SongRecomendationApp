@@ -1,4 +1,7 @@
-﻿using System.Security.Cryptography;
+﻿using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using NAudio.Wave.SampleProviders;
 using ProjectHellsParadise.BusinessLogic.Data_Transfer_Object;
 using ProjectHellsParadise.BusinessLogic.Exceptions;
@@ -9,9 +12,6 @@ using NAudio.Wave;
 
 public class DeezerClient : ApiClientBase
 {
-
-    
-
     private static readonly Dictionary<string, int> GenreIds = new Dictionary<string, int>()
     {
         { "pop", 132 },
@@ -41,8 +41,15 @@ public class DeezerClient : ApiClientBase
         {"latin music", 197}
     };
 
-public DeezerClient() : base("https://api.deezer.com") //TODO MORE GENRES AT A TIME
+public DeezerClient() : base("https://api.deezer.com", new SocketsHttpHandler
     {
+        EnableMultipleHttp2Connections =  true,
+        MaxConnectionsPerServer = 100,
+        PooledConnectionLifetime = TimeSpan.FromMinutes(5),
+        PooledConnectionIdleTimeout = TimeSpan.FromMinutes(2),
+    }) //TODO MORE GENRES AT A TIME
+    {
+
     }
 
 
@@ -81,7 +88,7 @@ public DeezerClient() : base("https://api.deezer.com") //TODO MORE GENRES AT A T
     public async Task<DeezerDTO> GetGenreSongsAsync(GenrePredictionDTO[] genrePredictions)
     {
         DeezerDTO result = new DeezerDTO();
-        const int playlistsToFetch = 6;
+        const int playlistsToFetch = 10;
         int songsPerPlaylist = Math.Max(1, 50 / genrePredictions.Length);
         int remainder = 50 % genrePredictions.Length;
         Random rng = new Random();
@@ -144,39 +151,41 @@ public DeezerClient() : base("https://api.deezer.com") //TODO MORE GENRES AT A T
         }
     }
     
-    public async Task<ByteRecord[]> DownloadPreviewBytes(DeezerDTO dto)
+    public async IAsyncEnumerable<ByteRecord> DownloadPreviewBytesStreamed(
+        DeezerDTO dto,
+        [EnumeratorCancellation] CancellationToken ct = default)
     {
-        try
-        {
-            SemaphoreSlim semaphoreSlim = new SemaphoreSlim(20);
-            IEnumerable<Task<ByteRecord>> tasks = dto.Data.Select(async deezerData =>
-            {
-                await semaphoreSlim.WaitAsync();
-                try
-                {
-                    byte[] mp3Bytes = await HttpClient.GetByteArrayAsync(deezerData.Preview);
-                    return new ByteRecord(deezerData.Title, deezerData.Artist.Name, mp3Bytes);
-                }
-                finally
-                {
-                    semaphoreSlim.Release();
-                }
-            });
+        SemaphoreSlim semaphore = new(20);
+        ConcurrentQueue<ByteRecord> ready = new();
 
-            ByteRecord[] recordArray = await Task.WhenAll(tasks);
-        
-            return recordArray;
-        }
-        catch (ByteTransformationException ex)
+        List<Task> tasks = dto.Data.Select(async deezerData =>
         {
-            throw new ByteTransformationException("Btye Transform Issue: " + ex.Message, ex);  
-        }
-        catch (Exception)
+            await semaphore.WaitAsync(ct).ConfigureAwait(false);
+            try
+            {
+                using HttpResponseMessage response = await HttpClient
+                    .GetAsync(deezerData.Preview, HttpCompletionOption.ResponseHeadersRead, ct)
+                    .ConfigureAwait(false);
+
+                response.EnsureSuccessStatusCode();
+                byte[] mp3Bytes = await response.Content.ReadAsByteArrayAsync(ct).ConfigureAwait(false);
+                ready.Enqueue(new ByteRecord(deezerData.Title, deezerData.Artist.Name, mp3Bytes));
+            }
+            finally
+            {
+                semaphore.Release();
+            }
+        }).ToList();
+
+        while (tasks.Any(t => !t.IsCompleted) || !ready.IsEmpty)
         {
-            throw new ByteTransformationException("An error occured song previewUrl couldn't identify specific one");
+            while (ready.TryDequeue(out ByteRecord? record))
+                yield return record;
+
+            await Task.Delay(50, ct).ConfigureAwait(false);
         }
     }
-
+    
     public static byte[] ConvertMp3BytesToWav(byte[] mp3Bytes) 
     {
         try

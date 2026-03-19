@@ -20,6 +20,7 @@ public partial class Recommendation : ContentPage
     private DeezerClient _deezerClient;
     private FeatureExtractionApi _myApi;
     private ObservableCollection<SongSimilarity> _similarities;
+    private CancellationTokenSource _cancellationToken;
 
     public Recommendation(DeezerClient deezerClient, FeatureExtractionApi extractionApi)
     {
@@ -30,6 +31,7 @@ public partial class Recommendation : ContentPage
         _deezerClient = deezerClient;
         _myApi = extractionApi;
         _similarities = new ObservableCollection<SongSimilarity>();
+        _cancellationToken = new CancellationTokenSource();
     }
 
     public bool IsLoading
@@ -65,6 +67,7 @@ public partial class Recommendation : ContentPage
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
+        _cancellationToken.Cancel();
         _wavEvent.Stop();
         _wavEvent.Dispose();
     }
@@ -73,52 +76,46 @@ public partial class Recommendation : ContentPage
     {
         IsLoading = true;
         PlayAudio(_featureData.MP3SongBytes);
-        await StartSearchViaGenre();
+        await StartSearchViaGenre(_cancellationToken);
         IsLoading = false;
     }
 
-   
-
-    private async Task StartSearchViaGenre() //TODO ask if they wanna try again if not at least 5 above strong similarity
+    private async Task StartSearchViaGenre(CancellationTokenSource token) //TODO ask if they wanna try again if not at least 5 above strong similarity
     {
         Stopwatch sw = new Stopwatch();
+        Console.WriteLine(_featureData);
         try
         {
-            sw.Start();
             DeezerDTO trackData = await _deezerClient.GetGenreSongsAsync(_featureData.GetMainGenres());
-            Console.WriteLine($"Genre Elapsed: {sw.Elapsed.TotalSeconds:F3} seconds");
-            sw.Stop();
-            sw.Restart();
             List<FeatureData> featureDataList = [_featureData];
-            sw.Start();
-            ByteRecord[] wavBytes = await _deezerClient.DownloadPreviewBytes(trackData);
-            Console.WriteLine($"Bytes Elapsed: {sw.Elapsed.TotalSeconds:F3} seconds");
-            sw.Stop();
-            sw.Restart();
             SemaphoreSlim limiter = new SemaphoreSlim(16);
+            ConcurrentBag<FeatureData> results = new();
+            List<Task> featureTasks = new();
             sw.Start();
-            FeatureData?[] featureDataArray = (await Task.WhenAll(
-                wavBytes.Select(async (wavByte) =>
+            await foreach (ByteRecord record in _deezerClient.DownloadPreviewBytesStreamed(trackData))
+            {
+                featureTasks.Add(Task.Run(async () =>
                 {
-                    await limiter.WaitAsync();
+                    await limiter.WaitAsync().ConfigureAwait(false);
                     try
                     {
-                        return await _myApi.GetFeaturesAsync("features", wavByte);
+                        FeatureData? data = await _myApi.GetFeaturesAsync("features", record);
+                        if (data != null) results.Add(data);
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Skipping {wavByte.Title}: {ex.Message}");
-                        return null;
+                        Console.WriteLine($"Skipping {record.Title}: {ex.Message}");
                     }
                     finally
                     {
                         limiter.Release();
                     }
-                })
-            )).Where(b => b != null).ToArray();
+                }));
+            }
             sw.Stop();
-            Console.WriteLine($"Feature Elapsed: {sw.Elapsed.TotalSeconds:F3} seconds");
-            sw.Restart();
+            Console.WriteLine($"{sw.Elapsed}");
+            await Task.WhenAll(featureTasks);
+            FeatureData[] featureDataArray = results.ToArray();
             featureDataList.AddRange(featureDataArray);
             Vector vectorMaker = new Vector(featureDataList);
             float[][] vectors = vectorMaker.MakeVectors();

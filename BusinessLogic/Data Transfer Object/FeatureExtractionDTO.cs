@@ -12,6 +12,7 @@ public record FeatureExtractionDTO
     public float danceability { get; set; }
     public float dynamic_complexity { get; set; }
     public float[] mfcc { get; set; }
+    public float vocal { get; set; }
 
     public override string ToString()
     {

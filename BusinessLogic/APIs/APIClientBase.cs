@@ -8,11 +8,12 @@ public abstract class ApiClientBase
     protected readonly HttpClient HttpClient;
     protected readonly string BaseUrl;
 
-    protected ApiClientBase(string baseUrl)
+    protected ApiClientBase(string baseUrl, HttpMessageHandler? handler = null)
     {
         HttpClient = new HttpClient();
         BaseUrl = baseUrl;
         HttpClient.BaseAddress = new Uri(baseUrl);
+        
     }
 
     protected async Task<T> RequestAsync<T>(string endpoint, string query, string? ending = null)
@@ -34,7 +35,7 @@ public abstract class ApiClientBase
         await AddAuthHeader(request);
         await AddRequestHeader(request);
         HttpResponseMessage response = await HttpClient.SendAsync(request);
-        response.EnsureSuccessStatusCode();
+        response.EnsureSuccessStatusCode(); 
         string json = await response.Content.ReadAsStringAsync();
         return JsonSerializer.Deserialize<T>(json)
             ?? throw new DTOException("Failed to deserialize response to " + typeof(T));
