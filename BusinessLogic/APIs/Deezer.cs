@@ -47,7 +47,7 @@ public DeezerClient() : base("https://api.deezer.com", new SocketsHttpHandler
         MaxConnectionsPerServer = 100,
         PooledConnectionLifetime = TimeSpan.FromMinutes(5),
         PooledConnectionIdleTimeout = TimeSpan.FromMinutes(2),
-    }) //TODO MORE GENRES AT A TIME
+    })
     {
 
     }

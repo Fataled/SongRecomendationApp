@@ -112,9 +112,10 @@ public partial class Recommendation : ContentPage
                     }
                 }));
             }
-            sw.Stop();
-            Console.WriteLine($"{sw.Elapsed}");
             await Task.WhenAll(featureTasks);
+            sw.Stop();
+            Console.WriteLine($"Feature Extraction: {sw.Elapsed}");
+            Console.WriteLine($"Feature data length: {results.Count}");
             FeatureData[] featureDataArray = results.ToArray();
             featureDataList.AddRange(featureDataArray);
             Vector vectorMaker = new Vector(featureDataList);

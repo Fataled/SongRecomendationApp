@@ -8,7 +8,7 @@ public class FeatureExtractionApi : ApiClientBase
 {
     private bool _connected;
     
-    public FeatureExtractionApi() : base("http://127.0.0.1:4000") //  SERVER: http://159.203.18.252:4000  HOME: http://127.0.0.1:4000
+    public FeatureExtractionApi() : base("http://127.0.0.1:8000") //  SERVER: http://159.203.18.252:4000  HOME: http://127.0.0.1:8000
     {
         _connected = false; //TODO make it so on shutdown this becomes false or on disconnect So far we have smth but not sure if its the best idea
         HttpClient.Timeout = TimeSpan.FromSeconds(600);
@@ -80,12 +80,14 @@ public class FeatureExtractionApi : ApiClientBase
                 foreach (byte[] wavByte in wavFiles)
                 {
                     ByteArrayContent fileContent = new ByteArrayContent(wavByte);
-                    form.Add(fileContent, "files", "audio.wav");
+                    form.Add(fileContent, "wav_data", "audio.wav");
                 }
                 request.Content = form;
                 break;
             default:
-                request.Content = new ByteArrayContent((byte[])body);
+                MultipartFormDataContent content = new MultipartFormDataContent();
+                content.Add(new ByteArrayContent((byte[])body), "wav_data", "audio.wav");
+                request.Content = content;
                 break;
         }
         return Task.CompletedTask;
