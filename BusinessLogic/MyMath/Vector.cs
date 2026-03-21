@@ -86,12 +86,14 @@ public class Vector
             1.5f,  // spectral_centroid
             1.0f,  // scale
             2.0f,  // danceability - important
-            1.0f,  // dynamic_complexity
+            1.0f,
+            1.5f,
+            // dynamic_complexity
             // mfcc - reduce these
-            1.5f, 1.5f, 1.5f, 1.5f,
-            1.5f, 1.5f, 1.5f, 1.5f,
-            1.5f, 1.5f, 1.5f, 1.5f,
-            1f
+            1.0f, 1.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, 1.0f, 1.0f,
+            
         ];
         
         float[][] vectorArray = _featureDataSet.Select(s =>
@@ -130,7 +132,7 @@ public class Vector
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message + "AT MAKE VECTORS");
+            Console.WriteLine(e.Message + " AT MAKE VECTORS");
         }
         
         vectorArray.ToList().ForEach(L2Normalize);
@@ -156,12 +158,16 @@ public class Vector
                     Score = score,
                     AngleBetween = Math.Acos(score) * 180 / Math.PI,
                     Explanation = InterpretSimilarity(score),
-                    Mp3Bytes = featureDataList[index + 1].MP3SongBytes
+                    Mp3Bytes = featureDataList[index + 1].MP3SongBytes,
+                    Vector = featureDataList[index + 1].Vector
                 };
             })
             .OrderByDescending(x => x.Score)
             .ToList();
     }
+
+    
+    
     
     private static string InterpretSimilarity(double score)
     {

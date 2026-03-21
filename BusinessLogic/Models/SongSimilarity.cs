@@ -9,7 +9,8 @@ public class SongSimilarity
     public required string Explanation { get; init; }
     
     public required byte[] Mp3Bytes { get; init; }
-
+    
+    public required float[] Vector {get; init; }
     public override string ToString()
     {
         return $"Index: {Index} Score: {Score} Angle Between: {AngleBetween :F2} Explanation: {Explanation}";

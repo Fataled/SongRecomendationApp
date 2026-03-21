@@ -85,9 +85,7 @@ public class FeatureExtractionApi : ApiClientBase
                 request.Content = form;
                 break;
             default:
-                MultipartFormDataContent content = new MultipartFormDataContent();
-                content.Add(new ByteArrayContent((byte[])body), "wav_data", "audio.wav");
-                request.Content = content;
+                request.Content = new ByteArrayContent((byte[])body);
                 break;
         }
         return Task.CompletedTask;

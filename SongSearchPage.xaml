@@ -9,9 +9,17 @@
             <SearchBar x:Name="_songSearchBar" 
                        Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Center"
                        FontFamily="Inter"
-                       Placeholder="Enter Song Name" SearchButtonPressed="SongSearch" />
+                       Placeholder="Enter Song Name" SearchCommand="{Binding SongSearchCommand}"
+                       SearchCommandParameter="{Binding Text, Source={RelativeSource Self}}"
+                       />
             
-            <CollectionView x:Name="_searchBarResults" Grid.Row="1" ItemsSource="{Binding ObservableCollection}" SelectionMode="Single" SelectionChanged="SearchBarResultsChanged">
+            <CollectionView 
+                x:Name="_searchBarResults" 
+                Grid.Row="1" 
+                ItemsSource="{Binding ObservableCollection}" 
+                SelectionMode="Single"
+                SelectionChangedCommand="{Binding SearchBarResultsChangedCommand}"
+                SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <VerticalStackLayout Padding="10">

@@ -3,21 +3,30 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProjectHellsParadise.Recommendation">
+    
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
+    
     <ContentPage.Content>
         <Grid Margin="20">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-
-            <CollectionView Grid.Row="0"
+            
+            <Button Grid.Row="0" Text="←" WidthRequest="40" HeightRequest="40" HorizontalOptions="Start" Command="{Binding GoBackCommand}"></Button>
+            
+            <CollectionView Grid.Row="1"
                             x:Name="_recomendationsView"
                             ItemsSource="{Binding Similarities}"
                             VerticalOptions="Fill"
                             HorizontalOptions="Fill"
                             VerticalScrollBarVisibility="Always"
                             SelectionMode="Single"
-                            SelectionChanged="RecomendationSelected">
+                            SelectionChangedCommand="{Binding SelectSongCommand}"
+                            SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <VerticalStackLayout Padding="10">
@@ -32,6 +41,7 @@
                                IsRunning="{Binding IsLoading}"
                                IsVisible="{Binding IsLoading}"
                                Color="CornflowerBlue" />
+            
         </Grid>
     </ContentPage.Content>
 </ContentPage>
