@@ -88,8 +88,8 @@ public DeezerClient() : base("https://api.deezer.com", new SocketsHttpHandler
     public async Task<DeezerDTO> GetGenreSongsAsync(GenrePredictionDTO[] genrePredictions)
     {
         DeezerDTO result = new DeezerDTO();
-        const int playlistsToFetch = 10;
-        int songsPerPlaylist = Math.Max(1, 50 / genrePredictions.Length);
+        const int playlistsToFetch = 1; // Base Home = 10
+        int songsPerPlaylist = Math.Max(1, 50 / genrePredictions.Length); // Base Home Max = 50
         int remainder = 50 % genrePredictions.Length;
         Random rng = new Random();
 

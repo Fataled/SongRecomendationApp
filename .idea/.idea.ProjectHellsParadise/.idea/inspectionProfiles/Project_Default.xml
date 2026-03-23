@@ -1,0 +1,189 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <Languages>
+        <language minSize="148" name="Python" />
+      </Languages>
+    </inspection_tool>
+    <inspection_tool class="HttpUrlsUsage" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredUrls">
+        <list>
+          <option value="http://" />
+          <option value="http://0.0.0.0" />
+          <option value="http://127.0.0.1" />
+          <option value="http://activemq.apache.org/schema/" />
+          <option value="http://cxf.apache.org/schemas/" />
+          <option value="http://java.sun.com/" />
+          <option value="http://javafx.com/fxml" />
+          <option value="http://javafx.com/javafx/" />
+          <option value="http://json-schema.org/draft" />
+          <option value="http://localhost" />
+          <option value="http://maven.apache.org/POM/" />
+          <option value="http://maven.apache.org/xsd/" />
+          <option value="http://primefaces.org/ui" />
+          <option value="http://schema.cloudfoundry.org/spring/" />
+          <option value="http://schemas.xmlsoap.org/" />
+          <option value="http://tiles.apache.org/" />
+          <option value="http://www.ibm.com/webservices/xsd" />
+          <option value="http://www.jboss.com/xml/ns/" />
+          <option value="http://www.jboss.org/j2ee/schema/" />
+          <option value="http://www.springframework.org/schema/" />
+          <option value="http://www.springframework.org/security/tags" />
+          <option value="http://www.springframework.org/tags" />
+          <option value="http://www.thymeleaf.org" />
+          <option value="http://www.w3.org/" />
+          <option value="http://xmlns.jcp.org/" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyArgumentListInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyBroadExceptionInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="anyio" />
+          <option value="aptdaemon" />
+          <option value="attrs" />
+          <option value="autocommand" />
+          <option value="babel" />
+          <option value="bcc" />
+          <option value="bcrypt" />
+          <option value="beautifulsoup4" />
+          <option value="blinker" />
+          <option value="Brlapi" />
+          <option value="certifi" />
+          <option value="chardet" />
+          <option value="click" />
+          <option value="cloud-init" />
+          <option value="command-not-found" />
+          <option value="configobj" />
+          <option value="cryptography" />
+          <option value="cssselect" />
+          <option value="cupshelpers" />
+          <option value="dbus-python" />
+          <option value="defer" />
+          <option value="distro" />
+          <option value="distro-info" />
+          <option value="docopt" />
+          <option value="gyp-next" />
+          <option value="h11" />
+          <option value="html5lib-modern" />
+          <option value="httpcore" />
+          <option value="httplib2" />
+          <option value="httpx" />
+          <option value="i3ipc" />
+          <option value="idna" />
+          <option value="inflect" />
+          <option value="jaraco.context" />
+          <option value="jaraco.functools" />
+          <option value="jaraco.text" />
+          <option value="Jinja2" />
+          <option value="jsonpatch" />
+          <option value="jsonpointer" />
+          <option value="jsonschema" />
+          <option value="jsonschema-specifications" />
+          <option value="language-selector" />
+          <option value="launchpadlib" />
+          <option value="lazr.restfulclient" />
+          <option value="lazr.uri" />
+          <option value="legacy-cgi" />
+          <option value="louis" />
+          <option value="lxml" />
+          <option value="Mako" />
+          <option value="Markdown" />
+          <option value="markdown-it-py" />
+          <option value="MarkupSafe" />
+          <option value="mdurl" />
+          <option value="mercurial" />
+          <option value="meson" />
+          <option value="more-itertools" />
+          <option value="mutagen" />
+          <option value="nala" />
+          <option value="netaddr" />
+          <option value="netifaces" />
+          <option value="nwg-displays" />
+          <option value="oauthlib" />
+          <option value="olefile" />
+          <option value="packaging" />
+          <option value="passlib" />
+          <option value="pexpect" />
+          <option value="pipreqs" />
+          <option value="ptyprocess" />
+          <option value="pycairo" />
+          <option value="pycryptodomex" />
+          <option value="pycups" />
+          <option value="Pygments" />
+          <option value="PyGObject" />
+          <option value="PyJWT" />
+          <option value="pyparsing" />
+          <option value="pyquery" />
+          <option value="pyserial" />
+          <option value="python-apt" />
+          <option value="python-dateutil" />
+          <option value="python-debian" />
+          <option value="python-xlib" />
+          <option value="pyxdg" />
+          <option value="PyYAML" />
+          <option value="referencing" />
+          <option value="requests" />
+          <option value="rich" />
+          <option value="rpds-py" />
+          <option value="screen-resolution-extra" />
+          <option value="setuptools" />
+          <option value="shellingham" />
+          <option value="sniffio" />
+          <option value="socksio" />
+          <option value="soupsieve" />
+          <option value="systemd-python" />
+          <option value="tomli" />
+          <option value="typeguard" />
+          <option value="typer" />
+          <option value="typing_extensions" />
+          <option value="ubuntu-drivers-common" />
+          <option value="ubuntu-pro-client" />
+          <option value="ufw" />
+          <option value="unattended-upgrades" />
+          <option value="urllib3" />
+          <option value="wadllib" />
+          <option value="webencodings" />
+          <option value="WebOb" />
+          <option value="websockets" />
+          <option value="wheel" />
+          <option value="xdg" />
+          <option value="xkit" />
+          <option value="yarg" />
+          <option value="yt-dlp" />
+          <option value="zipp" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N802" />
+          <option value="N803" />
+          <option value="N806" />
+          <option value="N801" />
+          <option value="N814" />
+          <option value="N813" />
+          <option value="N812" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyShadowingNamesInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyTypeHintsInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="types.NoneType.*" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="SpellCheckingInspection" enabled="false" level="TYPO" enabled_by_default="false">
+      <option name="processCode" value="true" />
+      <option name="processLiterals" value="true" />
+      <option name="processComments" value="true" />
+    </inspection_tool>
+  </profile>
+</component>

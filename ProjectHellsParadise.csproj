@@ -42,31 +42,32 @@
 
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4"/>
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
         <!-- Splash Screen -->
-        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128"/>
+        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
         <!-- Images -->
-        <MauiImage Include="Resources\Images\*"/>
-        <MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185"/>
+        <MauiImage Include="Resources\Images\*" />
+        <MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 
         <!-- Custom Fonts -->
-        <MauiFont Include="Resources\Fonts\*"/>
+        <MauiFont Include="Resources\Fonts\*" />
 
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
-        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)"/>
+        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="AnalyticsPipeline" Version="1.0.0" />
         <PackageReference Include="CommunityToolkit.Maui" Version="14.0.1" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1" />
         <PackageReference Include="LiveCharts" Version="0.9.7" />
         <PackageReference Include="LiveChartsCore" Version="2.0.0-rc6.1" />
         <PackageReference Include="LiveChartsCore.SkiaSharpView" Version="2.0.0-rc6.1" />
         <PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.0-rc6.1" />
-        <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.41"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0"/>
+        <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.41" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
         <PackageReference Include="NAudio" Version="2.2.1" />
     </ItemGroup>
 

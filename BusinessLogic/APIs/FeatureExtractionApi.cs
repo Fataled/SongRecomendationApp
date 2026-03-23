@@ -1,17 +1,20 @@
 ﻿using System.Net.Http.Headers;
 using ProjectHellsParadise.BusinessLogic.Data_Transfer_Object;
 using ProjectHellsParadise.BusinessLogic.Models;
+using AnalyticsPipeline;
 
 namespace ProjectHellsParadise.BusinessLogic.APIs;
 
 public class FeatureExtractionApi : ApiClientBase
 {
     private bool _connected;
+    private AnalyticsClient _analyticsClient;
     
-    public FeatureExtractionApi() : base("http://127.0.0.1:8000") //  SERVER: http://159.203.18.252:4000  HOME: http://127.0.0.1:8000
+    public FeatureExtractionApi() : base("http://159.203.18.252:8000") //  SERVER: http://159.203.18.252:4000  HOME: http://127.0.0.1:8000
     {
         _connected = false; //TODO make it so on shutdown this becomes false or on disconnect So far we have smth but not sure if its the best idea
         HttpClient.Timeout = TimeSpan.FromSeconds(600);
+        _analyticsClient = new AnalyticsClient("http://159.203.18.252:8001");
     }
 
     private async Task WaitForServer()
@@ -48,6 +51,11 @@ public class FeatureExtractionApi : ApiClientBase
         ByteRecord byteRecord = (ByteRecord)body;
         byte[] wavBytes = await Task.Run(() => DeezerClient.ConvertMp3BytesToWav(byteRecord.Mp3Bytes));
         FeatureExtractionDTO dto = await SendAsync<FeatureExtractionDTO>(endpoint, wavBytes);
+        await _analyticsClient.IngestEvent("FeatureExtraction", "User", properties: new Dictionary<string, object>
+        {
+            { "song Name", byteRecord.Title },
+            {"Artist Name",  byteRecord.Artist },
+        });
         return new FeatureData(byteRecord.Title, byteRecord.Artist, dto, wavBytes, byteRecord.Mp3Bytes);
     }
 
