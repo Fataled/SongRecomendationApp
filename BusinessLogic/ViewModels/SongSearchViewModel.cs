@@ -20,11 +20,12 @@ public partial class SongSearchViewModel : ObservableObject
     private SongSessionService _songSessionService; 
     private readonly IDialogService _dialogService;
     private readonly AnalyticsClient _analyticsClient;
+    private readonly CurrentUser _currentUser;
         
     [ObservableProperty]
     private ObservableCollection<DeezerDTO.DeezerData> _observableCollection;
 
-    public SongSearchViewModel(DeezerClient deezerClient, FeatureExtractionApi extractionApi, SongSessionService songSessionService, IDialogService dialogService, AnalyticsClient analyticsClient)
+    public SongSearchViewModel(DeezerClient deezerClient, FeatureExtractionApi extractionApi, SongSessionService songSessionService, IDialogService dialogService, AnalyticsClient analyticsClient, CurrentUser currentUser)
     {
         _analyzedSong = new FeatureData();
         _deezerClient = deezerClient;
@@ -33,6 +34,7 @@ public partial class SongSearchViewModel : ObservableObject
         _songSessionService = songSessionService;
         _dialogService = dialogService;
         _analyticsClient = analyticsClient;
+        _currentUser = currentUser;
     }
     
     [RelayCommand]
@@ -65,11 +67,11 @@ public partial class SongSearchViewModel : ObservableObject
             _analyzedSong.Genre = genreDto;
             
             _songSessionService.BaseSong = _analyzedSong;
-            await _analyticsClient.IngestEvent("Selected Base Song", "User Token goes here", properties: new Dictionary<string, object>
+            await _analyticsClient.IngestEvent("Selected Base Song", _currentUser.Id, properties: new Dictionary<string, object>
             {
                 {"Song Name", _analyzedSong.SongName },
                 {"User Name",  _analyzedSong.Artist},
-                {"Genres", _analyzedSong.Genre}
+                {"Genres", _analyzedSong.Genre.Select(g => g.label).ToList()}
             });
             await Shell.Current.GoToAsync(nameof(Recommendation));
         }

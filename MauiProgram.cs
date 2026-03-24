@@ -8,6 +8,7 @@ using ProjectHellsParadise.BusinessLogic.Services;
 using ProjectHellsParadise.BusinessLogic.ViewModels;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using AuthClient;
+using Microsoft.Extensions.Configuration;
 
 namespace ProjectHellsParadise;
 
@@ -33,9 +34,21 @@ public static class MauiProgram
         builder.Services.AddSingleton<SpotifyClient>();
         builder.Services.AddSingleton<AppleMusic>();
         builder.Services.AddSingleton<SongSessionService>();
-        builder.Services.AddSingleton<AuthClient.AuthClient>(sp => new AuthClient.AuthClient("http://159.203.18.252:8002"));
+        
+        AuthClient.AuthClient authClient = new AuthClient.AuthClient("http://159.203.18.252.nip.io:8002");
+        builder.Services.AddSingleton(authClient);
+        Task.Run(async () => await
+            authClient.RegisterOidcProviderAsync(
+                "",
+                "google",
+                "REMOVED_GOOGLE_CLIENT_ID",
+                "REMOVED_GOOGLE_CLIENT_SECRET",
+                "https://accounts.google.com/.well-known/openid-configuration"
+            ));
+        
         builder.Services.AddSingleton<AnalyticsClient>(sp => new AnalyticsClient("http://159.203.18.252:8001"));
         builder.Services.AddSingleton<IDialogService, DialogService>();
+        builder.Services.AddSingleton<CurrentUser>();
 
         builder.Services.AddTransient<RegisterPageViewModel>();
         builder.Services.AddTransient<MainPage>();

@@ -13,6 +13,7 @@ public partial class AnalysisViewModel : ObservableObject
 {
     private SongSessionService _sessionService;
     private AnalyticsClient _analyticsClient;
+    private readonly CurrentUser _currentUser;
 
     [ObservableProperty] private ISeries[] _series = Array.Empty<ISeries>();
 
@@ -44,12 +45,13 @@ public partial class AnalysisViewModel : ObservableObject
         }
     };
 
-    public AnalysisViewModel(SongSessionService songSessionService, AnalyticsClient analyticsClient)
+    public AnalysisViewModel(SongSessionService songSessionService, AnalyticsClient analyticsClient, CurrentUser currentUser)
     {
+        _sessionService = songSessionService;
+        _analyticsClient = analyticsClient;
+        _currentUser = currentUser;
         try
         {
-            _sessionService = songSessionService;
-            _analyticsClient = analyticsClient;
             Ranking = _sessionService.SelectedSong.Explanation;
             UpdatePolarChart();
         }
@@ -89,7 +91,7 @@ public partial class AnalysisViewModel : ObservableObject
             }
         ];
 
-        await _analyticsClient.IngestEvent("Viewed Graph", "User Token", properties: new Dictionary<string, object>
+        await _analyticsClient.IngestEvent("Viewed Graph", _currentUser.Id, properties: new Dictionary<string, object>
         {
             { "Base Song", _sessionService.BaseSong.SongName},
             { "User Name", _sessionService.SelectedSong.Index },

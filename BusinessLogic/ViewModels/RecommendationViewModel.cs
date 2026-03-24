@@ -21,6 +21,7 @@ public partial class RecommendationViewModel : ObservableObject {
     private DeezerClient _deezerClient;
     private SongSessionService  _songSessionService;
     private AnalyticsClient _analyticsClient;
+    private readonly CurrentUser _currentUser;
     
     [ObservableProperty]
     FeatureData _featureData;
@@ -32,7 +33,7 @@ public partial class RecommendationViewModel : ObservableObject {
     private bool isLoading;
 
     
-    public RecommendationViewModel(FeatureExtractionApi extractionApi, DeezerClient deezerClient, SongSessionService songSessionService, AnalyticsClient analyticsClient)
+    public RecommendationViewModel(FeatureExtractionApi extractionApi, DeezerClient deezerClient, SongSessionService songSessionService, AnalyticsClient analyticsClient, CurrentUser currentUser)
     {
         _wavEvent = new WaveOutEvent();
         _deezerClient = deezerClient;
@@ -41,6 +42,7 @@ public partial class RecommendationViewModel : ObservableObject {
         _cancellationToken = new CancellationTokenSource();
         _songSessionService = songSessionService;
         _analyticsClient = analyticsClient;
+        _currentUser = currentUser;
         InitAsync().FireAndForget();
     }
 
@@ -87,7 +89,7 @@ public partial class RecommendationViewModel : ObservableObject {
             }
             await Task.WhenAll(featureTasks);
             sw.Stop();
-            await _analyticsClient.IngestEvent("Genre Search", "User Token", properties: new Dictionary<string, object>
+            await _analyticsClient.IngestEvent("Genre Search", _currentUser.Id, properties: new Dictionary<string, object>
             {
                 { "Songs Found", results.Count},
                 {"Time Take", sw.Elapsed}
