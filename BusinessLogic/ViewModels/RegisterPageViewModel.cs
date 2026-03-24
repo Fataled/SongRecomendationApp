@@ -2,8 +2,6 @@
 using AnalyticsPipeline;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.Configuration;
-using ProjectHellsParadise.BusinessLogic.APIs;
 using ProjectHellsParadise.BusinessLogic.Models;
 
 namespace ProjectHellsParadise.BusinessLogic.ViewModels;
