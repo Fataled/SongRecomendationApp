@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AnalyticsPipeline;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
@@ -11,6 +12,7 @@ namespace ProjectHellsParadise.BusinessLogic.ViewModels;
 public partial class AnalysisViewModel : ObservableObject
 {
     private SongSessionService _sessionService;
+    private AnalyticsClient _analyticsClient;
 
     [ObservableProperty] private ISeries[] _series = Array.Empty<ISeries>();
 
@@ -42,11 +44,12 @@ public partial class AnalysisViewModel : ObservableObject
         }
     };
 
-    public AnalysisViewModel(SongSessionService songSessionService)
+    public AnalysisViewModel(SongSessionService songSessionService, AnalyticsClient analyticsClient)
     {
         try
         {
             _sessionService = songSessionService;
+            _analyticsClient = analyticsClient;
             Ranking = _sessionService.SelectedSong.Explanation;
             UpdatePolarChart();
         }
@@ -56,7 +59,7 @@ public partial class AnalysisViewModel : ObservableObject
         }
     }
     
-    private void UpdatePolarChart()
+    private async void UpdatePolarChart()
     {
         if (_sessionService.BaseSong?.Vector == null || _sessionService.SelectedSong?.Vector == null){
             Console.WriteLine("Vector is null — chart not built");
@@ -85,6 +88,14 @@ public partial class AnalysisViewModel : ObservableObject
                 IsClosed = true,
             }
         ];
+
+        await _analyticsClient.IngestEvent("Viewed Graph", "User Token", properties: new Dictionary<string, object>
+        {
+            { "Base Song", _sessionService.BaseSong.SongName},
+            { "User Name", _sessionService.SelectedSong.Index },
+            { "Similarity Score", _sessionService.SelectedSong.Score},
+            
+        });
     }
     
     [RelayCommand]

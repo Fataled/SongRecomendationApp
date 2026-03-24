@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using AnalyticsPipeline;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NAudio.Wave;
@@ -18,11 +19,12 @@ public partial class SongSearchViewModel : ObservableObject
     private FeatureData _analyzedSong;
     private SongSessionService _songSessionService; 
     private readonly IDialogService _dialogService;
+    private readonly AnalyticsClient _analyticsClient;
         
     [ObservableProperty]
     private ObservableCollection<DeezerDTO.DeezerData> _observableCollection;
 
-    public SongSearchViewModel(DeezerClient deezerClient, FeatureExtractionApi extractionApi, SongSessionService songSessionService, IDialogService dialogService)
+    public SongSearchViewModel(DeezerClient deezerClient, FeatureExtractionApi extractionApi, SongSessionService songSessionService, IDialogService dialogService, AnalyticsClient analyticsClient)
     {
         _analyzedSong = new FeatureData();
         _deezerClient = deezerClient;
@@ -30,10 +32,11 @@ public partial class SongSearchViewModel : ObservableObject
         _observableCollection = new ObservableCollection<DeezerDTO.DeezerData>();
         _songSessionService = songSessionService;
         _dialogService = dialogService;
+        _analyticsClient = analyticsClient;
     }
     
     [RelayCommand]
-    private async void SongSearch(string songName)
+    private async Task SongSearch(string songName)
     {
         try{
             DeezerDTO deezerDto = await _deezerClient.GetAsync<DeezerDTO>("/search?q=", songName);
@@ -62,6 +65,12 @@ public partial class SongSearchViewModel : ObservableObject
             _analyzedSong.Genre = genreDto;
             
             _songSessionService.BaseSong = _analyzedSong;
+            await _analyticsClient.IngestEvent("Selected Base Song", "User Token goes here", properties: new Dictionary<string, object>
+            {
+                {"Song Name", _analyzedSong.SongName },
+                {"User Name",  _analyzedSong.Artist},
+                {"Genres", _analyzedSong.Genre}
+            });
             await Shell.Current.GoToAsync(nameof(Recommendation));
         }
         catch (AudioPlayException ex)

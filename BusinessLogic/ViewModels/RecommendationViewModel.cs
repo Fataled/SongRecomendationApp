@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using AnalyticsPipeline;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NAudio.Wave;
@@ -19,6 +20,7 @@ public partial class RecommendationViewModel : ObservableObject {
     private readonly FeatureExtractionApi _myApi;
     private DeezerClient _deezerClient;
     private SongSessionService  _songSessionService;
+    private AnalyticsClient _analyticsClient;
     
     [ObservableProperty]
     FeatureData _featureData;
@@ -30,7 +32,7 @@ public partial class RecommendationViewModel : ObservableObject {
     private bool isLoading;
 
     
-    public RecommendationViewModel(FeatureExtractionApi extractionApi, DeezerClient deezerClient, SongSessionService songSessionService)
+    public RecommendationViewModel(FeatureExtractionApi extractionApi, DeezerClient deezerClient, SongSessionService songSessionService, AnalyticsClient analyticsClient)
     {
         _wavEvent = new WaveOutEvent();
         _deezerClient = deezerClient;
@@ -38,6 +40,7 @@ public partial class RecommendationViewModel : ObservableObject {
         _similarities = new ObservableCollection<SongSimilarity>();
         _cancellationToken = new CancellationTokenSource();
         _songSessionService = songSessionService;
+        _analyticsClient = analyticsClient;
         InitAsync().FireAndForget();
     }
 
@@ -84,8 +87,12 @@ public partial class RecommendationViewModel : ObservableObject {
             }
             await Task.WhenAll(featureTasks);
             sw.Stop();
-            Console.WriteLine($"Feature Extraction: {sw.Elapsed}");
-            Console.WriteLine($"Feature data length: {results.Count}");
+            await _analyticsClient.IngestEvent("Genre Search", "User Token", properties: new Dictionary<string, object>
+            {
+                { "Songs Found", results.Count},
+                {"Time Take", sw.Elapsed}
+            });
+            
             FeatureData[] featureDataArray = results.ToArray();
             featureDataList.AddRange(featureDataArray);
             Vector vectorMaker = new Vector(featureDataList);

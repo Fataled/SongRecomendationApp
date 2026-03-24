@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui;
+﻿using AnalyticsPipeline;
+using CommunityToolkit.Maui;
 using LiveChartsCore.SkiaSharpView.Maui;
 using Microsoft.Extensions.Logging;
 using ProjectHellsParadise.BusinessLogic.APIs;
@@ -6,6 +7,7 @@ using ProjectHellsParadise.BusinessLogic.ExtraStuff;
 using ProjectHellsParadise.BusinessLogic.Services;
 using ProjectHellsParadise.BusinessLogic.ViewModels;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using AuthClient;
 
 namespace ProjectHellsParadise;
 
@@ -31,8 +33,12 @@ public static class MauiProgram
         builder.Services.AddSingleton<SpotifyClient>();
         builder.Services.AddSingleton<AppleMusic>();
         builder.Services.AddSingleton<SongSessionService>();
+        builder.Services.AddSingleton<AuthClient.AuthClient>(sp => new AuthClient.AuthClient("http://159.203.18.252:8002"));
+        builder.Services.AddSingleton<AnalyticsClient>(sp => new AnalyticsClient("http://159.203.18.252:8001"));
         builder.Services.AddSingleton<IDialogService, DialogService>();
 
+        builder.Services.AddTransient<RegisterPageViewModel>();
+        builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<RecommendationViewModel>();
         builder.Services.AddTransient<Recommendation>(); 
         builder.Services.AddTransient<AnalysisViewModel>();
