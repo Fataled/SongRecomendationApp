@@ -8,7 +8,7 @@ namespace ProjectHellsParadise.BusinessLogic.APIs;
 public class FeatureExtractionApi : ApiClientBase
 {
     private bool _connected;
-    private AnalyticsClient _analyticsClient;
+    private readonly AnalyticsClient _analyticsClient;
     
     public FeatureExtractionApi() : base("http://159.203.18.252:8000") //  SERVER: http://159.203.18.252:4000  HOME: http://127.0.0.1:8000
     {
@@ -21,8 +21,8 @@ public class FeatureExtractionApi : ApiClientBase
     {
         if (_connected) return;
         
-        int maxAttempts = 10;
-        int delayMs = 1000;
+        const int maxAttempts = 10;
+        const int delayMs = 1000;
 
         for (int i = 0; i < maxAttempts; i++)
         {
