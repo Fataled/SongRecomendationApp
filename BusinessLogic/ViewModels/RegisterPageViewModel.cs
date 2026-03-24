@@ -52,5 +52,29 @@ public partial class RegisterPageViewModel : ObservableObject
             Console.WriteLine(ex.Message);
         }   
     }
+
+    [RelayCommand]
+    private async Task RegisterViaGoogle(UserRegisterModel registerModel)
+    {
+        try
+        {
+            JsonElement response = await _authClient.LoginWithOidc("google");
+            
+            _currentUser.Jwt = response.GetProperty("access_token").GetString()!;
+            
+            JsonElement userData = await _authClient.GetUserAsync(_currentUser.Jwt);
+            
+            _currentUser.Id = userData.GetProperty("id").GetString()!;
+            
+            await _analyticsClient.IngestEvent("Login Via Google", _currentUser.Id, properties: new Dictionary<string, object>
+            {
+                { "User Email", userData.GetProperty("email").GetString()! },
+            });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
     
 }

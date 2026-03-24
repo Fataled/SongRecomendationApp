@@ -39,7 +39,7 @@ public static class MauiProgram
         builder.Services.AddSingleton(authClient);
         Task.Run(async () => await
             authClient.RegisterOidcProviderAsync(
-                "",
+                "REMOVED_AUTH_TOKEN",
                 "google",
                 "REMOVED_GOOGLE_CLIENT_ID",
                 "REMOVED_GOOGLE_CLIENT_SECRET",

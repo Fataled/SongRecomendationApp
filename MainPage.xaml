@@ -3,15 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProjectHellsParadise.MainPage">
 
-   <Grid RowDefinitions="*,*,*,*">
+   <Grid RowDefinitions="*,*,*,*,*">
        
        <Entry Grid.Row="0" Placeholder="Enter Email" Text="{Binding RegisterModel.Email, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"> </Entry>
        <Entry Grid.Row="1" Placeholder="Enter Password" Text="{Binding RegisterModel.Password, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"> </Entry>
        <Entry Grid.Row="2" Placeholder="Enter Username" Text="{Binding RegisterModel.Name, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"> </Entry>
        
-       <Button Grid.Row="3" Command="{Binding RegisterViaEmailPasswordCommand}" CommandParameter="{Binding RegisterModel}">
-            
-       </Button>
+       <Button Grid.Row="3" Command="{Binding RegisterViaEmailPasswordCommand}" CommandParameter="{Binding RegisterModel}"/>
+       <Button Grid.Row="4" Command="{Binding RegisterViaGoogleCommand}" CommandParameter="{Binding RegisterModel}"/>
+           
        
        
    </Grid>

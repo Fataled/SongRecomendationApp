@@ -58,7 +58,6 @@ public partial class SongSearchViewModel : ObservableObject
     [RelayCommand]
     private async Task SearchBarResultsChanged(DeezerDTO.DeezerData selected)
     {
-        if (selected == null) return;
         try
         {
             ByteRecord selectedSong = await _deezerClient.DownloadPreviewBytes(selected.Preview, selected.Title, selected.Artist.Name);
