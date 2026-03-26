@@ -51,6 +51,7 @@ public partial class RegisterPageViewModel : ObservableObject
                 { "User Email", registerModel.Email },
                 {"User Name",  registerModel.Name },
             });
+            
             if (RememberMe)
             {
                 RefreshTokenResponse refreshTokenResponse = await _authClient.GetRefreshTokenAsync(_currentUser.Jwt);
@@ -172,7 +173,7 @@ public partial class RegisterPageViewModel : ObservableObject
     private async Task GoLoginPage()
     {
         RegisterModel = new UserRegisterModel();
-        await Shell.Current.GoToAsync("///MainPage");
+        await Shell.Current.GoToAsync(nameof(LoginPage));
     }
 
     [RelayCommand]
@@ -185,7 +186,7 @@ public partial class RegisterPageViewModel : ObservableObject
     [RelayCommand]
     private async Task ForgotPassword(string email)
     {
-        JsonElement resetRequest = await _authClient.RequestPasswordReset(email);
+        ConfirmationResponse resetRequest = await _authClient.RequestPasswordReset(email);
         
     } 
     

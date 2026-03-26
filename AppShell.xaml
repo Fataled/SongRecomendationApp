@@ -7,7 +7,7 @@
     Title="ProjectHellsParadise">
 
     <ShellContent
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        ContentTemplate="{DataTemplate local:LoadingPage}"
+        Route="LoadingPage" />
 
 </Shell>

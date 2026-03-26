@@ -6,10 +6,10 @@ using ProjectHellsParadise.BusinessLogic.ViewModels;
 
 namespace ProjectHellsParadise;
 
-public partial class MainPage : ContentPage
+public partial class LoginPage : ContentPage
 {
     
-    public MainPage(RegisterPageViewModel vm)
+    public LoginPage(RegisterPageViewModel vm)
     {
         BindingContext = vm;
         InitializeComponent();

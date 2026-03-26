@@ -62,7 +62,7 @@
     <ItemGroup>
         <PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="6.0.0" />
         <PackageReference Include="AnalyticsPipeline" Version="1.0.0" />
-        <PackageReference Include="AuthClient" Version="1.5.1" />
+        <PackageReference Include="AuthClient" Version="1.5.4" />
         <PackageReference Include="CommunityToolkit.Maui" Version="14.0.1" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1" />
         <PackageReference Include="LiveCharts" Version="0.9.7" />
