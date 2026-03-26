@@ -8,6 +8,7 @@ using ProjectHellsParadise.BusinessLogic.Models;
 namespace ProjectHellsParadise.BusinessLogic.ViewModels;
 using AuthClient;
 
+// TODO PUT THEIR IMAGE ABOVE PASSWORD ON LOGIN PAGE
 public partial class RegisterPageViewModel : ObservableObject
 {
     private readonly AuthClient _authClient;
@@ -90,10 +91,10 @@ public partial class RegisterPageViewModel : ObservableObject
         switch (emailExists)
         {
             case true:
-                await Shell.Current.GoToAsync(nameof(LoginPage)); // TODO login
+                await Shell.Current.GoToAsync(nameof(LoginPage));
                 break;
             case false:
-                await Shell.Current.GoToAsync(nameof(RegisterPage)); // TODO register
+                await Shell.Current.GoToAsync(nameof(RegisterPage));
                 break;
             default:
                 await _dialogService.ShowAlertAsync("Issue checking email", "Try again with a different email", "ok");
