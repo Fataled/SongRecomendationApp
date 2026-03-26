@@ -15,6 +15,8 @@ public partial class RegisterPageViewModel : ObservableObject
     private readonly AnalyticsClient _analyticsClient;
     private CurrentUser _currentUser;
     private IDialogService _dialogService;
+    [ObservableProperty]
+    private bool _rememberMe;
 
     public RegisterPageViewModel(AuthClient authClient, AnalyticsClient analyticsClient, CurrentUser currentUser, IDialogService dialogService)
     {
@@ -22,6 +24,7 @@ public partial class RegisterPageViewModel : ObservableObject
         _analyticsClient = analyticsClient;
         _currentUser = currentUser;
         _dialogService = dialogService;
+        _rememberMe = false;  
     }
 
     public UserRegisterModel RegisterModel { get; set; } = new UserRegisterModel();
@@ -48,7 +51,13 @@ public partial class RegisterPageViewModel : ObservableObject
                 { "User Email", registerModel.Email },
                 {"User Name",  registerModel.Name },
             });
-            
+            if (_rememberMe)
+            {
+                RefreshTokenResponse refreshTokenResponse = await _authClient.GetRefreshTokenAsync(_currentUser.Jwt);
+                if (refreshTokenResponse.RefreshToken != null) await SecureStorage.SetAsync("refreshToken", refreshTokenResponse.RefreshToken);
+                else { await _dialogService.ShowAlertAsync("Token error", "A token error occured you can just click ok", "ok"); }
+            }
+
             RegisterModel = new UserRegisterModel();
 
             await Shell.Current.GoToAsync(nameof(SongSearchPage));
@@ -126,6 +135,13 @@ public partial class RegisterPageViewModel : ObservableObject
                         { "User Email", loginModel.Email },
                     });
                 
+                if (_rememberMe)
+                {
+                    RefreshTokenResponse refreshTokenResponse = await _authClient.GetRefreshTokenAsync(_currentUser.Jwt);
+                    if (refreshTokenResponse.RefreshToken != null) await SecureStorage.SetAsync("refreshToken", refreshTokenResponse.RefreshToken);
+                    else { await _dialogService.ShowAlertAsync("Token error", "A token error occured you can just click ok", "ok"); }
+                }
+                
                 RegisterModel = new UserRegisterModel();
                 
                 await Shell.Current.GoToAsync(nameof(SongSearchPage));
@@ -158,5 +174,4 @@ public partial class RegisterPageViewModel : ObservableObject
         RegisterModel = new UserRegisterModel();
         await Shell.Current.GoToAsync("///MainPage");
     }
-  
 }

@@ -40,11 +40,16 @@
                       AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0.5, 0.74, 1, -1"
                       Margin="30,0" IsPassword="True"/>
                
+               <HorizontalStackLayout AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.05, 0.85" Margin="20,0">
+                   <Label Text="Remember me? " FontSize="16" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"></Label>
+                   <CheckBox IsChecked="{Binding RememberMe}" HorizontalOptions="Start" VerticalOptions="Center"/>
+               </HorizontalStackLayout>
+               
                <Button Text="Login" 
                        BackgroundColor="White" 
                        BorderColor="LightGray"
                        AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional"
-                       AbsoluteLayout.LayoutBounds="0.5, 0.9, 1, 50"
+                       AbsoluteLayout.LayoutBounds="0.5, 0.95, 1, 50"
                        Margin="30,0"
                        Command="{Binding LoginViaEmailPasswordCommand}"
                        CommandParameter="{Binding RegisterModel}"
@@ -56,7 +61,7 @@
        </Border>
        
        <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,20,0 ,0">
-           <Label Text="Don't have an account?" FontSize="16" VerticalOptions="Center"></Label>
+           <Label Text="Don't have an account? " FontSize="16" VerticalOptions="Center"></Label>
            <Label Text="Register Here" FontSize="16" TextColor="DeepSkyBlue" VerticalOptions="Center">
                <Label.GestureRecognizers>
                    <TapGestureRecognizer Command="{Binding RegisterPageCommand}"/>
