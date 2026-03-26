@@ -59,7 +59,7 @@
             <Label Text="Already have an account?" FontSize="16" VerticalOptions="Center"></Label>
             <Label Text=" Login Here" FontSize="16" TextColor="DeepSkyBlue" VerticalOptions="Center">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding LoginPageCommand}"/>
+                    <TapGestureRecognizer Command="{Binding GoLoginPageCommand}"/>
                 </Label.GestureRecognizers>
             </Label>
         </HorizontalStackLayout>

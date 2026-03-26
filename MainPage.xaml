@@ -61,10 +61,10 @@
        </Border>
        
        <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,20,0 ,0">
-           <Label Text="Don't have an account? " FontSize="16" VerticalOptions="Center"></Label>
-           <Label Text="Register Here" FontSize="16" TextColor="DeepSkyBlue" VerticalOptions="Center">
+           <Label Text="Don't have an account?" FontSize="16" VerticalOptions="Center"></Label>
+           <Label Text=" Register Here" FontSize="16" TextColor="DeepSkyBlue" VerticalOptions="Center">
                <Label.GestureRecognizers>
-                   <TapGestureRecognizer Command="{Binding RegisterPageCommand}"/>
+                   <TapGestureRecognizer Command="{Binding GoRegisterPageCommand}"/>
                </Label.GestureRecognizers>
            </Label>
        </HorizontalStackLayout>

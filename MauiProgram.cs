@@ -7,9 +7,7 @@ using ProjectHellsParadise.BusinessLogic.ExtraStuff;
 using ProjectHellsParadise.BusinessLogic.Services;
 using ProjectHellsParadise.BusinessLogic.ViewModels;
 using SkiaSharp.Views.Maui.Controls.Hosting;
-using AuthClient;
 using MauiIcons.Material;
-using Microsoft.Extensions.Configuration;
 
 namespace ProjectHellsParadise;
 
@@ -47,6 +45,21 @@ public static class MauiProgram
                 "REMOVED_GOOGLE_CLIENT_SECRET",
                 "https://accounts.google.com/.well-known/openid-configuration"
             ));
+
+        Task.Run(async () => await
+            authClient.ModifyMailService(
+                "REMOVED_AUTH_TOKEN",
+                "Song Recommendation Service",
+                "vcdi ijhj oglj wuyq",
+                "akobrume@gmail.com",
+                587,
+                "smtp.gmail.com",
+                true,
+                false
+            ));
+
+        Task.Run(async () => await
+            authClient.RequestPasswordReset("akobrume@gmail.com"));
         
         builder.Services.AddSingleton<AnalyticsClient>(sp => new AnalyticsClient("http://159.203.18.252:8001"));
         builder.Services.AddSingleton<IDialogService, DialogService>();

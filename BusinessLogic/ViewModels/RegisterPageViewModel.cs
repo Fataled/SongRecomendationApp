@@ -51,7 +51,7 @@ public partial class RegisterPageViewModel : ObservableObject
                 { "User Email", registerModel.Email },
                 {"User Name",  registerModel.Name },
             });
-            if (_rememberMe)
+            if (RememberMe)
             {
                 RefreshTokenResponse refreshTokenResponse = await _authClient.GetRefreshTokenAsync(_currentUser.Jwt);
                 if (refreshTokenResponse.RefreshToken != null) await SecureStorage.SetAsync("refreshToken", refreshTokenResponse.RefreshToken);
@@ -135,7 +135,7 @@ public partial class RegisterPageViewModel : ObservableObject
                         { "User Email", loginModel.Email },
                     });
                 
-                if (_rememberMe)
+                if (RememberMe)
                 {
                     RefreshTokenResponse refreshTokenResponse = await _authClient.GetRefreshTokenAsync(_currentUser.Jwt);
                     if (refreshTokenResponse.RefreshToken != null) await SecureStorage.SetAsync("refreshToken", refreshTokenResponse.RefreshToken);
@@ -162,16 +162,31 @@ public partial class RegisterPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task RegisterPage()
+    private async Task GoRegisterPage()
     {
         RegisterModel = new UserRegisterModel();
         await Shell.Current.GoToAsync(nameof(RegisterPage));
     }
 
     [RelayCommand]
-    private async Task LoginPage()
+    private async Task GoLoginPage()
     {
         RegisterModel = new UserRegisterModel();
         await Shell.Current.GoToAsync("///MainPage");
     }
+
+    [RelayCommand]
+    private async Task StartAccRecovery()
+    {
+        RegisterModel = new UserRegisterModel();
+        await Shell.Current.GoToAsync(nameof(ForgotPasswordPage));
+    }
+
+    [RelayCommand]
+    private async Task ForgotPassword(string email)
+    {
+        JsonElement resetRequest = await _authClient.RequestPasswordReset(email);
+        
+    } 
+    
 }
