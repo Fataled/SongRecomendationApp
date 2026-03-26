@@ -4,14 +4,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:Class="ProjectHellsParadise.RegisterPage">
+    
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
+    
     <ContentPage.Content>
         <Grid 
        ColumnDefinitions="*,*,*"
+       RowDefinitions="*, Auto"
        Padding="0,70"
        >
        
        <Border 
            Grid.Column="1"
+           Grid.Row="0"
            >
            <Border.StrokeShape>
                <RoundRectangle CornerRadius="20"/>
@@ -22,33 +29,40 @@
                <mi:MauiIcon Icon="{mi:Material Person}" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5, 0.05"></mi:MauiIcon>
                <Label Text="Register" FontSize="24" FontAttributes="Bold" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5, 0.1"/>
                
-               <Label Text="Username" FontAttributes="Bold" FontSize="16" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0, 0.39 "
-                      Margin="30,0"/>
-               <Entry Placeholder="Enter your username" Text="{Binding RegisterModel.Name, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
-                      AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0.5, 0.45, 1, -1"
-                      Margin="30,0"/>
+               <Button Text="Continue With Google" Command="{Binding RegisterViaGoogleCommand}" CommandParameter="{Binding RegisterModel}"
+                       AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0.5, 0.3, 1, 50" BackgroundColor="White"
+                       BorderColor="LightGray" Margin="30,0"/>
                
-               <Label Text="Password" FontAttributes="Bold" FontSize="16" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0, 0.59 "
-                      Margin="30,0"/>
-               <Entry Placeholder="Enter your password" Text="{Binding RegisterModel.Password, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
-                      AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0.5, 0.65, 1, -1"
-                      Margin="30,0" IsPassword="True"/>
+               <Label Text="OR" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5, 0.5"></Label>
                
+               <Label Text="Email" FontAttributes="Bold" FontSize="16" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0, 0.60"
+                      Margin="30,0"/>
+               <Entry Placeholder="Enter your email address" Text="{Binding RegisterModel.Email, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
+                      AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0.5, 0.67, 1, -1"
+                      Margin="30,0"/>
                
                <Button Text="Register" 
                        BackgroundColor="White" 
                        BorderColor="LightGray"
                        AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional"
-                       AbsoluteLayout.LayoutBounds="0.5, 0.8, 1, 50"
+                       AbsoluteLayout.LayoutBounds="0.5, 0.9, 1, 50"
                        Margin="30,0"
-                       Command="{Binding RegisterViaEmailPasswordCommand}"
-                       CommandParameter="{Binding RegisterModel}"
+                       Command="{Binding CheckEmailCommand}"
                        />
                
            </AbsoluteLayout>
            
            
        </Border>
+            
+        <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,20,0 ,0">
+            <Label Text="Already have an account?" FontSize="16" VerticalOptions="Center"></Label>
+            <Label Text=" Login Here" FontSize="16" TextColor="DeepSkyBlue" VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LoginPageCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </HorizontalStackLayout>
        
    </Grid>
     </ContentPage.Content>

@@ -52,9 +52,10 @@ public static class MauiProgram
         builder.Services.AddSingleton<IDialogService, DialogService>();
         builder.Services.AddSingleton<CurrentUser>();
         builder.Services.AddSingleton<RegisterPageViewModel>();
+        builder.Services.AddSingleton<SettingsPageViewModel>();
         
         builder.Services.AddTransient<RegisterPage>();
-        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<AccountCreationPage>();
         builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<RecommendationViewModel>();
         builder.Services.AddTransient<Recommendation>(); 
@@ -62,6 +63,7 @@ public static class MauiProgram
         builder.Services.AddTransient<AnalysisPage>();
         builder.Services.AddTransient<SongSearchViewModel>();
         builder.Services.AddTransient<SongSearchPage>();
+        builder.Services.AddTransient<SettingsPage>();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

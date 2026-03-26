@@ -48,6 +48,8 @@ public partial class RegisterPageViewModel : ObservableObject
                 { "User Email", registerModel.Email },
                 {"User Name",  registerModel.Name },
             });
+            
+            RegisterModel = new UserRegisterModel();
 
             await Shell.Current.GoToAsync(nameof(SongSearchPage));
         }
@@ -91,10 +93,10 @@ public partial class RegisterPageViewModel : ObservableObject
         switch (emailExists)
         {
             case true:
-                await Shell.Current.GoToAsync(nameof(LoginPage));
+                await _dialogService.ShowAlertAsync("Email exists", "This email is connected to an account", "ok");
                 break;
             case false:
-                await Shell.Current.GoToAsync(nameof(RegisterPage));
+                await Shell.Current.GoToAsync(nameof(AccountCreationPage));
                 break;
             default:
                 await _dialogService.ShowAlertAsync("Issue checking email", "Try again with a different email", "ok");
@@ -124,6 +126,8 @@ public partial class RegisterPageViewModel : ObservableObject
                         { "User Email", loginModel.Email },
                     });
                 
+                RegisterModel = new UserRegisterModel();
+                
                 await Shell.Current.GoToAsync(nameof(SongSearchPage));
             }
             else if (response.MfaRequired)
@@ -140,5 +144,19 @@ public partial class RegisterPageViewModel : ObservableObject
             Console.WriteLine(ex.Message);
         }
     }
-    
+
+    [RelayCommand]
+    private async Task RegisterPage()
+    {
+        RegisterModel = new UserRegisterModel();
+        await Shell.Current.GoToAsync(nameof(RegisterPage));
+    }
+
+    [RelayCommand]
+    private async Task LoginPage()
+    {
+        RegisterModel = new UserRegisterModel();
+        await Shell.Current.GoToAsync("///MainPage");
+    }
+  
 }

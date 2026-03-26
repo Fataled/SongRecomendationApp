@@ -2,6 +2,7 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:Class="ProjectHellsParadise.SongSearchPage">
     
     <Shell.BackButtonBehavior>
@@ -9,18 +10,19 @@
     </Shell.BackButtonBehavior>
     
     <ContentPage.Content>
-        <Grid RowDefinitions="*, 4*" Margin="10">
+        <Grid RowDefinitions="*, 4*" ColumnDefinitions="*, Auto" Margin="10">
             
             <SearchBar x:Name="_songSearchBar" 
-                       Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Center"
+                       Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Center" Grid.Column="0"
                        FontFamily="Inter"
                        Placeholder="Enter Song Name" SearchCommand="{Binding SongSearchCommand}"
                        SearchCommandParameter="{Binding Text, Source={RelativeSource Self}}"
                        />
             
             <CollectionView 
-                x:Name="_searchBarResults" 
                 Grid.Row="1" 
+                Grid.Column="0"
+                Grid.ColumnSpan="1"
                 ItemsSource="{Binding ObservableCollection}" 
                 SelectionMode="Single"
                 SelectionChangedCommand="{Binding SearchBarResultsChangedCommand}"
@@ -34,6 +36,12 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            
+            <Label Text="{mi:Material Settings}" Grid.Column = "1" HeightRequest="45" WidthRequest="45" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SettingsPageCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
             
         </Grid>
     </ContentPage.Content>

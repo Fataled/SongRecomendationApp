@@ -3,7 +3,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
-             x:Class="ProjectHellsParadise.LoginPage">
+             x:Class="ProjectHellsParadise.AccountCreationPage">
     <ContentPage.Content>
         <Grid 
        ColumnDefinitions="*,*,*"
@@ -20,21 +20,27 @@
            <AbsoluteLayout >
                
                <mi:MauiIcon Icon="{mi:Material Person}" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5, 0.05"></mi:MauiIcon>
-               <Label Text="Login" FontSize="24" FontAttributes="Bold" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5, 0.1"/>
+               <Label Text="Register" FontSize="24" FontAttributes="Bold" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5, 0.1"/>
                
-               <Label Text="Password" FontAttributes="Bold" FontSize="16" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0, 0.49 "
+               <Label Text="Username" FontAttributes="Bold" FontSize="16" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0, 0.3 "
+                      Margin="30,0"/>
+               <Entry Placeholder="Enter your username" Text="{Binding RegisterModel.Name, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
+                      AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0.5, 0.37, 1, -1"
+                      Margin="30,0"/>
+               
+               <Label Text="Password" FontAttributes="Bold" FontSize="16" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0, 0.5 "
                       Margin="30,0"/>
                <Entry Placeholder="Enter your password" Text="{Binding RegisterModel.Password, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
-                      AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0.5, 0.55, 1, -1"
+                      AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0.5, 0.57, 1, -1"
                       Margin="30,0" IsPassword="True"/>
                
-               <Button Text="Login" 
+               <Button Text="Register" 
                        BackgroundColor="White" 
                        BorderColor="LightGray"
                        AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional"
                        AbsoluteLayout.LayoutBounds="0.5, 0.8, 1, 50"
                        Margin="30,0"
-                       Command="{Binding LoginViaEmailPasswordCommand}"
+                       Command="{Binding RegisterViaEmailPasswordCommand}"
                        CommandParameter="{Binding RegisterModel}"
                        />
                

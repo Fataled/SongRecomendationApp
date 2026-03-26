@@ -2,7 +2,6 @@
 using AnalyticsPipeline;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using NAudio.Wave;
 using ProjectHellsParadise.BusinessLogic.APIs;
 using ProjectHellsParadise.BusinessLogic.Data_Transfer_Object;
 using ProjectHellsParadise.BusinessLogic.Exceptions;
@@ -84,5 +83,6 @@ public partial class SongSearchViewModel : ObservableObject
         }
     }
     
-    
+    [RelayCommand]
+    private async Task SettingsPage() => await Shell.Current.GoToAsync(nameof(SettingsPage));
 }

@@ -2,9 +2,9 @@
 
 namespace ProjectHellsParadise;
 
-public partial class LoginPage : ContentPage
+public partial class AccountCreationPage : ContentPage
 {
-    public LoginPage(RegisterPageViewModel viewModel)
+    public AccountCreationPage(RegisterPageViewModel viewModel)
     {
         BindingContext = viewModel;
         InitializeComponent();
