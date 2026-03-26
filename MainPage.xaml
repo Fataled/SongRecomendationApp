@@ -1,18 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:Class="ProjectHellsParadise.MainPage">
 
-   <Grid RowDefinitions="*,*,*,*,*">
+   <Grid 
+       ColumnDefinitions="*,*,*"
+       Padding="0,70"
+       >
        
-       <Entry Grid.Row="0" Placeholder="Enter Email" Text="{Binding RegisterModel.Email, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"> </Entry>
-       <Entry Grid.Row="1" Placeholder="Enter Password" Text="{Binding RegisterModel.Password, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"> </Entry>
-       <Entry Grid.Row="2" Placeholder="Enter Username" Text="{Binding RegisterModel.Name, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"> </Entry>
-       
-       <Button Grid.Row="3" Command="{Binding RegisterViaEmailPasswordCommand}" CommandParameter="{Binding RegisterModel}"/>
-       <Button Grid.Row="4" Command="{Binding RegisterViaGoogleCommand}" CommandParameter="{Binding RegisterModel}"/>
+       <Border 
+           Grid.Column="1"
+           >
+           <Border.StrokeShape>
+               <RoundRectangle CornerRadius="20"/>
+           </Border.StrokeShape>
            
-       
+           <AbsoluteLayout >
+               
+               <mi:MauiIcon Icon="{mi:Material Person}" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5, 0.05"></mi:MauiIcon>
+               <Label Text="Sign Up" FontSize="24" FontAttributes="Bold" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5, 0.1"/>
+               
+               <Button Text="Continue With Google" Command="{Binding RegisterViaGoogleCommand}" CommandParameter="{Binding RegisterModel}"
+                       AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0.5, 0.3, 1, 50" BackgroundColor="White"
+                       BorderColor="LightGray" Margin="30,0"/>
+               
+               <Label Text="OR" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5, 0.5"></Label>
+               
+               <Label Text="Email" FontAttributes="Bold" FontSize="16" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0, 0.62 "
+                      Margin="30,0"/>
+               <Entry Placeholder="Enter your email address" Text="{Binding RegisterModel.Email, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
+                      AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0.5, 0.69, 1, -1"
+                      Margin="30,0"/>
+               
+               <Button Text="Continue With Email" 
+                       BackgroundColor="White" 
+                       BorderColor="LightGray"
+                       AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional"
+                       AbsoluteLayout.LayoutBounds="0.5, 0.8, 1, 50"
+                       Margin="30,0"
+                       Command="{Binding }"
+                       />
+               
+           </AbsoluteLayout>
+           
+           
+       </Border>
        
    </Grid>
 

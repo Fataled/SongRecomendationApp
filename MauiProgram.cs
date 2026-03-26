@@ -8,6 +8,7 @@ using ProjectHellsParadise.BusinessLogic.Services;
 using ProjectHellsParadise.BusinessLogic.ViewModels;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using AuthClient;
+using MauiIcons.Material;
 using Microsoft.Extensions.Configuration;
 
 namespace ProjectHellsParadise;
@@ -22,6 +23,7 @@ public static class MauiProgram
             .UseLiveCharts()
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .UseMaterialMauiIcons()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
