@@ -51,8 +51,10 @@ public static class MauiProgram
         builder.Services.AddSingleton<AnalyticsClient>(sp => new AnalyticsClient("http://159.203.18.252:8001"));
         builder.Services.AddSingleton<IDialogService, DialogService>();
         builder.Services.AddSingleton<CurrentUser>();
-
-        builder.Services.AddTransient<RegisterPageViewModel>();
+        builder.Services.AddSingleton<RegisterPageViewModel>();
+        
+        builder.Services.AddTransient<RegisterPage>();
+        builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<RecommendationViewModel>();
         builder.Services.AddTransient<Recommendation>(); 
