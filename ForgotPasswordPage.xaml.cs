@@ -9,7 +9,7 @@ namespace ProjectHellsParadise;
 
 public partial class ForgotPasswordPage : ContentPage
 {
-    public ForgotPasswordPage(RegisterPageViewModel viewModel)
+    public ForgotPasswordPage(ForgotPasswordViewModel viewModel)
     {
         BindingContext = viewModel;
         InitializeComponent();

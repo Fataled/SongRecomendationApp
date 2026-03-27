@@ -182,12 +182,5 @@ public partial class RegisterPageViewModel : ObservableObject
         RegisterModel = new UserRegisterModel();
         await Shell.Current.GoToAsync(nameof(ForgotPasswordPage));
     }
-
-    [RelayCommand]
-    private async Task ForgotPassword(string email)
-    {
-        ConfirmationResponse resetRequest = await _authClient.RequestPasswordReset(email);
-        
-    } 
     
 }

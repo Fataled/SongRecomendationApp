@@ -3,7 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:Class="ProjectHellsParadise.LoginPage">
+    
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
 
+    
    <Grid 
        ColumnDefinitions="*,*,*"
        RowDefinitions="*, Auto"
@@ -36,6 +41,11 @@
                
                <Label Text="Password" FontAttributes="Bold" FontSize="16" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0, 0.67 "
                       Margin="30,0"/>
+               <Label Text="Forgot Password?" FontSize="12" TextColor="DeepSkyBlue" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.9, 0.67">
+                   <Label.GestureRecognizers>
+                       <TapGestureRecognizer Command="{Binding StartAccRecoveryCommand}"/>
+                   </Label.GestureRecognizers>
+               </Label>
                <Entry Placeholder="Enter your password" Text="{Binding RegisterModel.Password, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
                       AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0.5, 0.74, 1, -1"
                       Margin="30,0" IsPassword="True"/>
