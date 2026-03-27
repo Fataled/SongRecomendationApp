@@ -4,6 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProjectHellsParadise.SettingsPage">
     <ContentPage.Content>
-        
+        <Grid>
+            <Button Text="Logout" Command="{Binding LogoutCommand}"></Button>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
