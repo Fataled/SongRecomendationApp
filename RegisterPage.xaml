@@ -29,7 +29,7 @@
                <mi:MauiIcon Icon="{mi:Material Person}" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5, 0.05"></mi:MauiIcon>
                <Label Text="Register" FontSize="24" FontAttributes="Bold" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5, 0.1"/>
                
-               <Button Text="Continue With Google" Command="{Binding RegisterViaGoogleCommand}" CommandParameter="{Binding RegisterModel}"
+               <Button Text="Continue With Google" Command="{Binding RegisterViaGoogleCommand}" CommandParameter="{Binding RegisterService}"
                        AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0.5, 0.3, 1, 50" BackgroundColor="White"
                        BorderColor="LightGray" Margin="30,0"/>
                
@@ -37,7 +37,7 @@
                
                <Label Text="Email" FontAttributes="Bold" FontSize="16" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0, 0.60"
                       Margin="30,0"/>
-               <Entry Placeholder="Enter your email address" Text="{Binding RegisterModel.Email, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
+               <Entry Placeholder="Enter your email address" Text="{Binding RegisterService.Email, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
                       AbsoluteLayout.LayoutFlags="XProportional, YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0.5, 0.67, 1, -1"
                       Margin="30,0"/>
                

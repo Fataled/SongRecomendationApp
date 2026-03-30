@@ -2,6 +2,10 @@
 
 namespace ProjectHellsParadise.BusinessLogic.MyMath;
 
+/// <summary>
+/// Turning song features into vectors so math can be done on them
+/// </summary>
+/// <author>Brume Ako</author>
 public class Vector
 {
     private List<FeatureData> _featureDataSet;

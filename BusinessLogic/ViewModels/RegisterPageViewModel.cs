@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ProjectHellsParadise.BusinessLogic.ExtraStuff;
 using ProjectHellsParadise.BusinessLogic.Models;
+using ProjectHellsParadise.BusinessLogic.Services;
 
 namespace ProjectHellsParadise.BusinessLogic.ViewModels;
 using AuthClient;
@@ -27,20 +28,20 @@ public partial class RegisterPageViewModel : ObservableObject
         _rememberMe = false;  
     }
 
-    public UserRegisterModel RegisterModel { get; set; } = new UserRegisterModel();
+    public UserRegisterService RegisterService { get; set; } = new UserRegisterService();
 
     [RelayCommand]
-    private async Task RegisterViaEmailPassword(UserRegisterModel registerModel)
+    private async Task RegisterViaEmailPassword(UserRegisterService registerService)
     {
         try
         {
             JsonElement response =
-                await _authClient.RegisterAsync(registerModel.Email, registerModel.Password, registerModel.Name);
+                await _authClient.RegisterAsync(registerService.Email, registerService.Password, registerService.Name);
 
             _currentUser.Jwt = response.GetProperty("access_token").GetString()!;
             
-            RegisterModel = new UserRegisterModel();
-            OnPropertyChanged(nameof(RegisterModel));
+            RegisterService = new UserRegisterService();
+            OnPropertyChanged(nameof(RegisterService));
             
             JsonElement userData = await _authClient.GetUserAsync(_currentUser.Jwt);
 
@@ -48,8 +49,8 @@ public partial class RegisterPageViewModel : ObservableObject
             
             await _analyticsClient.IngestEvent("User Registration", _currentUser.Id, properties: new Dictionary<string, object>
             {
-                { "User Email", registerModel.Email },
-                {"User Name",  registerModel.Name },
+                { "User Email", registerService.Email },
+                {"User Name",  registerService.Name },
             });
             
             if (RememberMe)
@@ -59,7 +60,7 @@ public partial class RegisterPageViewModel : ObservableObject
                 else { await _dialogService.ShowAlertAsync("Token error", "A token error occured you can just click ok", "ok"); }
             }
 
-            RegisterModel = new UserRegisterModel();
+            RegisterService = new UserRegisterService();
 
             await Shell.Current.GoToAsync(nameof(SongSearchPage));
         }
@@ -70,7 +71,7 @@ public partial class RegisterPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task RegisterViaGoogle(UserRegisterModel registerModel)
+    private async Task RegisterViaGoogle(UserRegisterService registerService)
     {
         try
         {
@@ -98,7 +99,7 @@ public partial class RegisterPageViewModel : ObservableObject
     [RelayCommand]
     private async Task CheckEmail()
     {
-        bool? emailExists = await _authClient.CheckEmail(RegisterModel.Email);
+        bool? emailExists = await _authClient.CheckEmail(RegisterService.Email);
 
         switch (emailExists)
         {
@@ -115,12 +116,12 @@ public partial class RegisterPageViewModel : ObservableObject
     } 
     
     [RelayCommand]
-    private async Task LoginViaEmailPassword(UserRegisterModel loginModel)
+    private async Task LoginViaEmailPassword(UserRegisterService loginService)
     {
         try
         {
             LoginResult response =
-                await _authClient.LoginAsync(loginModel.Email, loginModel.Password);
+                await _authClient.LoginAsync(loginService.Email, loginService.Password);
 
             if (response.IsSuccess)
             {
@@ -133,7 +134,7 @@ public partial class RegisterPageViewModel : ObservableObject
                 await _analyticsClient.IngestEvent("User Logged In", _currentUser.Id,
                     properties: new Dictionary<string, object>
                     {
-                        { "User Email", loginModel.Email },
+                        { "User Email", loginService.Email },
                     });
                 
                 if (RememberMe)
@@ -143,7 +144,7 @@ public partial class RegisterPageViewModel : ObservableObject
                     else { await _dialogService.ShowAlertAsync("Token error", "A token error occured you can just click ok", "ok"); }
                 }
                 
-                RegisterModel = new UserRegisterModel();
+                RegisterService = new UserRegisterService();
                 
                 await Shell.Current.GoToAsync(nameof(SongSearchPage));
             }
@@ -165,21 +166,21 @@ public partial class RegisterPageViewModel : ObservableObject
     [RelayCommand]
     private async Task GoRegisterPage()
     {
-        RegisterModel = new UserRegisterModel();
+        RegisterService = new UserRegisterService();
         await Shell.Current.GoToAsync(nameof(RegisterPage));
     }
 
     [RelayCommand]
     private async Task GoLoginPage()
     {
-        RegisterModel = new UserRegisterModel();
+        RegisterService = new UserRegisterService();
         await Shell.Current.GoToAsync(nameof(LoginPage));
     }
 
     [RelayCommand]
     private async Task StartAccRecovery()
     {
-        RegisterModel = new UserRegisterModel();
+        RegisterService = new UserRegisterService();
         await Shell.Current.GoToAsync(nameof(ForgotPasswordPage));
     }
     

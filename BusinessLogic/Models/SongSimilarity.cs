@@ -1,5 +1,9 @@
 ﻿namespace ProjectHellsParadise.BusinessLogic.Models;
 
+/// <summary>
+/// A compiled location of all data related to how dongs relate to their base
+/// </summary>
+/// <author>Brume Ako</author>
 public class SongSimilarity
 {
     public required string Index { get; init; }

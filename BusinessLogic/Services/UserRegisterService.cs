@@ -1,14 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace ProjectHellsParadise.BusinessLogic.Models;
+namespace ProjectHellsParadise.BusinessLogic.Services;
 
-public class UserRegisterModel : ObservableObject
+/// <summary>
+/// An object to allow the transer of login details between pages
+/// </summary>
+/// <author>Brume Ako</author>
+public class UserRegisterService : ObservableObject
 {
     private string _email;
     private string _password;
     private string _name;
     private string _totp;
-    public UserRegisterModel(string name, string password, string email,string totp)
+    public UserRegisterService(string name, string password, string email,string totp)
     {
         _name = name;
         _password = password;
@@ -16,7 +20,7 @@ public class UserRegisterModel : ObservableObject
         _totp = totp ;
     }
 
-    public UserRegisterModel()
+    public UserRegisterService()
     {
         _name = "";
         _email = "";

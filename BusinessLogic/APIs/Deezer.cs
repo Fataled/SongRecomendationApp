@@ -1,7 +1,5 @@
 ﻿using System.Collections.Concurrent;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
 using NAudio.Wave.SampleProviders;
 using ProjectHellsParadise.BusinessLogic.Data_Transfer_Object;
 using ProjectHellsParadise.BusinessLogic.Exceptions;
@@ -9,9 +7,15 @@ using ProjectHellsParadise.BusinessLogic.Exceptions;
 namespace ProjectHellsParadise.BusinessLogic.APIs;
 
 using NAudio.Wave;
-
+///<summary>
+/// The class that handles the talking to Deezer's api
+/// </summary>
+/// <author>Brume Ako</author>
 public class DeezerClient : ApiClientBase
 {
+    /// <summary>
+    /// A dictionary mapping deezer's genres in string form to their int counterpart used in the api
+    /// </summary>
     private static readonly Dictionary<string, int> GenreIds = new Dictionary<string, int>()
     {
         { "pop", 132 },
@@ -64,6 +68,12 @@ public DeezerClient() : base("https://api.deezer.com", new SocketsHttpHandler
         
         return await RequestAsync<T>(endpoint, query, ending);
     }
+    /// <summary>
+    /// Take a genre and searches Deezer's api for songs related to that genre
+    /// </summary>
+    /// <param name="query">The genre in string form</param>
+    /// <returns>A new DeezerDTO object with the data of around 200 songs</returns>
+    /// <exception cref="KeyNotFoundException">In case the genre put in isnt in the api</exception>
 
     public async Task<DeezerDTO> GetGenreSongsAsync(string query)
     {
@@ -84,6 +94,12 @@ public DeezerClient() : base("https://api.deezer.com", new SocketsHttpHandler
             throw new KeyNotFoundException("No genre found for query: " + query);
         }
     }
+    
+    /// <summary>
+    /// Takes multiple genres and evenly gets songs per
+    /// </summary>
+    /// <param name="genrePredictions">An object which contains a songs possible genres</param>
+    /// <returns>An amoount of songs in a DeezerDTO</returns>
     
     public async Task<DeezerDTO> GetGenreSongsAsync(GenrePredictionDTO[] genrePredictions)
     {
@@ -133,6 +149,15 @@ public DeezerClient() : base("https://api.deezer.com", new SocketsHttpHandler
     {
         return Task.CompletedTask;
     }
+    
+    /// <summary>
+    /// Downloads the mp3 bytes for a song off Deezer's api
+    /// </summary>
+    /// <param name="previewUrl">The url to the preview track</param>
+    /// <param name="title">The song name</param>
+    /// <param name="artist">The artists title</param>
+    /// <returns>returns a byte array for the song</returns>
+    /// <exception cref="ByteTransformationException">If any issues occur when trying to download the bytes</exception>
 
     public async Task<ByteRecord> DownloadPreviewBytes(string previewUrl, string title = "", string artist = "")
     {
@@ -141,16 +166,17 @@ public DeezerClient() : base("https://api.deezer.com", new SocketsHttpHandler
             byte[] mp3Bytes = await HttpClient.GetByteArrayAsync(previewUrl);
             return new ByteRecord(title, artist, mp3Bytes);
         }
-        catch (ByteTransformationException ex)
-        {
-          throw new ByteTransformationException("Btye Transform Issue: " + ex.Message, ex);  
-        }
         catch (Exception)
         {
-            throw new ByteTransformationException("An error occured song previewUrl was: " + previewUrl);
+            throw new ByteTransformationException($"An error downloading {title} by {artist}: " + previewUrl);
         }
     }
-    
+    /// <summary>
+    /// Takes the download function and streams it so it can output while running 
+    /// </summary>
+    /// <param name="dto">A DeezerDTO which contains the preview url, song title and name</param>
+    /// <param name="ct">A way for the method to be canceled if needed</param>
+    /// <returns>A ConcurrentQueue of ByteRecords</returns>
     public async IAsyncEnumerable<ByteRecord> DownloadPreviewBytesStreamed(
         DeezerDTO dto,
         [EnumeratorCancellation] CancellationToken ct = default)
@@ -185,7 +211,12 @@ public DeezerClient() : base("https://api.deezer.com", new SocketsHttpHandler
             await Task.Delay(50, ct).ConfigureAwait(false);
         }
     }
-    
+    /// <summary>
+    /// Convert mp3 bytes to wav bytes for processing
+    /// </summary>
+    /// <param name="mp3Bytes">Incomming mp3 byte array</param>
+    /// <returns>byte array but in wav format</returns>
+    /// <exception cref="ByteTransformationException">A way to save/check for issues when converting</exception>
     public static byte[] ConvertMp3BytesToWav(byte[] mp3Bytes) 
     {
         try

@@ -3,7 +3,10 @@ using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Media;
 
 namespace ProjectHellsParadise.BusinessLogic.ExtraStuff;
-
+/// <summary>
+/// A microphone functionality to the application allowing users to speak to find songs
+/// </summary>
+/// <author>Brume Ako</author>
 public class Microphone
 {
     private ISpeechToText _speechToText;

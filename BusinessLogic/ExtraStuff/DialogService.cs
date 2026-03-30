@@ -1,5 +1,8 @@
 ﻿namespace ProjectHellsParadise.BusinessLogic.ExtraStuff;
-
+/// <summary>
+/// A way to use display alearts in viewmodels
+/// </summary>
+/// <author>Brume Ako</author>
 public class DialogService : IDialogService
 {
     public async Task ShowAlertAsync(string title, string message, string cancel)
