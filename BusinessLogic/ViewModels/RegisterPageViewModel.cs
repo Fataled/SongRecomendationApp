@@ -2,7 +2,8 @@
 using AnalyticsPipeline;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ProjectHellsParadise.BusinessLogic.ExtraStuff;    
+using ProjectHellsParadise.BusinessLogic.ExtraStuff;
+using ProjectHellsParadise.BusinessLogic.Models;
 using ProjectHellsParadise.BusinessLogic.Services;
 
 namespace ProjectHellsParadise.BusinessLogic.ViewModels;
