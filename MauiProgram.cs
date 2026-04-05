@@ -8,6 +8,7 @@ using ProjectHellsParadise.BusinessLogic.Services;
 using ProjectHellsParadise.BusinessLogic.ViewModels;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using MauiIcons.Material;
+using ProjectHellsParadise.BusinessLogic.Models;
 
 namespace ProjectHellsParadise;
 

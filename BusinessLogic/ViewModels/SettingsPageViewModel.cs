@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ProjectHellsParadise.BusinessLogic.Models;
 
 namespace ProjectHellsParadise.BusinessLogic.ViewModels;
 
