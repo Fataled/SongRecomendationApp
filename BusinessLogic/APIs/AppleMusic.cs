@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using System.Text.Json;
-using ProjectHellsParadise.BusinessLogic.Data_Transfer_Object;
+using System.Text.Json.Serialization;
 using ProjectHellsParadise.BusinessLogic.Models;
 
 namespace ProjectHellsParadise.BusinessLogic.APIs;
@@ -51,15 +51,15 @@ public class AppleMusic
 
         await using Stream responseStream = await response.Content.ReadAsStreamAsync();
 
-        AppleMusicSearchResponseDTO? searchResponse =
-            await JsonSerializer.DeserializeAsync<AppleMusicSearchResponseDTO>(
+        AppleMusicSearchResponse? searchResponse =
+            await JsonSerializer.DeserializeAsync<AppleMusicSearchResponse>(
                 responseStream,
                 new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
                 });
 
-        AppleMusicSongDTO? firstSong = searchResponse?.Results?.Songs?.Data?.FirstOrDefault();
+        AppleMusicSongDto? firstSong = searchResponse?.Results?.Songs?.Data?.FirstOrDefault();
 
         if (firstSong?.Attributes == null)
             return null;
@@ -85,4 +85,43 @@ public class AppleMusic
 
         await Launcher.Default.OpenAsync(song.Url);
     }
+}
+
+public class AppleMusicSearchResponse
+{
+    [JsonPropertyName("results")]
+    public AppleMusicResults? Results { get; set; }
+}
+
+public class AppleMusicResults
+{
+    [JsonPropertyName("songs")]
+    public AppleMusicSongsContainer? Songs { get; set; }
+}
+
+public class AppleMusicSongsContainer
+{
+    [JsonPropertyName("data")]
+    public List<AppleMusicSongDto>? Data { get; set; }
+}
+
+public class AppleMusicSongDto
+{
+    [JsonPropertyName("id")]
+    public string? Id { get; set; }
+
+    [JsonPropertyName("attributes")]
+    public AppleMusicSongAttributes? Attributes { get; set; }
+}
+
+public class AppleMusicSongAttributes
+{
+    [JsonPropertyName("name")]
+    public string? Name { get; set; }
+
+    [JsonPropertyName("artistName")]
+    public string? ArtistName { get; set; }
+
+    [JsonPropertyName("url")]
+    public string? Url { get; set; }
 }
