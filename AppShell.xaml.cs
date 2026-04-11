@@ -9,6 +9,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(Recommendation), typeof(Recommendation));
         Routing.RegisterRoute(nameof(AnalysisPage),  typeof(AnalysisPage));
         Routing.RegisterRoute(nameof(RegisterPage),  typeof(RegisterPage));
+        Routing.RegisterRoute(nameof(FavoritesPlaylistPage), typeof(FavoritesPlaylistPage));
         Routing.RegisterRoute(nameof(AccountCreationPage),  typeof(AccountCreationPage));
         Routing.RegisterRoute(nameof(SettingsPage),  typeof(SettingsPage));
         Routing.RegisterRoute(nameof(ForgotPasswordPage),  typeof(ForgotPasswordPage));

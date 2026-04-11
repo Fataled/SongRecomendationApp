@@ -5,6 +5,8 @@
              x:Class="ProjectHellsParadise.SettingsPage">
     <ContentPage.Content>
         <Grid>
+            <Button Text="Favorites / Playlists"
+        Command="{Binding GoFavoritesPageCommand}" />
             <Button Text="Logout" Command="{Binding LogoutCommand}"></Button>
         </Grid>
     </ContentPage.Content>

@@ -3,12 +3,60 @@
   "WorkspaceRootPath": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\settingspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:settingspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\businesslogic\\viewmodels\\settingspageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:businesslogic\\viewmodels\\settingspageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\appshell.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:appshell.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\favoritesplaylistspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:favoritesplaylistspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\favoritesplaylistspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:favoritesplaylistspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\businesslogic\\viewmodels\\recommendationviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:businesslogic\\viewmodels\\recommendationviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\projecthellsparadise.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:projecthellsparadise.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\recommendation.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:recommendation.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\platforms\\android\\mainapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:platforms\\android\\mainapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\businesslogic\\apis\\spotify.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:businesslogic\\apis\\spotify.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\businesslogic\\apis\\applemusic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:businesslogic\\apis\\applemusic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\businesslogic\\models\\applemusicsong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:businesslogic\\models\\applemusicsong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\loginpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:loginpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\songsearchpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,10 +69,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\businesslogic\\data transfer object\\byterecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:businesslogic\\data transfer object\\byterecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\loginpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:loginpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +78,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,20 +86,157 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SettingsPage.xaml",
+              "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\SettingsPage.xaml",
+              "RelativeDocumentMoniker": "SettingsPage.xaml",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\SettingsPage.xaml*",
+              "RelativeToolTip": "SettingsPage.xaml*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-04-11T04:30:38.139Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AppleMusicSong.cs",
-              "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\Models\\AppleMusicSong.cs",
-              "RelativeDocumentMoniker": "BusinessLogic\\Models\\AppleMusicSong.cs",
-              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\Models\\AppleMusicSong.cs",
-              "RelativeToolTip": "BusinessLogic\\Models\\AppleMusicSong.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Title": "SettingsPageViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\ViewModels\\SettingsPageViewModel.cs",
+              "RelativeDocumentMoniker": "BusinessLogic\\ViewModels\\SettingsPageViewModel.cs",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\ViewModels\\SettingsPageViewModel.cs*",
+              "RelativeToolTip": "BusinessLogic\\ViewModels\\SettingsPageViewModel.cs*",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAuwBQAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-05T23:20:04.168Z",
+              "WhenOpened": "2026-04-11T04:29:57.902Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "AppShell.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\AppShell.xaml.cs",
+              "RelativeDocumentMoniker": "AppShell.xaml.cs",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\AppShell.xaml.cs*",
+              "RelativeToolTip": "AppShell.xaml.cs*",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAiwAsAAABcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-11T04:28:04.476Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FavoritesPlaylistsPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\FavoritesPlaylistsPage.xaml.cs",
+              "RelativeDocumentMoniker": "FavoritesPlaylistsPage.xaml.cs",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\FavoritesPlaylistsPage.xaml.cs*",
+              "RelativeToolTip": "FavoritesPlaylistsPage.xaml.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAO4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-11T04:21:27.251Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FavoritesPlaylistsPage.xaml",
+              "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\FavoritesPlaylistsPage.xaml",
+              "RelativeDocumentMoniker": "FavoritesPlaylistsPage.xaml",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\FavoritesPlaylistsPage.xaml*",
+              "RelativeToolTip": "FavoritesPlaylistsPage.xaml*",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAmwI8AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-04-11T04:20:47.887Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ProjectHellsParadise.csproj",
+              "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\ProjectHellsParadise.csproj",
+              "RelativeDocumentMoniker": "ProjectHellsParadise.csproj",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\ProjectHellsParadise.csproj",
+              "RelativeToolTip": "ProjectHellsParadise.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-04-10T20:54:08.435Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Spotify.cs",
+              "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\APIs\\Spotify.cs",
+              "RelativeDocumentMoniker": "BusinessLogic\\APIs\\Spotify.cs",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\APIs\\Spotify.cs",
+              "RelativeToolTip": "BusinessLogic\\APIs\\Spotify.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T20:53:28.969Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MainApplication.cs",
+              "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\Platforms\\Android\\MainApplication.cs",
+              "RelativeDocumentMoniker": "Platforms\\Android\\MainApplication.cs",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\Platforms\\Android\\MainApplication.cs",
+              "RelativeToolTip": "Platforms\\Android\\MainApplication.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T20:44:41.87Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Recommendation.xaml",
+              "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\Recommendation.xaml",
+              "RelativeDocumentMoniker": "Recommendation.xaml",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\Recommendation.xaml",
+              "RelativeToolTip": "Recommendation.xaml",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-04-09T23:25:35.561Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "MauiProgram.cs",
+              "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\MauiProgram.cs",
+              "RelativeDocumentMoniker": "MauiProgram.cs",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\MauiProgram.cs",
+              "RelativeToolTip": "MauiProgram.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwEkAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T23:23:50.115Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "RecommendationViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\ViewModels\\RecommendationViewModel.cs",
+              "RelativeDocumentMoniker": "BusinessLogic\\ViewModels\\RecommendationViewModel.cs",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\ViewModels\\RecommendationViewModel.cs",
+              "RelativeToolTip": "BusinessLogic\\ViewModels\\RecommendationViewModel.cs",
+              "ViewState": "AgIAAIkAAAAAAAAAAAAqwIwAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T23:14:14.528Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AppleMusicSong.cs",
+              "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\Models\\AppleMusicSong.cs",
+              "RelativeDocumentMoniker": "BusinessLogic\\Models\\AppleMusicSong.cs",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\Models\\AppleMusicSong.cs",
+              "RelativeToolTip": "BusinessLogic\\Models\\AppleMusicSong.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAWwBIAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-05T23:20:04.168Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "SongSearchPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\SongSearchPage.xaml.cs",
               "RelativeDocumentMoniker": "SongSearchPage.xaml.cs",
@@ -63,24 +244,23 @@
               "RelativeToolTip": "SongSearchPage.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-04T23:18:27.876Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-04T23:18:27.876Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 13,
               "Title": "LoginPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\LoginPage.xaml.cs",
               "RelativeDocumentMoniker": "LoginPage.xaml.cs",
               "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\LoginPage.xaml.cs",
               "RelativeToolTip": "LoginPage.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-04T16:20:10.712Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 16,
               "Title": "ByteRecord.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\Data Transfer Object\\ByteRecord.cs",
               "RelativeDocumentMoniker": "BusinessLogic\\Data Transfer Object\\ByteRecord.cs",
@@ -92,20 +272,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 10,
               "Title": "AppleMusic.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\APIs\\AppleMusic.cs",
               "RelativeDocumentMoniker": "BusinessLogic\\APIs\\AppleMusic.cs",
               "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\APIs\\AppleMusic.cs",
               "RelativeToolTip": "BusinessLogic\\APIs\\AppleMusic.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAH4AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAQwDoAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-04T16:15:41.313Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-04T16:15:41.313Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 15,
               "Title": "README.md",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\README.md",
               "RelativeDocumentMoniker": "README.md",
