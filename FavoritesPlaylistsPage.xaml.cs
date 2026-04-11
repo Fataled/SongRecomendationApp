@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace ProjectHellsParadise;
-
+//AUTHORED BY KONAPALA RITHVIK GANESH
 public partial class FavoritesPlaylistPage : ContentPage
 {
     public ObservableCollection<FavoriteSongItem> Favorites { get; } = new();

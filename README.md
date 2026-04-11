@@ -10,17 +10,17 @@ Team IA-11
 
 - Oghenebrume Ako – ID  
 - Obaid Waqas – ID  
-- Rithvik Ganesh Konapala – ID  
+- Rithvik Ganesh Konapala – 991845236
 
 ---
 
 ## 1. Project Overview
 
-NAMEYETTOBEDECIDED is a song recommendation application that helps users discover new music based on songs they already enjoy. The user selects or searches for a track, and the application computes a feature vector for that song and compares it against a collection of other songs to find the most similar ones. Recommendations are based on numerical similarity rather than just genre labels, making the suggestions more personalized and precise. 
+Project Hell's Paradise is a song recommendation application that helps users discover new music based on songs they already enjoy. The user selects or searches for a track, and the application computes a feature vector for that song and compares it against a collection of other songs to find the most similar ones. Recommendations are based on numerical similarity rather than just genre labels, making the suggestions more personalized and precise. 
 
 The application is developed as a .NET MAUI app using C# and XAML in Visual Studio on Windows. It uses MAUI pages for the presentation layer, C# classes and collections (such as `List<T>` and `Dictionary<TKey, TValue>`) for the business logic, and a SQL database for its data layer. The app demonstrates object‑oriented principles such as encapsulation, separation of concerns, and reuse through well‑designed classes and methods. 
 
-Users will interact with multiple screens to search for songs, view detailed information, see recommendations, and manage favorites or playlists. For users who have a premium music streaming subscription, NAMEYETTOBEDECIDED can open the selected track in their external music player so they can listen to recommended songs directly. In addition, the project includes a “new” research component compared to the classroom examples: representing songs as numerical feature vectors and using similarity metrics to derive recommendations, together with using a SQL database as the persistence mechanism.
+Users will interact with multiple screens to search for songs, view detailed information, see recommendations, and manage favorites or playlists. For users who have a premium music streaming subscription, Project Hell's Paradise can open the selected track in their external music player so they can listen to recommended songs directly. In addition, the project includes a “new” research component compared to the classroom examples: representing songs as numerical feature vectors and using similarity metrics to derive recommendations, together with using a SQL database as the persistence mechanism.
 
 > **Note:** The course requirements emphasize a file‑based data layer; the use of SQL here is treated as an extension / “something new” and can be adjusted to a file‑based format if required by the instructor.
 
@@ -105,7 +105,7 @@ This page allows users to manage their saved songs and playlists so they can eas
 
 ### 3.1 Class Diagram Overview
 
-The main business classes of NAMEYETTOBEDECIDED include: 
+The main business classes of Project Hell's Paradise include: 
 
 - `Song`  
   - Represents a single track.  
@@ -171,7 +171,7 @@ These sequence diagrams illustrate how the UI layer, business layer, and data la
 
 ## 4. Data Design
 
-NAMEYETTOBEDECIDED uses a relational SQL database as its primary data layer to persist songs, user favorites, playlists, and basic application settings. Data is stored in normalized tables and accessed through a small data‑access layer in C#, rather than directly via SQL from the UI. This design maintains a clear separation between presentation, business logic, and persistence while also treating SQL as a “new” technology component for the project.
+Project Hell's Paradise uses a relational SQL database as its primary data layer to persist songs, user favorites, playlists, and basic application settings. Data is stored in normalized tables and accessed through a small data‑access layer in C#, rather than directly via SQL from the UI. This design maintains a clear separation between presentation, business logic, and persistence while also treating SQL as a “new” technology component for the project.
 
 ### 4.1 Song Data
 
@@ -240,7 +240,7 @@ Each team member is responsible for a portion of the presentation layer, busines
 
 ## 6. Notes
 
-- This proposal represents the initial planned design for NAMEYETTOBEDECIDED and may be updated as the project evolves.  
+- This proposal represents the initial planned design for Project Hell's Paradise and may be updated as the project evolves.  
 - During development, features, screens, and classes may be refined, added, or removed while still respecting the course requirements for presentation, business logic, and data layers, as well as the use of MAUI, collections, and persistent storage.  
 - The final project report will update this proposal with the completed design, diagrams, screenshots, and a link to the demonstration video.
 - This is a pretty complex project though it sounds easy we will be using both C# Maui and python in order to make this work as well as quite a few different apis.

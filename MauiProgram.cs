@@ -71,6 +71,7 @@ public static class MauiProgram
         builder.Services.AddTransient<SongSearchViewModel>();
         builder.Services.AddTransient<SongSearchPage>();
         builder.Services.AddTransient<SettingsPage>();
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

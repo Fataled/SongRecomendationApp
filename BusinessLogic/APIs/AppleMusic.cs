@@ -32,7 +32,7 @@ public class AppleMusic
         if (string.IsNullOrWhiteSpace(query))
             return null;
 
-        if (DeveloperToken.Contains("PASTE_YOUR_APPLE_MUSIC_DEVELOPER_TOKEN_HERE"))
+        if (DeveloperToken.Contains("We Pretended like having one token but we dont have the paid subscription"))
             throw new InvalidOperationException("Add your Apple Music developer token in AppleMusic.cs before testing this feature.");
 
         _httpClient.DefaultRequestHeaders.Authorization =

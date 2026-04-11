@@ -1,13 +1,111 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="ProjectHellsParadise.SettingsPage"
+    Title="Settings"
+    BackgroundColor="#C8B6FF">
 
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ProjectHellsParadise.SettingsPage">
-    <ContentPage.Content>
-        <Grid>
-            <Button Text="Favorites / Playlists"
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="20">
+
+            <Label
+                Text="Settings"
+                FontSize="32"
+                FontAttributes="Bold"
+                TextColor="Black" />
+
+            <Frame
+                BackgroundColor="White"
+                CornerRadius="18"
+                Padding="20">
+                <VerticalStackLayout Spacing="12">
+                    <Label
+                        Text="Account"
+                        FontSize="22"
+                        FontAttributes="Bold"
+                        TextColor="Black" />
+
+                    <Label
+                        Text="Manage your session and app preferences."
+                        FontSize="14"
+                        TextColor="Gray" />
+
+                    <Button Text="Favorites / Playlists"
         Command="{Binding GoFavoritesPageCommand}" />
-            <Button Text="Logout" Command="{Binding LogoutCommand}"></Button>
-        </Grid>
-    </ContentPage.Content>
+                    <Button
+                        Text="Logout"
+                        Command="{Binding LogoutCommand}"
+                        BackgroundColor="#7B2CBF"
+                        TextColor="White"
+                        CornerRadius="12"
+                        HeightRequest="50" />
+                    
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame
+                BackgroundColor="White"
+                CornerRadius="18"
+                Padding="20">
+                <VerticalStackLayout Spacing="16">
+                    <Label
+                        Text="Preferences"
+                        FontSize="22"
+                        FontAttributes="Bold"
+                        TextColor="Black" />
+
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="18">
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Text="Dark Mode"
+                            FontSize="16"
+                            VerticalOptions="Center" />
+
+                        <Switch
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            IsToggled="{Binding IsDarkMode}" />
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Text="Remember Me"
+                            FontSize="16"
+                            VerticalOptions="Center" />
+
+                        <Switch
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            IsToggled="{Binding RememberMe}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame
+                BackgroundColor="White"
+                CornerRadius="18"
+                Padding="20">
+                <VerticalStackLayout Spacing="12">
+                    <Label
+                        Text="About"
+                        FontSize="22"
+                        FontAttributes="Bold"
+                        TextColor="Black" />
+
+                    <Label
+                        Text="Project Hells Paradise Song Recommender"
+                        FontSize="16"
+                        TextColor="Black" />
+
+                    <Label
+                        Text="Version 1.0"
+                        FontSize="14"
+                        TextColor="Gray" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
