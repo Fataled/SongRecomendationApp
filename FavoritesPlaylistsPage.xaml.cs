@@ -20,6 +20,7 @@ public partial class FavoritesPlaylistPage : ContentPage
     public FavoritesPlaylistPage()
     {
         InitializeComponent();
+        BindingContext = this;
         SeedSampleData();
     }
 

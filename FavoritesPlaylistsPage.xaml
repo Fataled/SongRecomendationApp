@@ -3,13 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProjectHellsParadise.FavoritesPlaylistPage"
              x:Name="PageRoot"
-             Title="Favorites & Playlists">
+             Title="Favorites &amp; Playlists">
 
     <Grid Padding="20"
           RowDefinitions="Auto,Auto,*,Auto,*,Auto,*"
           RowSpacing="14">
 
-        <!-- Header -->
         <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
             <Button Text="←"
                     WidthRequest="44"
@@ -24,13 +23,11 @@
                    VerticalOptions="Center" />
         </Grid>
 
-        <!-- Favorites title -->
         <Label Grid.Row="1"
                Text="Favorites"
                FontSize="20"
                FontAttributes="Bold" />
 
-        <!-- Favorites list -->
         <Border Grid.Row="2" StrokeThickness="1" Padding="10">
             <CollectionView ItemsSource="{Binding Source={x:Reference PageRoot}, Path=Favorites}"
                             SelectionMode="None">
@@ -67,7 +64,6 @@
             </CollectionView>
         </Border>
 
-        <!-- Create playlist -->
         <Grid Grid.Row="3" ColumnDefinitions="*,Auto" ColumnSpacing="10">
             <Entry x:Name="PlaylistNameEntry"
                    Placeholder="Enter new playlist name" />
@@ -76,7 +72,6 @@
                     Clicked="AddPlaylistClicked" />
         </Grid>
 
-        <!-- Playlists list -->
         <Border Grid.Row="4" StrokeThickness="1" Padding="10">
             <VerticalStackLayout Spacing="8">
                 <Label Text="Playlists"
@@ -109,13 +104,11 @@
             </VerticalStackLayout>
         </Border>
 
-        <!-- Selected playlist title -->
         <Label Grid.Row="5"
                Text="{Binding Source={x:Reference PageRoot}, Path=SelectedPlaylistTitle}"
                FontSize="18"
                FontAttributes="Bold" />
 
-        <!-- Songs inside selected playlist -->
         <Border Grid.Row="6" StrokeThickness="1" Padding="10">
             <CollectionView ItemsSource="{Binding Source={x:Reference PageRoot}, Path=PlaylistSongs}"
                             SelectionMode="None">
