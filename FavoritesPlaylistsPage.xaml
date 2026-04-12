@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProjectHellsParadise.FavoritesPlaylistPage"
+             x:Name="PageRoot"
+             Title="Favorites &amp; Playlists">
+
+    <Grid Padding="20"
+          RowDefinitions="Auto,Auto,*,Auto,*,Auto,*"
+          RowSpacing="14">
+
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+            <Button Text="←"
+                    WidthRequest="44"
+                    HeightRequest="44"
+                    Clicked="BackClicked" />
+
+            <Label Grid.Column="1"
+                   Text="Favorites &amp; Playlists"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+        </Grid>
+
+        <Label Grid.Row="1"
+               Text="Favorites"
+               FontSize="20"
+               FontAttributes="Bold" />
+
+        <Border Grid.Row="2" StrokeThickness="1" Padding="10">
+            <CollectionView ItemsSource="{Binding Source={x:Reference PageRoot}, Path=Favorites}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto"
+                              Padding="0,8">
+                            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                <Label Text="{Binding Title}"
+                                       FontSize="16"
+                                       FontAttributes="Bold" />
+                                <Label Text="{Binding Artist}"
+                                       FontSize="13"
+                                       TextColor="Gray" />
+                            </VerticalStackLayout>
+
+                            <Button Grid.Column="1"
+                                    Text="Open"
+                                    Margin="6,0,0,0"
+                                    Clicked="OpenFavoriteClicked" />
+
+                            <Button Grid.Column="2"
+                                    Text="Add To Playlist"
+                                    Margin="6,0,0,0"
+                                    Clicked="AddFavoriteToSelectedPlaylistClicked" />
+
+                            <Button Grid.Column="3"
+                                    Text="Remove"
+                                    Margin="6,0,0,0"
+                                    Clicked="RemoveFavoriteClicked" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+
+        <Grid Grid.Row="3" ColumnDefinitions="*,Auto" ColumnSpacing="10">
+            <Entry x:Name="PlaylistNameEntry"
+                   Placeholder="Enter new playlist name" />
+            <Button Grid.Column="1"
+                    Text="Create Playlist"
+                    Clicked="AddPlaylistClicked" />
+        </Grid>
+
+        <Border Grid.Row="4" StrokeThickness="1" Padding="10">
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Playlists"
+                       FontSize="20"
+                       FontAttributes="Bold" />
+
+                <CollectionView ItemsSource="{Binding Source={x:Reference PageRoot}, Path=Playlists}"
+                                SelectionMode="Single"
+                                SelectionChanged="PlaylistSelectionChanged">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="*,Auto"
+                                  Padding="0,8">
+                                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                    <Label Text="{Binding Name}"
+                                           FontSize="16"
+                                           FontAttributes="Bold" />
+                                    <Label Text="{Binding SongCountText}"
+                                           FontSize="13"
+                                           TextColor="Gray" />
+                                </VerticalStackLayout>
+
+                                <Button Grid.Column="1"
+                                        Text="Delete"
+                                        Clicked="RemovePlaylistClicked" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </Border>
+
+        <Label Grid.Row="5"
+               Text="{Binding Source={x:Reference PageRoot}, Path=SelectedPlaylistTitle}"
+               FontSize="18"
+               FontAttributes="Bold" />
+
+        <Border Grid.Row="6" StrokeThickness="1" Padding="10">
+            <CollectionView ItemsSource="{Binding Source={x:Reference PageRoot}, Path=PlaylistSongs}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*,Auto"
+                              Padding="0,8">
+                            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                <Label Text="{Binding Title}"
+                                       FontSize="16"
+                                       FontAttributes="Bold" />
+                                <Label Text="{Binding Artist}"
+                                       FontSize="13"
+                                       TextColor="Gray" />
+                            </VerticalStackLayout>
+
+                            <Button Grid.Column="1"
+                                    Text="Open"
+                                    Clicked="OpenPlaylistSongClicked" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+    </Grid>
+</ContentPage>

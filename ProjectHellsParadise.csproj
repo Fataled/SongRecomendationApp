@@ -74,4 +74,10 @@
         <PackageReference Include="NAudio" Version="2.2.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <MauiXaml Update="FavoritesPlaylistsPage.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+    </ItemGroup>
+
 </Project>
