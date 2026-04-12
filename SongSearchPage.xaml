@@ -4,45 +4,166 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:Class="ProjectHellsParadise.SongSearchPage">
-    
+
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsVisible="False" IsEnabled="False" />
     </Shell.BackButtonBehavior>
-    
+
     <ContentPage.Content>
-        <Grid RowDefinitions="*, 4*" ColumnDefinitions="*, Auto" Margin="10">
-            
-            <SearchBar x:Name="_songSearchBar" 
-                       Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Center" Grid.Column="0"
-                       FontFamily="Inter"
-                       Placeholder="Enter Song Name" SearchCommand="{Binding SongSearchCommand}"
-                       SearchCommandParameter="{Binding Text, Source={RelativeSource Self}}"
-                       />
-            
-            <CollectionView 
-                Grid.Row="1" 
-                Grid.Column="0"
-                Grid.ColumnSpan="1"
-                ItemsSource="{Binding ObservableCollection}" 
-                SelectionMode="Single"
-                SelectionChangedCommand="{Binding SearchBarResultsChangedCommand}"
-                SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}">
+        <!--
+            Root grid:
+            Row 0 = top bar (search + settings icon)
+            Row 1 = toggle + random button row
+            Row 2 = results area (fills remaining space)
+        -->
+        <Grid RowDefinitions="Auto, Auto, *" Margin="10" RowSpacing="6">
+
+            <Grid Grid.Row="0" ColumnDefinitions="*, Auto">
+
+                <!-- Deezer search bar — visible in Deezer mode -->
+                <SearchBar x:Name="_deezerSearchBar"
+                           Grid.Column="0"
+                           IsVisible="{Binding IsDeezerMode}"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Center"
+                           FontFamily="Inter"
+                           Placeholder="Search songs on Deezer…"
+                           SearchCommand="{Binding SongSearchCommand}"
+                           SearchCommandParameter="{Binding Text, Source={RelativeSource Self}}" />
+
+                <!-- Spotify search bar — visible in Spotify mode -->
+                <SearchBar x:Name="_spotifySearchBar"
+                           Grid.Column="0"
+                           IsVisible="{Binding IsSpotifyMode}"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Center"
+                           FontFamily="Inter"
+                           Placeholder="Search songs on Spotify…"
+                           SearchCommand="{Binding SpotifySearchCommand}"
+                           SearchCommandParameter="{Binding Text, Source={RelativeSource Self}}" />
+
+                <!-- Settings icon -->
+                <Label Text="{mi:Material Settings}"
+                       Grid.Column="1"
+                       HeightRequest="45" WidthRequest="45"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SettingsPageCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+
+            <Grid Grid.Row="1" ColumnDefinitions="*, Auto" ColumnSpacing="8">
+
+                <!-- Toggle Deezer / Spotify -->
+                <Button Grid.Column="0"
+                        HorizontalOptions="Fill"
+                        Command="{Binding ToggleSpotifyModeCommand}">
+                    <!-- Label updates based on which mode is currently active -->
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsSpotifyMode}" Value="False">
+                            <Setter Property="Text" Value="Switch to Spotify" />
+                            <Setter Property="BackgroundColor" Value="#1DB954" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsSpotifyMode}" Value="True">
+                            <Setter Property="Text" Value="Switch to Deezer" />
+                            <Setter Property="BackgroundColor" Value="#E52C75" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <!-- Random Song button + spinner -->
+                <Grid Grid.Column="1" WidthRequest="120">
+                    <Button Text="🎲 Random"
+                            IsVisible="{Binding IsRandomLoading, Converter={StaticResource InvertedBoolConverter}}"
+                            Command="{Binding RandomSongCommand}"
+                            BackgroundColor="DarkSlateBlue"
+                            TextColor="White" />
+                    <ActivityIndicator IsRunning="{Binding IsRandomLoading}"
+                                       IsVisible="{Binding IsRandomLoading}"
+                                       Color="DarkSlateBlue"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                </Grid>
+            </Grid>
+
+            <!-- DEEZER results list -->
+            <CollectionView Grid.Row="2"
+                            IsVisible="{Binding IsDeezerMode}"
+                            ItemsSource="{Binding ObservableCollection}"
+                            SelectionMode="Single"
+                            SelectionChangedCommand="{Binding SearchBarResultsChangedCommand}"
+                            SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}"
+                            VerticalScrollBarVisibility="Always">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <VerticalStackLayout Padding="10">
                             <Label Text="{Binding Title}" FontSize="16" FontAttributes="Bold" FontFamily="Inter" />
-                            <Label Text="{Binding Artist.Name}" FontSize="12" />
+                            <Label Text="{Binding Artist.Name}" FontSize="12" TextColor="Gray" />
                         </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            
-            <Label Text="{mi:Material Settings}" Grid.Column = "1" HeightRequest="45" WidthRequest="45" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SettingsPageCommand}"/>
-                </Label.GestureRecognizers>
-            </Label>
-            
+
+            <!-- SPOTIFY panel — search results + recently opened history -->
+            <ScrollView Grid.Row="2" IsVisible="{Binding IsSpotifyMode}">
+                <VerticalStackLayout Spacing="0">
+
+                    <!-- Spotify search results -->
+                    <CollectionView ItemsSource="{Binding SpotifyResults}"
+                                    SelectionMode="Single"
+                                    SelectionChangedCommand="{Binding SpotifyResultSelectedCommand}"
+                                    SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}"
+                                    HeightRequest="350">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*, Auto" Padding="10">
+                                    <VerticalStackLayout Grid.Column="0">
+                                        <Label Text="{Binding Name}" FontSize="15" FontAttributes="Bold" FontFamily="Inter" />
+                                        <Label Text="{Binding Artists}" FontSize="12" TextColor="Gray" />
+                                        <Label Text="{Binding Album}" FontSize="11" TextColor="LightGray" />
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="1"
+                                           Text="{Binding Duration}"
+                                           FontSize="12" TextColor="Gray"
+                                           VerticalOptions="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <!-- Recently opened header — only shown when there is history -->
+                    <Label Text="Recently Opened"
+                           FontSize="14" FontAttributes="Bold"
+                           Margin="10,12,10,4"
+                           IsVisible="{Binding RecentlyOpened.Count, Converter={StaticResource IntToBoolConverter}}" />
+
+                    <!-- Recently opened songs list -->
+                    <CollectionView ItemsSource="{Binding RecentlyOpened}"
+                                    SelectionMode="Single"
+                                    SelectionChangedCommand="{Binding RecentSongSelectedCommand}"
+                                    SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*, Auto" Padding="10,6">
+                                    <VerticalStackLayout Grid.Column="0">
+                                        <Label Text="{Binding Name}" FontSize="14" FontAttributes="Bold" FontFamily="Inter" />
+                                        <Label Text="{Binding Artist}" FontSize="12" TextColor="Gray" />
+                                        <Label Text="{Binding Album}" FontSize="11" TextColor="LightGray" />
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="1"
+                                           Text="▶ Open"
+                                           FontSize="12" TextColor="#1DB954"
+                                           VerticalOptions="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>
