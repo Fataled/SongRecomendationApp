@@ -49,7 +49,7 @@ public class SpotifyClient : ApiClientBase
         if (!string.IsNullOrEmpty(_bearerToken) && DateTime.UtcNow < _tokenExpiry)
             return;
 
-        string credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{ClientId} : {ClientSecret}"));
+        string credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{ClientId}:{ClientSecret}"));
 
         HttpRequestMessage tokenRequest = new HttpRequestMessage(HttpMethod.Post, "https://accounts.spotify.com/api/token");
 
@@ -68,7 +68,7 @@ public class SpotifyClient : ApiClientBase
         }
 
         string json = await response.Content.ReadAsStringAsync();
-        SpotifyTokenResponse? tokenResponse = JsonSerializer.Deserialize<SpotifyTokenResponse>(json)
+        SpotifyTokenResponse tokenResponse = JsonSerializer.Deserialize<SpotifyTokenResponse>(json)
             ?? throw new DTOException("Failed to deserialize Spotify token response");
 
         _bearerToken = tokenResponse.AccessToken;
@@ -133,7 +133,7 @@ public class SpotifyClient : ApiClientBase
     /// </summary>
     /// <param name="song"></param>
     /// <returns></returns>
-    public static async Task OpenInSpotifyAsync(SpotifyMusicSong song)
+    public async Task OpenInSpotifyAsync(SpotifyMusicSong song)
     {
         //Use external URL because it works on all platfroms
         //if spotify is installed it will intercept the link and open the app
@@ -143,6 +143,8 @@ public class SpotifyClient : ApiClientBase
             ? song.ExternalUrl : $"https://open.spotify.com/track/{song.Id}";
 
         await Launcher.OpenAsync(new Uri(url));
+
+        await _historyService.SaveOpenedSongAsync(song);
     }
     
     /// <summary>
