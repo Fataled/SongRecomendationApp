@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using ProjectHellsParadise.BusinessLogic.Data_Transfer_Object;
 using ProjectHellsParadise.BusinessLogic.Exceptions;
 using ProjectHellsParadise.BusinessLogic.Models;
+using ProjectHellsParadise.BusinessLogic.Services;
 
 namespace ProjectHellsParadise.BusinessLogic.APIs;
 
@@ -13,19 +14,36 @@ namespace ProjectHellsParadise.BusinessLogic.APIs;
 /// Talks to the Spotify Web API
 /// Inherits from the ApiClientBase class
 /// </summary>
+/// <author> Obaid Waqas </author>
 public class SpotifyClient : ApiClientBase
 {
+    private SpotifyHistoryService _historyService;
+
+    /// <summary>
+    /// Spotify application Client ID from the spotify developer dashboard
+    /// </summary>
     private const string ClientId = "df13c3929f934878af76c8286403e84d";
+
+    /// <summary>
+    /// Spotify appliaction client secret from the spotify developer dashboard
+    /// </summary>
     private const string ClientSecret = "6c8c35b7d15244879e6274d58c039356";
 
     private string _bearerToken = string.Empty;
     private DateTime _tokenExpiry = DateTime.MinValue;
 
     public SpotifyClient() : base("https://api.spotify.com/v1")
-    { 
-        
+    {
+        _historyService = new SpotifyHistoryService();
     }
 
+    /// <summary>
+    /// Ensure we have a valid token before making any API call
+    /// Fetches a nwe token from Spotify's accounts service if we dont have one or if the current one is expired
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ApiException"></exception>
+    /// <exception cref="DTOException"></exception>
     private async Task EnsureTokenAsync()
     {
         if (!string.IsNullOrEmpty(_bearerToken) && DateTime.UtcNow < _tokenExpiry)
@@ -57,7 +75,12 @@ public class SpotifyClient : ApiClientBase
         _tokenExpiry = DateTime.UtcNow.AddSeconds(tokenResponse.ExpiresIn - 30); 
     }
 
-
+    /// <summary>
+    /// Attaches the Bearer token to every outgoing HTTP request
+    /// CAlls EnsureTokenAsync first to guarantee the token is valid
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     protected override async Task AddAuthHeader(HttpRequestMessage request)
     {
         await EnsureTokenAsync();
@@ -68,7 +91,14 @@ public class SpotifyClient : ApiClientBase
 
     protected override Task AddContent(HttpRequestMessage requestMessage, object body) => Task.CompletedTask;
 
-    //Searches Spotify for tracks matching the query string.
+    /// <summary>
+    /// Searches Spotify for tracks matching the query string.
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="limit"></param>
+    /// <returns></returns>
+    /// <exception cref="ApiException"></exception>
+    /// <exception cref="DTOException"></exception>
     public async Task<List<SpotifyMusicSong>> SearchTracksAsync(string query, int limit = 20)
     {
         if (string.IsNullOrEmpty(query))
@@ -97,6 +127,12 @@ public class SpotifyClient : ApiClientBase
             .ToList() ?? new List<SpotifyMusicSong>();
     }
 
+    /// <summary>
+    /// Opens the given song externally in the spotify app or browser
+    /// Also saves the opened song to the history file for data persistence
+    /// </summary>
+    /// <param name="song"></param>
+    /// <returns></returns>
     public static async Task OpenInSpotifyAsync(SpotifyMusicSong song)
     {
         //Use external URL because it works on all platfroms
@@ -108,8 +144,16 @@ public class SpotifyClient : ApiClientBase
 
         await Launcher.OpenAsync(new Uri(url));
     }
+    
+    /// <summary>
+    /// Returns SPotifyHistoryService so the viewmodel can access recent searches and recently opened songs
+    /// </summary>
+    /// <returns></returns>
+    public SpotifyHistoryService GetHistoryService() => _historyService;
 
-    //Used only for deserializing the spotify token endpoint response
+    /// <summary>
+    /// Used only for deserializing the spotify token endpoint response
+    /// </summary>
     private class SpotifyTokenResponse
     {
         [JsonPropertyName("access_token")]
