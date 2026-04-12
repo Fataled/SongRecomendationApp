@@ -35,6 +35,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<SpotifyClient>();
         builder.Services.AddSingleton<AppleMusic>();
         builder.Services.AddSingleton<SongSessionService>();
+        builder.Services.AddSingleton<RandomSongService>();
         builder.Services.AddSingleton<ForgotPasswordViewModel>();
         
         AuthClient.AuthClient authClient = new AuthClient.AuthClient("http://159.203.18.252.nip.io:8002");

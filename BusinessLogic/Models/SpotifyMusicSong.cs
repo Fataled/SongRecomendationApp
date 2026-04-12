@@ -25,7 +25,7 @@ public class SpotifyMusicSong
     public string Album {  get; set; } = string.Empty;
 
     // Album art image URL
-    public string AlbumArtURL {  get; set; } = string.Empty;
+    public string AlbumArtUrl {  get; set; } = string.Empty;
 
     //Duration in milliseconds from spotify
     [JsonPropertyName("duration_ms")]
@@ -34,8 +34,11 @@ public class SpotifyMusicSong
     //Human readable duration
     public string Duration => FormatDuration(DurationMs);
 
+    //30 second preview - Null if spotify doesnt provide with one
+    public string? PreviewUrl {  get; set; }
+
     // The URI used to open the app on this exact track
-    public string ExternalUri {  get; set; } = string.Empty;
+    public string SpotifyUri {  get; set; } = string.Empty;
 
     // The https://open.spotify.com/track/URL - browser fallback
     public string ExternalUrl {  get; set; } = string.Empty;
@@ -51,7 +54,11 @@ public class SpotifyMusicSong
     //Shown in the CollectionView: "SOng Name & Artist"
     public string DisplayLabel => $"{Name} {Artist}";
 
-    
+    /// <summary>
+    /// Converts a duration in ms into a readable "m:s" string
+    /// </summary>
+    /// <param name="ms"></param>
+    /// <returns> 0: 00 if the value is null or negative </returns>
     private static string FormatDuration (int ms)
     {
         if (ms <= 0)
