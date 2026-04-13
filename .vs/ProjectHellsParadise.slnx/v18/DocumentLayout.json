@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\analysispage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:analysispage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\analysispage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:analysispage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\businesslogic\\viewmodels\\analysisviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:businesslogic\\viewmodels\\analysisviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|c:\\users\\krish\\source\\repos\\term-project-ia-11\\businesslogic\\apis\\applemusic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DA978E00-9BD2-C279-B111-7FBC0D3E96DA}|ProjectHellsParadise.csproj|solutionrelative:businesslogic\\apis\\applemusic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -78,7 +90,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 16,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -86,7 +98,46 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AnalysisViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\ViewModels\\AnalysisViewModel.cs",
+              "RelativeDocumentMoniker": "BusinessLogic\\ViewModels\\AnalysisViewModel.cs",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\ViewModels\\AnalysisViewModel.cs",
+              "RelativeToolTip": "BusinessLogic\\ViewModels\\AnalysisViewModel.cs",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAAAGoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-13T00:15:37.242Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AnalysisPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\AnalysisPage.xaml.cs",
+              "RelativeDocumentMoniker": "AnalysisPage.xaml.cs",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\AnalysisPage.xaml.cs",
+              "RelativeToolTip": "AnalysisPage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-13T00:15:24.642Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "AnalysisPage.xaml",
+              "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\AnalysisPage.xaml",
+              "RelativeDocumentMoniker": "AnalysisPage.xaml",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\AnalysisPage.xaml",
+              "RelativeToolTip": "AnalysisPage.xaml",
+              "ViewState": "AgIAABUAAAAAAAAAAAAYwCAAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-04-13T00:15:12.609Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "SpotifyDTO.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\Data Transfer Object\\SpotifyDTO.cs",
               "RelativeDocumentMoniker": "BusinessLogic\\Data Transfer Object\\SpotifyDTO.cs",
@@ -94,12 +145,11 @@
               "RelativeToolTip": "BusinessLogic\\Data Transfer Object\\SpotifyDTO.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAAgwEEAAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-12T23:43:58.045Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-12T23:43:58.045Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "SongSearchViewModel.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\ViewModels\\SongSearchViewModel.cs",
               "RelativeDocumentMoniker": "BusinessLogic\\ViewModels\\SongSearchViewModel.cs",
@@ -111,7 +161,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "SettingsPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\SettingsPage.xaml.cs",
               "RelativeDocumentMoniker": "SettingsPage.xaml.cs",
@@ -123,7 +173,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "SettingsPage.xaml",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\SettingsPage.xaml",
               "RelativeDocumentMoniker": "SettingsPage.xaml",
@@ -135,7 +185,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "SettingsPageViewModel.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\ViewModels\\SettingsPageViewModel.cs",
               "RelativeDocumentMoniker": "BusinessLogic\\ViewModels\\SettingsPageViewModel.cs",
@@ -147,7 +197,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "AppShell.xaml.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\AppShell.xaml.cs",
               "RelativeDocumentMoniker": "AppShell.xaml.cs",
@@ -159,7 +209,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "ProjectHellsParadise.csproj",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\ProjectHellsParadise.csproj",
               "RelativeDocumentMoniker": "ProjectHellsParadise.csproj",
@@ -171,7 +221,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "Spotify.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\APIs\\Spotify.cs",
               "RelativeDocumentMoniker": "BusinessLogic\\APIs\\Spotify.cs",
@@ -183,7 +233,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "MainApplication.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\Platforms\\Android\\MainApplication.cs",
               "RelativeDocumentMoniker": "Platforms\\Android\\MainApplication.cs",
@@ -195,7 +245,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "Recommendation.xaml",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\Recommendation.xaml",
               "RelativeDocumentMoniker": "Recommendation.xaml",
@@ -207,7 +257,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "MauiProgram.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\MauiProgram.cs",
               "RelativeDocumentMoniker": "MauiProgram.cs",
@@ -219,7 +269,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "RecommendationViewModel.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\ViewModels\\RecommendationViewModel.cs",
               "RelativeDocumentMoniker": "BusinessLogic\\ViewModels\\RecommendationViewModel.cs",
@@ -231,7 +281,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 18,
               "Title": "SongSearchPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\SongSearchPage.xaml.cs",
               "RelativeDocumentMoniker": "SongSearchPage.xaml.cs",
@@ -243,7 +293,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "LoginPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\LoginPage.xaml.cs",
               "RelativeDocumentMoniker": "LoginPage.xaml.cs",
@@ -255,7 +305,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 19,
               "Title": "ByteRecord.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\Data Transfer Object\\ByteRecord.cs",
               "RelativeDocumentMoniker": "BusinessLogic\\Data Transfer Object\\ByteRecord.cs",
@@ -267,7 +317,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "AppleMusic.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\APIs\\AppleMusic.cs",
               "RelativeDocumentMoniker": "BusinessLogic\\APIs\\AppleMusic.cs",
@@ -280,7 +330,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "README.md",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\README.md",
               "RelativeDocumentMoniker": "README.md",
