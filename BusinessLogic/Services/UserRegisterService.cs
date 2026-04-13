@@ -12,6 +12,7 @@ public class UserRegisterService : ObservableObject
     private string _password;
     private string _name;
     private string _totp;
+    
     public UserRegisterService(string name, string password, string email,string totp)
     {
         _name = name;

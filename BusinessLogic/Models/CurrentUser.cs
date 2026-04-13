@@ -1,4 +1,4 @@
-﻿namespace ProjectHellsParadise.BusinessLogic.ViewModels;
+﻿namespace ProjectHellsParadise.BusinessLogic.Models;
 
 public class CurrentUser
 {

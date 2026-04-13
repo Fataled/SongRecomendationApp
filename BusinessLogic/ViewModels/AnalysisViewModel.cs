@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
+using ProjectHellsParadise.BusinessLogic.Models;
 using ProjectHellsParadise.BusinessLogic.Services;
 using SkiaSharp;
 

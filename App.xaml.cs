@@ -1,5 +1,6 @@
 ﻿
 using AuthClient;
+using ProjectHellsParadise.BusinessLogic.Models;
 using ProjectHellsParadise.BusinessLogic.ViewModels;
 
 namespace ProjectHellsParadise;
