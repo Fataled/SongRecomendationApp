@@ -1,110 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="ProjectHellsParadise.SettingsPage"
-    Title="Settings"
-    BackgroundColor="#C8B6FF">
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProjectHellsParadise.SettingsPage"
+             Title="Settings">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="20">
+        <VerticalStackLayout Padding="20" Spacing="18">
 
-            <Label
-                Text="Settings"
-                FontSize="32"
-                FontAttributes="Bold"
-                TextColor="Black" />
+            <Label Text="Settings"
+                   FontSize="28"
+                   FontAttributes="Bold" />
 
-            <Frame
-                BackgroundColor="White"
-                CornerRadius="18"
-                Padding="20">
-                <VerticalStackLayout Spacing="12">
-                    <Label
-                        Text="Account"
-                        FontSize="22"
-                        FontAttributes="Bold"
-                        TextColor="Black" />
+            <Border StrokeThickness="1" Padding="14">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Apple Music"
+                           FontSize="20"
+                           FontAttributes="Bold" />
+                    <Label Text="{Binding AppleStatus}"
+                           FontSize="14"
+                           TextColor="Gray" />
 
-                    <Label
-                        Text="Manage your session and app preferences."
-                        FontSize="14"
-                        TextColor="Gray" />
+                    <Button Text="Sign in to Apple Music"
+                            Command="{Binding AppleSignInCommand}"
+                            BackgroundColor="#FA243C"
+                            TextColor="White"
+                            HeightRequest="50" />
 
-                    <Button Text="Favorites / Playlists"
-        Command="{Binding GoFavoritesPageCommand}" />
-                    <Button
-                        Text="Logout"
-                        Command="{Binding LogoutCommand}"
-                        BackgroundColor="#7B2CBF"
-                        TextColor="White"
-                        CornerRadius="12"
-                        HeightRequest="50" />
-                    
+                    <Button Text="Sign out of Apple Music"
+                            Command="{Binding AppleSignOutCommand}"
+                            HeightRequest="50" />
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
-            <Frame
-                BackgroundColor="White"
-                CornerRadius="18"
-                Padding="20">
-                <VerticalStackLayout Spacing="16">
-                    <Label
-                        Text="Preferences"
-                        FontSize="22"
-                        FontAttributes="Bold"
-                        TextColor="Black" />
+            <Border StrokeThickness="1" Padding="14">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Spotify"
+                           FontSize="20"
+                           FontAttributes="Bold" />
+                    <Label Text="{Binding SpotifyStatus}"
+                           FontSize="14"
+                           TextColor="Gray" />
 
-                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="18">
-                        <Label
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Text="Dark Mode"
-                            FontSize="16"
-                            VerticalOptions="Center" />
+                    <Button Text="Sign in to Spotify"
+                            Command="{Binding SpotifySignInCommand}"
+                            BackgroundColor="#1DB954"
+                            TextColor="White"
+                            HeightRequest="50" />
 
-                        <Switch
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            IsToggled="{Binding IsDarkMode}" />
-
-                        <Label
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Text="Remember Me"
-                            FontSize="16"
-                            VerticalOptions="Center" />
-
-                        <Switch
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            IsToggled="{Binding RememberMe}" />
-                    </Grid>
+                    <Button Text="Sign out of Spotify"
+                            Command="{Binding SpotifySignOutCommand}"
+                            HeightRequest="50" />
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
-            <Frame
-                BackgroundColor="White"
-                CornerRadius="18"
-                Padding="20">
-                <VerticalStackLayout Spacing="12">
-                    <Label
-                        Text="About"
-                        FontSize="22"
-                        FontAttributes="Bold"
-                        TextColor="Black" />
-
-                    <Label
-                        Text="Project Hells Paradise Song Recommender"
-                        FontSize="16"
-                        TextColor="Black" />
-
-                    <Label
-                        Text="Version 1.0"
-                        FontSize="14"
-                        TextColor="Gray" />
-                </VerticalStackLayout>
-            </Frame>
+            <Button Text="Log out of App"
+                    Command="{Binding LogoutCommand}"
+                    BackgroundColor="Black"
+                    TextColor="White"
+                    HeightRequest="50" />
 
         </VerticalStackLayout>
     </ScrollView>
