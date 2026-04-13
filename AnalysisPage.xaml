@@ -1,33 +1,99 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
              x:Class="ProjectHellsParadise.AnalysisPage"
-             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui">
-    <Shell.BackButtonBehavior>
-        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
-    </Shell.BackButtonBehavior>
-    <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            
-            <Button Grid.Row="0" Text="←" WidthRequest="40" HeightRequest="40" HorizontalOptions="Start" Command="{Binding GoBackCommand}"></Button>
-            
-            <Label Grid.Row="1" Text="{Binding Ranking}" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="300" HeightRequest="30"></Label>
-            
-            <lvc:PolarChart
-                Series="{Binding Series}"
-                AngleAxes="{Binding AngleAxes}"
-                TooltipTextSize="12"
-                LegendPosition="Left"
-                Grid.Row="2">
-            </lvc:PolarChart>
-            
-            
+             Title="Analysis">
+
+    <Grid Padding="20" RowDefinitions="Auto,Auto,*" RowSpacing="12">
+
+        <Button Grid.Row="0"
+                Text="← Back"
+                WidthRequest="100"
+                HeightRequest="44"
+                HorizontalOptions="Start"
+                Command="{Binding GoBackCommand}" />
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="10">
+            <Button Grid.Column="0"
+                    Text="Graph"
+                    Command="{Binding ShowGraphTabCommand}" />
+            <Button Grid.Column="1"
+                    Text="Play Music"
+                    Command="{Binding ShowMusicTabCommand}" />
         </Grid>
-    </ContentPage.Content>
+
+        <Grid Grid.Row="2">
+
+            <ScrollView IsVisible="{Binding IsGraphTabVisible}">
+                <VerticalStackLayout Spacing="16" Padding="0,10,0,10">
+
+                    <Label Text="{Binding CurrentSongTitle}"
+                           FontSize="24"
+                           FontAttributes="Bold" />
+
+                    <Border StrokeThickness="1" Padding="12">
+                        <lvc:PolarChart Series="{Binding Series}"
+                                        AngleAxes="{Binding AngleAxes}"
+                                        HeightRequest="360" />
+                    </Border>
+
+                    <Border StrokeThickness="1" Padding="12">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Why this was recommended"
+                                   FontSize="18"
+                                   FontAttributes="Bold" />
+                            <Label Text="{Binding Ranking}"
+                                   FontSize="14" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <ScrollView IsVisible="{Binding IsMusicTabVisible}">
+                <VerticalStackLayout Spacing="16" Padding="0,10,0,10">
+
+                    <Label Text="Play this song on your device"
+                           FontSize="22"
+                           FontAttributes="Bold" />
+
+                    <Border StrokeThickness="1" Padding="14">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Selected song"
+                                   FontSize="16"
+                                   FontAttributes="Bold" />
+                            <Label Text="{Binding CurrentSongTitle}"
+                                   FontSize="18" />
+                            <Label Text="{Binding CurrentArtistName}"
+                                   FontSize="14"
+                                   TextColor="Gray" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Button Text="Play on Spotify"
+                            HeightRequest="50"
+                            BackgroundColor="#1DB954"
+                            TextColor="White"
+                            Command="{Binding PlayOnSpotifyCommand}" />
+
+                    <Button Text="Play on Apple Music"
+                            HeightRequest="50"
+                            BackgroundColor="#FA243C"
+                            TextColor="White"
+                            Command="{Binding PlayOnAppleMusicCommand}" />
+
+                    <ActivityIndicator IsRunning="{Binding IsLaunchingPlatform}"
+                                       IsVisible="{Binding IsLaunchingPlatform}"
+                                       Color="CornflowerBlue" />
+
+                    <Label Text="{Binding CurrentSongStatus}"
+                           FontSize="14"
+                           TextColor="Gray" />
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+        </Grid>
+    </Grid>
 </ContentPage>
