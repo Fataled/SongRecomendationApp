@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.ApplicationModel;
 using ProjectHellsParadise.BusinessLogic.Models;
 
 namespace ProjectHellsParadise.BusinessLogic.ViewModels;
@@ -10,30 +11,91 @@ namespace ProjectHellsParadise.BusinessLogic.ViewModels;
 /// <author>Brume Ako</author>
 public partial class SettingsPageViewModel : ObservableObject
 {
-    private readonly AuthClient.AuthClient _authClient;
-    private readonly CurrentUser _currentUser;
+    private readonly AuthClient.AuthClient authClient;
+    private readonly CurrentUser currentUser;
 
     [ObservableProperty]
-    private bool isDarkMode;
+    private bool isAppleSignedIn;
 
     [ObservableProperty]
-    private bool rememberMe;
+    private bool isSpotifySignedIn;
+
+    [ObservableProperty]
+    private string appleStatus = "Not connected to Apple Music";
+
+    [ObservableProperty]
+    private string spotifyStatus = "Not connected to Spotify";
 
     public SettingsPageViewModel(AuthClient.AuthClient authClient, CurrentUser currentUser)
     {
-        _authClient = authClient;
-        _currentUser = currentUser;
+        this.authClient = authClient;
+        this.currentUser = currentUser;
     }
+
     [RelayCommand]
-    private async Task GoFavoritesPage()
+    private async Task AppleSignIn()
     {
-        await Shell.Current.GoToAsync(nameof(FavoritesPlaylistPage));
+        try
+        {
+            await Browser.Default.OpenAsync(new Uri("https://music.apple.com/"), BrowserLaunchMode.SystemPreferred);
+            IsAppleSignedIn = true;
+            AppleStatus = "Apple Music sign-in page opened";
+        }
+        catch (Exception ex)
+        {
+            AppleStatus = $"Apple Music sign-in failed: {ex.Message}";
+        }
+    }
+
+    [RelayCommand]
+    private async Task AppleSignOut()
+    {
+        try
+        {
+            await Browser.Default.OpenAsync(new Uri("https://music.apple.com/settings"), BrowserLaunchMode.SystemPreferred);
+            IsAppleSignedIn = false;
+            AppleStatus = "Apple Music settings opened";
+        }
+        catch (Exception ex)
+        {
+            AppleStatus = $"Apple Music sign-out failed: {ex.Message}";
+        }
+    }
+
+    [RelayCommand]
+    private async Task SpotifySignIn()
+    {
+        try
+        {
+            await Browser.Default.OpenAsync(new Uri("https://accounts.spotify.com/en/login"), BrowserLaunchMode.SystemPreferred);
+            IsSpotifySignedIn = true;
+            SpotifyStatus = "Spotify sign-in page opened";
+        }
+        catch (Exception ex)
+        {
+            SpotifyStatus = $"Spotify sign-in failed: {ex.Message}";
+        }
+    }
+
+    [RelayCommand]
+    private async Task SpotifySignOut()
+    {
+        try
+        {
+            await Browser.Default.OpenAsync(new Uri("https://www.spotify.com/account/overview/"), BrowserLaunchMode.SystemPreferred);
+            IsSpotifySignedIn = false;
+            SpotifyStatus = "Spotify account page opened";
+        }
+        catch (Exception ex)
+        {
+            SpotifyStatus = $"Spotify sign-out failed: {ex.Message}";
+        }
     }
 
     [RelayCommand]
     private async Task Logout()
     {
-        await _authClient.LogoutAsync(_currentUser.Jwt);
+        await authClient.LogoutAsync(currentUser.Jwt);
         await Shell.Current.GoToAsync(nameof(LoginPage));
     }
 }

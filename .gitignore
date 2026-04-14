@@ -4,5 +4,10 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+<<<<<<< HEAD
+/.vs/ProjectHellsParadise.slnx/FileContentIndex
+/.vs/term-project-ia-11.slnx/FileContentIndex
+=======
 /.vs
 /.vs/ProjectHellsParadise.slnx/FileContentIndex
+>>>>>>> 8825fce97ba6ae858eb68d9dde7d52b8d500ecee

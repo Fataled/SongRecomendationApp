@@ -1,11 +1,6 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\BusinessLogic",
-    "\\BusinessLogic\\APIs",
-    "\\BusinessLogic\\Data Transfer Object",
-    "\\BusinessLogic\\ViewModels"
+    ""
   ],
-  "SelectedNode": "\\BusinessLogic\\APIs\\AppleMusic.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -1,14 +1,12 @@
-﻿
-
-using ProjectHellsParadise.BusinessLogic.ViewModels;
+﻿using ProjectHellsParadise.BusinessLogic.ViewModels;
 
 namespace ProjectHellsParadise;
 
 public partial class AnalysisPage : ContentPage
 {
-    public AnalysisPage(AnalysisViewModel viewModel)
+    public AnalysisPage(AnalysisViewModel vm)
     {
         InitializeComponent();
-        BindingContext = viewModel;
+        BindingContext = vm;
     }
 }
