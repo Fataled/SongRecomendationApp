@@ -6,6 +6,10 @@ using ProjectHellsParadise.BusinessLogic.ExtraStuff;
 
 namespace ProjectHellsParadise.BusinessLogic.ViewModels;
 
+/// <summary>
+/// The methods for ForgotPassword Page
+/// </summary>
+/// <author>Brume Ako</author>
 public partial class ForgotPasswordViewModel : ObservableObject
 {
     [ObservableProperty]

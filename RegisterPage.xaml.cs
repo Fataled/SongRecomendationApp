@@ -7,6 +7,7 @@ using ProjectHellsParadise.BusinessLogic.ViewModels;
 
 namespace ProjectHellsParadise;
 
+// Authored by Brume
 public partial class RegisterPage : ContentPage
 {
     public RegisterPage(RegisterPageViewModel viewModel)

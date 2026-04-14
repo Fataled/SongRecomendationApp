@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ProjectHellsParadise.BusinessLogic.ViewModels;
 
 namespace ProjectHellsParadise;
-
+// Authored by Brume
 public partial class ForgotPasswordPage : ContentPage
 {
     public ForgotPasswordPage(ForgotPasswordViewModel viewModel)

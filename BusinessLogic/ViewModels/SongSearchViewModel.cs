@@ -13,6 +13,10 @@ using ProjectHellsParadise.BusinessLogic.Services;
 
 namespace ProjectHellsParadise.BusinessLogic.ViewModels;
 
+/// <summary>
+/// The methods for the Song search page
+/// </summary>
+/// <author>Brume Ako</author>
 public partial class SongSearchViewModel : ObservableObject
 {
     private readonly FeatureExtractionApi _myApi;

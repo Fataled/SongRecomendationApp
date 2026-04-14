@@ -5,7 +5,7 @@ using ProjectHellsParadise.BusinessLogic.Models;
 using ProjectHellsParadise.BusinessLogic.ViewModels;
 
 namespace ProjectHellsParadise;
-
+//Authored by Brume
 public partial class LoginPage : ContentPage
 {
     
