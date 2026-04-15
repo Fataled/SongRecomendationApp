@@ -1,5 +1,4 @@
 ﻿using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -9,7 +8,6 @@ using ProjectHellsParadise.BusinessLogic.Models;
 using ProjectHellsParadise.BusinessLogic.Services;
 
 namespace ProjectHellsParadise.BusinessLogic.APIs;
-
 
 /// <summary>
 /// Talks to the Spotify Web API
@@ -30,11 +28,9 @@ public class SpotifyClient : ApiClientBase
     /// </summary>
     private const string ClientSecret = "6c8c35b7d15244879e6274d58c039356";
 
-    private const string redirectUri = "https://127.0.0.1:8000/callback";
-
     private string _bearerToken = string.Empty;
     private DateTime _tokenExpiry = DateTime.MinValue;
-    private string _accessToken;
+    private string _accessToken = string.Empty;
 
     public SpotifyClient() : base("https://api.spotify.com/v1")
     {
@@ -43,9 +39,8 @@ public class SpotifyClient : ApiClientBase
 
     /// <summary>
     /// Ensure we have a valid token before making any API call
-    /// Fetches a nwe token from Spotify's accounts service if we dont have one or if the current one is expired
+    /// Fetches a new token from Spotify's accounts service if we dont have one or if the current one is expired
     /// </summary>
-    /// <returns></returns>
     /// <exception cref="ApiException"></exception>
     /// <exception cref="DTOException"></exception>
     private async Task EnsureTokenAsync()
@@ -53,9 +48,14 @@ public class SpotifyClient : ApiClientBase
         if (!string.IsNullOrEmpty(_bearerToken) && DateTime.UtcNow < _tokenExpiry)
             return;
 
-        string credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{ClientId}:{ClientSecret}"));
+        string credentials = Convert.ToBase64String(
+            Encoding.UTF8.GetBytes($"{ClientId}:{ClientSecret}")
+        );
 
-        HttpRequestMessage tokenRequest = new HttpRequestMessage(HttpMethod.Post, "https://accounts.spotify.com/api/token");
+        HttpRequestMessage tokenRequest = new HttpRequestMessage(
+            HttpMethod.Post,
+            "https://accounts.spotify.com/api/token"
+        );
 
         tokenRequest.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
         tokenRequest.Content = new FormUrlEncodedContent(new[]
@@ -76,28 +76,24 @@ public class SpotifyClient : ApiClientBase
             ?? throw new DTOException("Failed to deserialize Spotify token response");
 
         _bearerToken = tokenResponse.AccessToken;
-        _tokenExpiry = DateTime.UtcNow.AddSeconds(tokenResponse.ExpiresIn - 30); 
+        _accessToken = tokenResponse.AccessToken;
+        _tokenExpiry = DateTime.UtcNow.AddSeconds(tokenResponse.ExpiresIn - 30);
     }
 
     /// <summary>
     /// Attaches the Bearer token to every outgoing HTTP request
-    /// CAlls EnsureTokenAsync first to guarantee the token is valid
+    /// Calls EnsureTokenAsync first to guarantee the token is valid
     /// </summary>
     /// <param name="request"></param>
-    /// <returns></returns>
     protected override async Task AddAuthHeader(HttpRequestMessage request)
     {
         await EnsureTokenAsync();
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _bearerToken);
     }
 
-    private async Task Login()
+    private Task Login()
     {
-        HttpContent content = new JsonContent()
-        {
-
-        }
-        var response = await HttpClient.PostAsync(redirectUri, );
+        throw new NotSupportedException("Interactive Spotify login is not implemented in this client.");
     }
 
     protected override Task AddRequestHeader(HttpRequestMessage request) => Task.CompletedTask;
@@ -148,20 +144,16 @@ public class SpotifyClient : ApiClientBase
     /// <returns></returns>
     public async Task OpenInSpotifyAsync(SpotifyMusicSong song)
     {
-        //Use external URL because it works on all platfroms
-        //if spotify is installed it will intercept the link and open the app
-        //if not, the browser opens Spotify Web Player instead.
-
         string url = !string.IsNullOrEmpty(song.ExternalUrl)
-            ? song.ExternalUrl : $"https://open.spotify.com/track/{song.Id}";
+            ? song.ExternalUrl
+            : $"https://open.spotify.com/track/{song.Id}";
 
         await Launcher.OpenAsync(new Uri(url));
-
         await _historyService.SaveOpenedSongAsync(song);
     }
-    
+
     /// <summary>
-    /// Returns SPotifyHistoryService so the viewmodel can access recent searches and recently opened songs
+    /// Returns SpotifyHistoryService so the viewmodel can access recent searches and recently opened songs
     /// </summary>
     /// <returns></returns>
     public SpotifyHistoryService GetHistoryService() => _historyService;

@@ -93,6 +93,12 @@ public partial class SettingsPageViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private async Task GoFavoritesPage()
+    {
+        await Shell.Current.GoToAsync(nameof(FavoritesPlaylistPage));
+    }
+
+    [RelayCommand]
     private async Task Logout()
     {
         await authClient.LogoutAsync(currentUser.Jwt);
