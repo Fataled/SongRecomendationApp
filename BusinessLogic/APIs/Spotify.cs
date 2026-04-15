@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -29,8 +30,11 @@ public class SpotifyClient : ApiClientBase
     /// </summary>
     private const string ClientSecret = "6c8c35b7d15244879e6274d58c039356";
 
+    private const string redirectUri = "https://127.0.0.1:8000/callback";
+
     private string _bearerToken = string.Empty;
     private DateTime _tokenExpiry = DateTime.MinValue;
+    private string _accessToken;
 
     public SpotifyClient() : base("https://api.spotify.com/v1")
     {
@@ -85,6 +89,15 @@ public class SpotifyClient : ApiClientBase
     {
         await EnsureTokenAsync();
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _bearerToken);
+    }
+
+    private async Task Login()
+    {
+        HttpContent content = new JsonContent()
+        {
+
+        }
+        var response = await HttpClient.PostAsync(redirectUri, );
     }
 
     protected override Task AddRequestHeader(HttpRequestMessage request) => Task.CompletedTask;

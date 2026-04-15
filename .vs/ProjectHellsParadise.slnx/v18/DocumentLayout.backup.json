@@ -106,8 +106,7 @@
               "RelativeToolTip": "BusinessLogic\\ViewModels\\AnalysisViewModel.cs",
               "ViewState": "AgIAAMEAAAAAAAAAAAAYwNgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T00:15:37.242Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-13T00:15:37.242Z"
             },
             {
               "$type": "Document",
@@ -119,8 +118,7 @@
               "RelativeToolTip": "AnalysisPage.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T00:15:24.642Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-13T00:15:24.642Z"
             },
             {
               "$type": "Document",
@@ -132,8 +130,7 @@
               "RelativeToolTip": "AnalysisPage.xaml",
               "ViewState": "AgIAAEsAAAAAAAAAAAAYwGIAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-13T00:15:12.609Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-13T00:15:12.609Z"
             },
             {
               "$type": "Document",
@@ -145,8 +142,7 @@
               "RelativeToolTip": "BusinessLogic\\Data Transfer Object\\SpotifyDTO.cs",
               "ViewState": "AgIAADIAAAAAAAAAAAAIwEEAAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-12T23:43:58.045Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-12T23:43:58.045Z"
             },
             {
               "$type": "Document",
@@ -166,8 +162,8 @@
               "Title": "SettingsPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\SettingsPage.xaml.cs",
               "RelativeDocumentMoniker": "SettingsPage.xaml.cs",
-              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\SettingsPage.xaml.cs*",
-              "RelativeToolTip": "SettingsPage.xaml.cs*",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\SettingsPage.xaml.cs",
+              "RelativeToolTip": "SettingsPage.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-12T23:43:58.179Z",
@@ -179,12 +175,11 @@
               "Title": "SettingsPage.xaml",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\SettingsPage.xaml",
               "RelativeDocumentMoniker": "SettingsPage.xaml",
-              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\SettingsPage.xaml*",
-              "RelativeToolTip": "SettingsPage.xaml*",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\SettingsPage.xaml",
+              "RelativeToolTip": "SettingsPage.xaml",
               "ViewState": "AgIAACgAAAAAAAAAAAAYwD8AAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-12T23:43:58.184Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-12T23:43:58.184Z"
             },
             {
               "$type": "Document",
@@ -192,12 +187,11 @@
               "Title": "SettingsPageViewModel.cs",
               "DocumentMoniker": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\ViewModels\\SettingsPageViewModel.cs",
               "RelativeDocumentMoniker": "BusinessLogic\\ViewModels\\SettingsPageViewModel.cs",
-              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\ViewModels\\SettingsPageViewModel.cs*",
-              "RelativeToolTip": "BusinessLogic\\ViewModels\\SettingsPageViewModel.cs*",
+              "ToolTip": "C:\\Users\\KRISH\\source\\repos\\term-project-ia-11\\BusinessLogic\\ViewModels\\SettingsPageViewModel.cs",
+              "RelativeToolTip": "BusinessLogic\\ViewModels\\SettingsPageViewModel.cs",
               "ViewState": "AgIAAEkAAAAAAAAAAAAYwGAAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-12T23:43:58.189Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-12T23:43:58.189Z"
             },
             {
               "$type": "Document",
@@ -329,8 +323,7 @@
               "RelativeToolTip": "BusinessLogic\\APIs\\AppleMusic.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAABuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-12T23:43:58.325Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-12T23:43:58.325Z"
             },
             {
               "$type": "Document",
