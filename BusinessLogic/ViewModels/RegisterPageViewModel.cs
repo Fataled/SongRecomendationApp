@@ -9,6 +9,12 @@ using ProjectHellsParadise.BusinessLogic.Services;
 namespace ProjectHellsParadise.BusinessLogic.ViewModels;
 using AuthClient;
 
+
+/// <summary>
+/// The methods for the Register page
+/// </summary>
+/// <author>Brume Ako</author>
+
 // TODO PUT THEIR IMAGE ABOVE PASSWORD ON LOGIN PAGE
 public partial class RegisterPageViewModel : ObservableObject
 {

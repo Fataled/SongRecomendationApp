@@ -13,6 +13,11 @@ using ProjectHellsParadise.BusinessLogic.MyMath;
 using ProjectHellsParadise.BusinessLogic.Services;
 
 namespace ProjectHellsParadise.BusinessLogic.ViewModels;
+
+/// <summary>
+/// The methods for the Recommendation page
+/// </summary>
+/// <author>Brume Ako</author>
 public partial class RecommendationViewModel : ObservableObject {
     
     private WaveOutEvent _wavEvent;

@@ -12,6 +12,11 @@ using System.Text.Json;
 
 namespace ProjectHellsParadise.BusinessLogic.ViewModels;
 
+
+/// <summary>
+/// The methods for the Analysis page
+/// </summary>
+/// <author>Brume Ako</author>
 public partial class AnalysisViewModel : ObservableObject
 {
     private readonly SongSessionService sessionService;

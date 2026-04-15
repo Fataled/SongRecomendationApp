@@ -5,6 +5,10 @@ using ProjectHellsParadise.BusinessLogic.Models;
 
 namespace ProjectHellsParadise.BusinessLogic.ViewModels;
 
+/// <summary>
+/// The methods for the Settings page
+/// </summary>
+/// <author>Brume Ako</author>
 public partial class SettingsPageViewModel : ObservableObject
 {
     private readonly AuthClient.AuthClient authClient;

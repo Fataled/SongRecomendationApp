@@ -184,16 +184,25 @@ Songs are stored in a `Songs` table that includes both metadata and numerical fe
 Example schema (simplified):
 
 ```sql
-CREATE TABLE Songs (
-    Id              INTEGER PRIMARY KEY,
-    Title           TEXT NOT NULL,
-    Artist          TEXT NOT NULL,
-    Album           TEXT,
-    DurationSeconds INTEGER,
-    Genre           TEXT,
-    Tempo           INTEGER,
-    FeaturesJson    TEXT    -- serialized feature vector, e.g. [0.8,0.4,0.7]
+CREATE TABLE User (
+    Id              TEXT PRIMARY KEY,
+    Email           TEXT NOT NULL,
+    Name            TEXT,
+    Hashed_picture  TEXT,
+    created_at      DATE,
+    totp_secret     INTEGER,
+    mfa_enabled     Boolean,
+    reset_password_token TEXT,
+    reset_pasword_expiry DATE,
+    refresh_token   TEXT   
 );
+
+CREATE TABLE Events(
+    event_name TEXT,
+    usder_id TEXT,
+    timestamp Date,
+    properties TEXT
+)
 ```
 ## 5. Work Assignments
 

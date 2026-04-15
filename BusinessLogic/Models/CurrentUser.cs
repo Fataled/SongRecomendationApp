@@ -1,5 +1,9 @@
 ﻿namespace ProjectHellsParadise.BusinessLogic.Models;
 
+/// <summary>
+/// A class designed to keep track of the current user
+/// </summary>
+/// <author>Brume Ako</author>
 public class CurrentUser
 {
     private string _jwt = "";

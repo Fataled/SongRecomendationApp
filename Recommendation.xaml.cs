@@ -2,7 +2,7 @@
 
 
 namespace ProjectHellsParadise;
-
+// Authored by Brume
 public partial class Recommendation : ContentPage
 {
     public Recommendation(RecommendationViewModel vm)
