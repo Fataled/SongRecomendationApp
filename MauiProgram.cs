@@ -43,18 +43,18 @@ public static class MauiProgram
         
         Task.Run(async () => await
             authClient.RegisterOidcProviderAsync(
-                "REMOVED_AUTH_TOKEN",
+                Environment.GetEnvironmentVariable("clientToken"),
                 "google",
-                "REMOVED_GOOGLE_CLIENT_ID",
-                "REMOVED_GOOGLE_CLIENT_SECRET",
+                Environment.GetEnvironmentVariable("clientID"),
+                Environment.GetEnvironmentVariable("clientSecret"),
                 "https://accounts.google.com/.well-known/openid-configuration"
             ));
         
         Task.Run(async () => await
             authClient.ModifyMailService(
-                "REMOVED_AUTH_TOKEN",
-                "akobrume@gmail.com",
-                "REMOVED_SENDGRID_API_KEY"
+                Environment.GetEnvironmentVariable("adminKey"),
+                Environment.GetEnvironmentVariable("senderEmail"),
+                Environment.GetEnvironmentVariable("sendGridApiKey")
             ));
         
         builder.Services.AddSingleton<AnalyticsClient>(sp => new AnalyticsClient("http://159.203.18.252:8001"));
