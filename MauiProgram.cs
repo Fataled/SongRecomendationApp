@@ -57,6 +57,8 @@ public static class MauiProgram
                 Environment.GetEnvironmentVariable("sendGridApiKey")
             ));
         
+        
+        
         builder.Services.AddSingleton<AnalyticsClient>(sp => new AnalyticsClient("http://159.203.18.252:8001"));
         builder.Services.AddSingleton<IDialogService, DialogService>();
         builder.Services.AddSingleton<CurrentUser>();
